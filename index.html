@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#006D62">
+    <title>Sant Patrici · AudioVisita Guiada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,400;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde: #006D62;
+            --verde-75: rgba(0,109,98,0.75);
+            --verde-50: rgba(0,109,98,0.50);
+            --verde-20: rgba(0,109,98,0.20);
+            --verde-10: rgba(0,109,98,0.10);
+            --verde-comp: #86AF9A;
+            --dorado: #F3B244;
+            --dorado-light: rgba(243,178,68,0.15);
+            --crema: #FAF8F4;
+            --crema-dark: #F0EDE7;
+            --antracita: #2C2C2C;
+            --antracita-soft: #555555;
+            --blanco: #FFFFFF;
+            --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --sans: 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        html, body { height:100%; overflow:hidden; }
+        body {
+            font-family: var(--sans);
+            background: var(--crema);
+            color: var(--antracita);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* === SCREENS === */
+        .screen {
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            display:flex; flex-direction:column;
+            opacity:0; visibility:hidden;
+            transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), visibility 0.6s;
+            z-index:1;
+        }
+        .screen.active { opacity:1; visibility:visible; z-index:10; }
+
+        /* === PATTERNS === */
+        .bg-lines {
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            opacity:0.07; pointer-events:none;
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.6) 2px, rgba(255,255,255,0.6) 3px);
+        }
+        .bg-lines-dark {
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            opacity:0.04; pointer-events:none;
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,109,98,0.5) 2px, rgba(0,109,98,0.5) 3px);
+        }
+
+        /* === ORNAMENTS === */
+        .ornament {
+            display:flex; align-items:center; justify-content:center;
+            gap:0.75rem; padding:0.75rem 0; color:var(--verde-50);
+        }
+        .ornament::before, .ornament::after {
+            content:''; height:1px; width:40px; background:var(--verde-20);
+        }
+        .ornament-dot {
+            width:5px; height:5px; background:var(--verde-50);
+            transform:rotate(45deg);
+        }
+
+        /* === SPLASH === */
+        #splash {
+            background: linear-gradient(165deg, #007a6e 0%, #005a50 50%, #004d44 100%);
+            justify-content:center; align-items:center; text-align:center;
+            color:var(--blanco); overflow:hidden;
+        }
+        #splash .content { position:relative; z-index:2; padding:2rem; }
+
+        .logo-house {
+            width:120px; height:auto; margin:0 auto 1.5rem; display:block;
+            animation: logoFade 1.2s ease forwards;
+        }
+        @keyframes logoFade { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+        .splash-year {
+            font-family:var(--sans); font-weight:200; font-size:0.75rem;
+            letter-spacing:0.5em; opacity:0.6; margin-bottom:0.4rem;
+        }
+        .splash-name {
+            font-family:var(--serif); font-size:1.8rem; font-weight:400;
+            letter-spacing:0.12em; margin-bottom:0.15rem;
+        }
+        .splash-loc {
+            font-family:var(--sans); font-weight:200; font-size:0.7rem;
+            letter-spacing:0.35em; text-transform:uppercase; opacity:0.6;
+            margin-bottom:2rem;
+        }
+        .splash-divider {
+            width:40px; height:1px; background:rgba(255,255,255,0.25);
+            margin:0 auto 1.5rem;
+        }
+        .splash-tagline {
+            font-family:var(--serif); font-style:italic; font-size:0.95rem;
+            opacity:0.85; margin-bottom:0.3rem; line-height:1.5;
+        }
+        .splash-tagline-sub {
+            font-family:var(--sans); font-weight:200; font-size:0.7rem;
+            letter-spacing:0.2em; text-transform:uppercase; opacity:0.5;
+            margin-bottom:2.5rem;
+        }
+        .lang-row {
+            display:flex; gap:0.6rem; justify-content:center; margin-bottom:2rem;
+        }
+        .lang-btn {
+            background:transparent; border:1px solid rgba(255,255,255,0.3);
+            color:var(--blanco); padding:0.45rem 1.1rem;
+            font-family:var(--sans); font-size:0.75rem; font-weight:300;
+            letter-spacing:0.15em; cursor:pointer;
+            transition:all 0.3s; border-radius:2px;
+        }
+        .lang-btn.sel, .lang-btn:active {
+            background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.7);
+        }
+        .btn-start {
+            background:var(--blanco); color:var(--verde); border:none;
+            padding:0.95rem 2.8rem; font-family:var(--sans); font-size:0.78rem;
+            font-weight:400; letter-spacing:0.2em; text-transform:uppercase;
+            cursor:pointer; transition:all 0.3s; border-radius:2px;
+        }
+        .btn-start:active { transform:scale(0.97); }
+
+        /* Animations */
+        .fade-up {
+            animation: fadeUp 0.7s ease forwards;
+        }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .d1{animation-delay:0.15s;opacity:0} .d2{animation-delay:0.3s;opacity:0}
+        .d3{animation-delay:0.45s;opacity:0} .d4{animation-delay:0.6s;opacity:0}
+        .d5{animation-delay:0.75s;opacity:0}
+
+        /* === STOPS LIST === */
+        #list { background:var(--crema); }
+        .list-head {
+            background: linear-gradient(165deg, #007a6e 0%, #005a50 100%);
+            padding: calc(1.8rem + var(--safe-top)) 1.5rem 1.8rem;
+            color:var(--blanco); position:relative; overflow:hidden;
+        }
+        .list-head-inner { position:relative; z-index:2; }
+        .lh-year { font-weight:200; font-size:0.65rem; letter-spacing:0.45em; opacity:0.5; margin-bottom:0.3rem; }
+        .lh-title { font-family:var(--serif); font-size:1.35rem; font-weight:400; margin-bottom:0.25rem; }
+        .lh-sub { font-weight:200; font-size:0.72rem; letter-spacing:0.12em; opacity:0.65; }
+        .lh-leaf {
+            position:absolute; right:1.5rem; top:50%; transform:translateY(-50%);
+            opacity:0.12; z-index:1;
+        }
+
+        .cards-wrap {
+            flex:1; overflow-y:auto; padding:1.25rem 1.25rem calc(1.25rem + var(--safe-bottom));
+            -webkit-overflow-scrolling:touch;
+        }
+        .card {
+            background:var(--blanco); border-radius:3px; padding:1.15rem 1rem;
+            margin-bottom:0.85rem; display:flex; align-items:center; gap:0.9rem;
+            cursor:pointer; transition:all 0.3s ease;
+            box-shadow:0 1px 4px rgba(0,0,0,0.05);
+            border-left:3px solid transparent;
+        }
+        .card:active {
+            border-left-color:var(--verde); transform:translateX(3px);
+            box-shadow:0 2px 10px rgba(0,0,0,0.08);
+        }
+        .card-num {
+            width:38px; height:38px; min-width:38px;
+            background:var(--verde); color:var(--blanco);
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            font-family:var(--serif); font-size:1rem;
+        }
+        .card-body { flex:1; }
+        .card-title { font-family:var(--serif); font-size:0.92rem; margin-bottom:0.15rem; color:var(--antracita); }
+        .card-desc { font-size:0.72rem; font-weight:300; color:var(--antracita-soft); line-height:1.4; }
+        .card-meta { font-size:0.65rem; font-weight:300; color:var(--verde); letter-spacing:0.03em; white-space:nowrap; }
+        .card-chevron { color:var(--verde-50); font-size:1.1rem; font-weight:300; }
+
+        /* === STOP DETAIL === */
+        #detail { background:var(--crema); }
+        .det-head {
+            background: linear-gradient(165deg, #007a6e 0%, #005a50 100%);
+            padding: calc(1rem + var(--safe-top)) 1rem 1rem;
+            color:var(--blanco); display:flex; align-items:center; gap:0.8rem;
+            position:relative; overflow:hidden;
+        }
+        .det-head-inner { position:relative; z-index:2; display:flex; align-items:center; gap:0.8rem; width:100%; }
+        .btn-back {
+            background:none; border:none; color:var(--blanco);
+            font-size:1.4rem; cursor:pointer; padding:0.4rem 0.6rem;
+            line-height:1; border-radius:4px; transition:background 0.2s;
+        }
+        .btn-back:active { background:rgba(255,255,255,0.1); }
+        .det-head-text { flex:1; }
+        .det-num { font-size:0.62rem; font-weight:300; letter-spacing:0.15em; opacity:0.65; }
+        .det-ttl { font-family:var(--serif); font-size:1.05rem; font-weight:400; }
+
+        .det-body {
+            flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch;
+            padding-bottom: var(--safe-bottom);
+        }
+
+        .det-hero {
+            padding:2rem 1.5rem 1.5rem; text-align:center;
+            position:relative;
+        }
+        .det-hero-icon { font-size:2.2rem; margin-bottom:0.6rem; }
+        .det-hero-title { font-family:var(--serif); font-size:1.45rem; color:var(--verde); margin-bottom:0.2rem; }
+        .det-hero-sub { font-family:var(--serif); font-style:italic; font-size:0.88rem; color:var(--antracita-soft); }
+
+        /* Player */
+        .player {
+            margin:0 1.25rem 1rem; padding:1.2rem 1.25rem;
+            background:var(--blanco); border-radius:4px;
+            box-shadow:0 1px 5px rgba(0,0,0,0.05);
+        }
+        .player-row { display:flex; align-items:center; gap:0.9rem; }
+        .btn-play {
+            width:46px; height:46px; min-width:46px;
+            background:var(--verde); border:none; border-radius:50%;
+            color:var(--blanco); font-size:0.9rem; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:transform 0.15s; position:relative;
+        }
+        .btn-play:active { transform:scale(0.93); }
+        .btn-play svg { width:18px; height:18px; fill:var(--blanco); }
+        .player-track { flex:1; }
+        .prog-bar {
+            width:100%; height:3px; background:var(--crema-dark);
+            border-radius:2px; margin-bottom:0.45rem; cursor:pointer;
+            position:relative; overflow:visible;
+        }
+        .prog-fill {
+            height:100%; background:var(--verde); border-radius:2px;
+            width:0%; transition:width 0.15s linear; position:relative;
+        }
+        .prog-fill::after {
+            content:''; position:absolute; right:-5px; top:-4px;
+            width:11px; height:11px; background:var(--verde);
+            border-radius:50%; box-shadow:0 0 0 3px rgba(0,109,98,0.15);
+        }
+        .player-times {
+            display:flex; justify-content:space-between;
+            font-size:0.65rem; font-weight:300; color:var(--antracita-soft);
+        }
+        .player-hint {
+            text-align:center; font-size:0.7rem; font-weight:300;
+            color:var(--verde-75); margin-top:0.8rem; font-style:italic;
+        }
+
+        /* Content text */
+        .det-content {
+            padding:0 1.5rem 1rem; line-height:1.85; font-weight:300;
+            font-size:0.88rem; color:var(--antracita-soft);
+        }
+        .det-content p { margin-bottom:1rem; }
+        .tone-badge {
+            display:inline-block; font-style:italic; color:var(--verde);
+            font-size:0.75rem; padding:0.4rem 0; margin-bottom:0.8rem;
+            border-bottom:1px solid var(--verde-20);
+        }
+
+        /* Nav */
+        .det-nav {
+            padding:0.5rem 1.25rem calc(1.5rem + var(--safe-bottom));
+            display:flex; gap:0.65rem;
+        }
+        .btn-nav {
+            flex:1; padding:0.85rem 0.5rem; border:1px solid var(--verde);
+            background:transparent; color:var(--verde);
+            font-family:var(--sans); font-size:0.73rem; font-weight:400;
+            letter-spacing:0.08em; cursor:pointer; transition:all 0.2s;
+            text-align:center; border-radius:2px;
+        }
+        .btn-nav.primary { background:var(--verde); color:var(--blanco); }
+        .btn-nav:active { transform:scale(0.97); }
+
+        /* === FINAL === */
+        #final {
+            background:var(--crema); justify-content:center; align-items:center;
+            text-align:center; padding:2rem; position:relative; overflow:hidden;
+        }
+        .final-inner { position:relative; z-index:2; }
+        .final-leaf { font-size:2.5rem; margin-bottom:1.2rem; }
+        .final-title { font-family:var(--serif); font-size:1.6rem; color:var(--verde); margin-bottom:0.4rem; }
+        .final-text {
+            font-weight:300; font-size:0.88rem; line-height:1.8;
+            color:var(--antracita-soft); margin-bottom:2rem; max-width:320px;
+        }
+        .final-links { display:flex; flex-direction:column; gap:0.7rem; width:100%; max-width:280px; }
+        .final-link {
+            display:block; padding:0.85rem; border:1px solid var(--verde);
+            color:var(--verde); text-decoration:none; font-family:var(--sans);
+            font-size:0.73rem; font-weight:400; letter-spacing:0.12em;
+            text-transform:uppercase; transition:all 0.2s; border-radius:2px;
+            cursor:pointer; background:none; text-align:center;
+        }
+        .final-link.primary { background:var(--verde); color:var(--blanco); }
+        .final-link:active { transform:scale(0.97); }
+
+        /* === SUN MODE === */
+        .sun-btn {
+            position:fixed; bottom:calc(0.8rem + var(--safe-bottom)); right:0.8rem;
+            width:38px; height:38px; border-radius:50%;
+            background:var(--dorado); border:none; color:var(--blanco);
+            font-size:1rem; cursor:pointer; z-index:100;
+            box-shadow:0 2px 10px rgba(0,0,0,0.15);
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.3s;
+        }
+        .sun-btn:active { transform:scale(0.88); }
+        body.sun-mode {
+            --crema:#FFFFFF; --crema-dark:#F0F0F0;
+            --antracita:#000000; --antracita-soft:#1a1a1a;
+        }
+        body.sun-mode .sun-btn { background:var(--antracita); }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width:3px; }
+        ::-webkit-scrollbar-track { background:transparent; }
+        ::-webkit-scrollbar-thumb { background:var(--verde-50); border-radius:2px; }
+
+        /* === CARD ANIMATION === */
+        @keyframes cardIn {
+            from { opacity:0; transform:translateY(12px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<button class="sun-btn" onclick="document.body.classList.toggle('sun-mode')" title="Modo Sol">☀️</button>
+
+<!-- ======== SPLASH ======== -->
+<section id="splash" class="screen active">
+    <div class="bg-lines"></div>
+    <div class="content">
+        <svg class="logo-house" viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="dl" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
+                    <line x1="0" y1="0" x2="0" y2="5" stroke="rgba(255,255,255,0.85)" stroke-width="1.2"/>
+                </pattern>
+                <clipPath id="hc">
+                    <path d="M90 8 L168 55 L168 130 L12 130 L12 55 Z"/>
+                    <rect x="78" y="2" width="12" height="18" rx="1"/>
+                </clipPath>
+            </defs>
+            <rect clip-path="url(#hc)" fill="url(#dl)" x="0" y="0" width="180" height="140"/>
+            <g stroke="rgba(255,255,255,0.85)" stroke-width="1.2" fill="none">
+                <rect x="35" y="72" width="22" height="32" rx="1.5"/>
+                <line x1="46" y1="72" x2="46" y2="104"/>
+                <line x1="35" y1="88" x2="57" y2="88"/>
+                <rect x="79" y="72" width="22" height="32" rx="1.5"/>
+                <line x1="90" y1="72" x2="90" y2="104"/>
+                <line x1="79" y1="88" x2="101" y2="88"/>
+                <rect x="123" y="72" width="22" height="32" rx="1.5"/>
+                <line x1="134" y1="72" x2="134" y2="104"/>
+                <line x1="123" y1="88" x2="145" y2="88"/>
+            </g>
+            <text x="90" y="148" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="'Josefin Sans',sans-serif" font-size="10" font-weight="200" letter-spacing="6">1 9 1 8</text>
+        </svg>
+
+        <div class="splash-name fade-up d1">SANT PATRICI</div>
+        <div class="splash-loc fade-up d1">M E N O R C A</div>
+        <div class="splash-divider fade-up d2"></div>
+        <div class="splash-tagline fade-up d2">AudioVisita Guiada</div>
+        <div class="splash-tagline-sub fade-up d3">El Alma de Sant Patrici</div>
+
+        <div class="lang-row fade-up d4">
+            <button class="lang-btn sel" onclick="pickLang(this)">ES</button>
+            <button class="lang-btn" onclick="pickLang(this)">CAT</button>
+            <button class="lang-btn" onclick="pickLang(this)">EN</button>
+        </div>
+        <button class="btn-start fade-up d5" onclick="go('list')">Comenzar Visita</button>
+    </div>
+</section>
+
+<!-- ======== STOPS LIST ======== -->
+<section id="list" class="screen">
+    <div class="list-head">
+        <div class="bg-lines"></div>
+        <svg class="lh-leaf" width="80" height="120" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 110 C40 110 10 80 10 50 C10 20 40 5 40 5 C40 5 70 20 70 50 C70 80 40 110 40 110Z" stroke="white" stroke-width="1" fill="none"/>
+            <line x1="40" y1="110" x2="40" y2="5" stroke="white" stroke-width="0.8"/>
+            <path d="M40 85 C30 75 18 65 15 55" stroke="white" stroke-width="0.6" fill="none"/>
+            <path d="M40 70 C50 60 60 50 63 42" stroke="white" stroke-width="0.6" fill="none"/>
+            <path d="M40 55 C32 48 22 40 20 34" stroke="white" stroke-width="0.6" fill="none"/>
+        </svg>
+        <div class="list-head-inner">
+            <div class="lh-year">1 9 1 8</div>
+            <h1 class="lh-title">Tu Recorrido</h1>
+            <p class="lh-sub">7 paradas · aproximadamente 60 min</p>
+        </div>
+    </div>
+    <div class="cards-wrap" id="cards-wrap"></div>
+</section>
+
+<!-- ======== STOP DETAIL ======== -->
+<section id="detail" class="screen">
+    <div class="det-head">
+        <div class="bg-lines"></div>
+        <div class="det-head-inner">
+            <button class="btn-back" onclick="go('list')">‹</button>
+            <div class="det-head-text">
+                <div class="det-num" id="dNum"></div>
+                <div class="det-ttl" id="dTtl"></div>
+            </div>
+        </div>
+    </div>
+    <div class="det-body" id="dBody"></div>
+</section>
+
+<!-- ======== FINAL ======== -->
+<section id="final" class="screen">
+    <div class="bg-lines-dark"></div>
+    <div class="final-inner">
+        <div class="final-leaf">🌿</div>
+        <h2 class="final-title">Gràcies</h2>
+        <div class="ornament" style="margin-bottom:1rem"><div class="ornament-dot"></div></div>
+        <p class="final-text">
+            Gracias de corazón por habernos acompañado, por escuchar la historia de Fernando y Xini, y por compartir nuestra pasión por lo que hacemos.<br><br>
+            <em style="color:var(--verde)">Sant Patrici es su casa.</em><br>¡Buen viaje y hasta pronto!
+        </p>
+        <div class="final-links">
+            <a href="https://santpatrici.com" class="final-link primary" target="_blank" rel="noopener">Visitar Tienda Online</a>
+            <a href="tel:+34971713716" class="final-link">Llamar · +34 971 713 716</a>
+            <button class="final-link" onclick="go('list')">Volver al Recorrido</button>
+        </div>
+    </div>
+</section>
+
+<script>
+// ===== DATA =====
+const stops=[
+{id:1,icon:"🏛️",title:"El Umbral del Tiempo",sub:"Bienvenidos a la Esencia de Menorca",dur:"4 min",desc:"Introducción y bienvenida a la finca",tone:"Cálido, acogedor e intrigante",
+text:`<p>Bienvenidos a Sant Patrici. Deténganse un momento y respiren el aire de este lugar. Aquí, cada piedra, cada hoja de vid y cada rincón tiene un secreto que contarnos.</p>
+<p>Hoy vamos a hacer algo más que visitar una quesería o una bodega. Vamos a caminar sobre las huellas de antiguos soñadores, vamos a entender por qué la tierra de Menorca sabe cómo sabe, y terminaremos celebrando la vida con una copa de vino y el sabor de nuestro queso.</p>
+<p>Mientras caminamos, quiero que sepan que pisamos un suelo cargado de memoria. Aquí vivieron pasiones, lujos y decadencias. Pero también es un lugar de renacimiento, donde el pasado de Fernando y Virginia se da la mano con el presente de un hotel exclusivo y una producción agrícola que respeta el alma de la isla.</p>
+<p>¿Me acompañan a descubrirlo?</p>`},
+
+{id:2,icon:"💕",title:"Amor, Arte y Decadencia",sub:"La Leyenda de Fernando y Xini",dur:"8 min",desc:"La historia romántica de los fundadores",tone:"Misterioso, romántico y ligeramente dramático",
+text:`<p>Estamos frente a la entrada principal, el escenario perfecto para viajar a 1917. Imaginen a un hombre, Fernando Vives. Un industrial visionario, hijo ilustre de Mahón, amante de las monedas antiguas, el arte árabe y la pastelería. Un hombre casado, pero cuyo corazón latía por otra mujer.</p>
+<p>Fernando compró esta finca por 225 pesetas buscando un refugio. En 1918 levantó la casa de s'Hort de Sant Patrici para vivir su "retiro" junto a su gran amor: Virginia López, a la que todos llamaban "Xini".</p>
+<p>Xini no era una mujer común. Hija de una familia numerosa de Valladolid, rompió con todo por Fernando. Era de una belleza arrebatadora y un carácter indomable. Dicen que siempre vestía elegante, cargada de joyas y, algo inaudito para el campo, jamás se quitaba sus tacones.</p>
+<p>Vivieron años dorados aquí. Imaginen este patio con estatuas de mármol de las cuatro estaciones, fiestas interminables, sábanas de seda y a Xini llevando sus famosos pastissets al horno del pueblo, caminando erguida con la bandeja en la cabeza. Fernando la pintaba en el porche mientras el mundo giraba a su alrededor. Vivían un sueño, aislados de una familia que les dio la espalda.</p>
+<p>Pero los sueños a veces se rompen. Fernando murió de tuberculosis, y aunque dejó la casa a Xini, el dinero fue para su esposa oficial.</p>
+<p>Aquí comenzó la leyenda negra de la finca. Xini, sola y sin recursos, se recluyó. Despidió al servicio y llenó este jardín de elegancia con cerdos, gallinas y vacas. Imaginen la escena: las vacas rascándose contra las estatuas de mármol, comiéndose las flores… y en medio de todo, Xini, ordeñando y recogiendo huevos, todavía con sus joyas y sus eternos tacones.</p>
+<p>La pobreza la obligó a robar hortalizas a los vecinos para sobrevivir, pero nunca perdió su altivez. Murió en 1966. Su hermano, al heredar, vendió lo valioso y quemó el resto, cerrando un capítulo de fuego y ceniza.</p>
+<p>La finca durmió hasta los años 70, cuando la familia Casals la despertó, recuperando la tradición que hoy, convertida en hotel y finca productiva, mantiene viva la memoria de aquellos amantes.</p>`},
+
+{id:3,icon:"🍇",title:"Raíces en el Viento",sub:"El Renacer del Vino Menorquín",dur:"6 min",desc:"Los viñedos y la tradición vinícola",tone:"Épico y conectado con la naturaleza",
+text:`<p>Dejemos atrás los fantasmas del pasado y miremos a la tierra fértil. En 2002, Sant Patrici decidió que era hora de que el vino volviera a correr por estas tierras.</p>
+<p>Plantamos Merlot, Cabernet Sauvignon, Syrah, Chardonnay y Moscatel. ¿Por qué estas uvas? Porque son unas supervivientes que aman nuestro clima. Aquí, la brisa del mar y el sol intenso crean una alquimia especial, logrando ese equilibrio perfecto entre acidez y dulzura.</p>
+<p>Pero no inventamos nada nuevo; recuperamos una memoria antigua. Menorca fue tierra de vinos desde los romanos. En el siglo XVIII, bajo el dominio británico, la isla era un viñedo flotante. La Royal Navy y el comercio hicieron que la producción se disparara. El puerto de Mahón exportaba millones de litros.</p>
+<p>Sin embargo, a finales del siglo XIX, la plaga de la filoxera arrasó con todo, silenciando nuestros viñedos durante décadas. No fue hasta los años 80 cuando la isla despertó de ese letargo. Hoy, con orgullo, formamos parte de ese renacimiento, avalados por el sello "Illa de Menorca", demostrando que esta tierra tiene mucho que decir en cada copa.</p>`},
+
+{id:4,icon:"🧀",title:"El Arte de las Manos Blancas",sub:"Secretos de la Quesería",dur:"7 min",desc:"La elaboración artesanal del queso",tone:"Artesanal, respetuoso con la tradición",
+text:`<p>Ahora, entremos en el corazón palpitante de la finca: nuestra quesería. Aquí el tiempo se mide en texturas y aromas.</p>
+<p>Si vinieran por la mañana, verían un espectáculo casi hipnótico tras los cristales: nuestros maestros queseros moldeando a mano, una a una, cada pieza. Usamos el método ancestral: el paño de algodón o <em>fogasser</em>, el cordel o <em>lligam</em>, y la fuerza de las manos para prensar.</p>
+<p>¿Ven ese dibujo en la parte superior del queso? Le llamamos <em>"mamella"</em>. No es un adorno, es la huella que deja el paño al atarse, la firma de que ese queso se hizo a la antigua usanza.</p>
+<p>El queso aquí tiene vida propia y evoluciona: el <strong>Fresco</strong>, blanco y suave, casi dulce, perfecto para deportistas. El <strong>Semicurado</strong>, con su color marfil y ese sabor a mantequilla y avellana tostada, protegido con Denominación de Origen. Y el <strong>Curado</strong>, el sabio de la familia: firme, quebradizo, con sabores complejos a madera y cuero, y ese picante final que emociona al paladar.</p>
+<p>Al terminar, les invito a perderse en nuestro pequeño museo. Allí verán las prensas de madera y los utensilios que usaban nuestros abuelos, testigos mudos de un oficio que nos negamos a olvidar.</p>`},
+
+{id:5,icon:"🍷",title:"Alquimia en la Bodega",sub:"De la Uva a la Copa",dur:"7 min",desc:"El proceso de vinificación",tone:"Técnico pero accesible, casi mágico",
+text:`<p>Del mundo lácteo pasamos al templo del vino. Al entrar en la bodega, notarán el cambio de atmósfera. Aquí se unen la tradición y la tecnología moderna.</p>
+<p>Hacer vino es una carrera contra el tiempo. La vendimia es el momento crítico: hay que recoger la uva cuando el azúcar y la piel están en perfecta armonía. En Menorca, el calor acelera todo, así que debemos ser rápidos y precisos.</p>
+<p>Nuestra bodega es pequeña, pero es un reloj suizo. Primero, despalillamos la uva —quitamos la rama— para evitar sabores amargos. Luego, fermentamos a baja temperatura, unos 14 ºC, mucho más frío de lo habitual. ¿Por qué? Porque queremos una fermentación lenta, como un guiso a fuego lento, para extraer la máxima elegancia y aroma.</p>
+<p>Después, el vino necesita dormir. Pasa a nuestra zona de "dormitorio", donde descansa en barricas de roble francés y americano. Allí ocurre la magia: el vino respira a través de la madera, se oxida suavemente, se redondea y gana esos matices a vainilla y especias. Y finalmente, la botella, donde termina de pulirse en silencio antes de llegar a su mesa.</p>`},
+
+{id:6,icon:"🥂",title:"La Danza de los Sentidos",sub:"El Maridaje Perfecto",dur:"5 min",desc:"Cata de vinos y quesos",tone:"Sensorial, placentero, clímax de la visita",
+text:`<p>Y ahora, el momento que todos esperaban. Hemos hablado de historia, de tierra y de esfuerzo. Es hora de probarlo.</p>
+<p>Bienvenidos a nuestra sala de cata. Aquí vamos a presenciar un diálogo entre dos viejos amigos: el queso y el vino. Hemos diseñado este maridaje para que descubran cómo se potencian mutuamente.</p>
+<p>No beban ni coman con prisa. Dejen que el vino limpie su paladar, que la grasa del queso abrace la acidez del vino. Busquen las notas de madera, la mantequilla, la fruta… Es una danza de sabores que cuenta la historia de Menorca mejor que cualquier libro.</p>
+<p>Relájense y disfruten, este momento es suyo.</p>`},
+
+{id:7,icon:"🎁",title:"Un Pedazo de Menorca",sub:"Para el Recuerdo",dur:"3 min",desc:"Tienda-museo y despedida",tone:"Agradecido y cordial",
+text:`<p>Todo viaje tiene un final, pero los recuerdos pueden durar para siempre. Al salir, pasarán por nuestra tienda-museo.</p>
+<p>Más que una tienda, es un homenaje a nuestra isla. Allí encontrarán los vinos y quesos que han probado, pero también mieles, embutidos y artesanías de otras fincas vecinas. Si quieren llevarse un pedazo de la esencia de Menorca a casa, o hacer un regalo con alma, este es el lugar.</p>
+<p>Gracias de corazón por habernos acompañado, por escuchar la historia de Fernando y Xini, y por compartir nuestra pasión por lo que hacemos. Sant Patrici es su casa. ¡Buen viaje y hasta pronto!</p>`}
+];
+
+// ===== NAVIGATION =====
+let curAudio=null, curStopIdx=0;
+
+function go(id){
+    if(curAudio){curAudio.pause();curAudio=null;}
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if(id==='list') buildCards();
+}
+
+function pickLang(btn){
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('sel'));
+    btn.classList.add('sel');
+}
+
+// ===== CARDS =====
+function buildCards(){
+    const w=document.getElementById('cards-wrap');
+    w.innerHTML=stops.map((s,i)=>`
+        <div class="card" onclick="openStop(${i})" style="animation:cardIn 0.45s ease ${i*0.06}s forwards;opacity:0">
+            <div class="card-num">${s.id}</div>
+            <div class="card-body">
+                <div class="card-title">${s.title}</div>
+                <div class="card-desc">${s.desc}</div>
+            </div>
+            <div class="card-meta">${s.dur}</div>
+            <div class="card-chevron">›</div>
+        </div>`).join('');
+}
+
+// ===== STOP DETAIL =====
+function openStop(i){
+    curStopIdx=i;
+    const s=stops[i];
+    document.getElementById('dNum').textContent=`PARADA ${s.id} DE 7`;
+    document.getElementById('dTtl').textContent=s.title;
+
+    const b=document.getElementById('dBody');
+    b.scrollTop=0;
+
+    const playIcon=`<svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>`;
+    const pauseIcon=`<svg viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>`;
+
+    let navHTML='<div class="det-nav">';
+    if(i>0) navHTML+=`<button class="btn-nav" onclick="openStop(${i-1})">‹ Anterior</button>`;
+    if(i<stops.length-1) navHTML+=`<button class="btn-nav primary" onclick="openStop(${i+1})">Siguiente ›</button>`;
+    else navHTML+=`<button class="btn-nav primary" onclick="go('final')">Finalizar ✦</button>`;
+    navHTML+='</div>';
+
+    b.innerHTML=`
+        <div class="det-hero">
+            <div class="det-hero-icon">${s.icon}</div>
+            <h3 class="det-hero-title">${s.title}</h3>
+            <p class="det-hero-sub">${s.sub}</p>
+        </div>
+
+        <div class="player">
+            <div class="player-row">
+                <button class="btn-play" id="bp${s.id}" onclick="togglePlay(${s.id})" data-play='${playIcon}' data-pause='${pauseIcon}'>
+                    ${playIcon}
+                </button>
+                <div class="player-track">
+                    <div class="prog-bar" id="pb${s.id}" onclick="seek(event,${s.id})">
+                        <div class="prog-fill" id="pf${s.id}"></div>
+                    </div>
+                    <div class="player-times">
+                        <span id="tc${s.id}">0:00</span>
+                        <span id="tt${s.id}">${s.dur}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="player-hint">🎧 Usa auriculares para la mejor experiencia</div>
+            <audio id="au${s.id}" preload="none">
+                <!-- <source src="audio/parada-${s.id}.mp3" type="audio/mpeg"> -->
+            </audio>
+        </div>
+
+        <div class="det-content">
+            <div class="tone-badge">✦ ${s.tone}</div>
+            ${s.text}
+        </div>
+
+        <div class="ornament"><div class="ornament-dot"></div></div>
+        ${navHTML}
+    `;
+    go('detail');
+    document.getElementById('detail').classList.add('active');
+}
+
+// ===== AUDIO =====
+function togglePlay(id){
+    const au=document.getElementById('au'+id);
+    const btn=document.getElementById('bp'+id);
+    const playIcon=btn.getAttribute('data-play');
+    const pauseIcon=btn.getAttribute('data-pause');
+
+    if(!au.querySelector('source') && !au.src){
+        // No audio: flash a subtle indicator
+        btn.style.opacity='0.5';
+        setTimeout(()=>{btn.style.opacity='1'},800);
+        return;
+    }
+    if(au.paused){
+        if(curAudio&&curAudio!==au){curAudio.pause();}
+        au.play(); curAudio=au;
+        btn.innerHTML=pauseIcon;
+        tick(id);
+    } else {
+        au.pause();
+        btn.innerHTML=playIcon;
+    }
+}
+
+function tick(id){
+    const au=document.getElementById('au'+id);
+    const fill=document.getElementById('pf'+id);
+    const tc=document.getElementById('tc'+id);
+    if(au&&!au.paused){
+        const p=(au.currentTime/au.duration)*100;
+        fill.style.width=p+'%';
+        tc.textContent=fmt(au.currentTime);
+        requestAnimationFrame(()=>tick(id));
+    }
+}
+
+function seek(e,id){
+    const au=document.getElementById('au'+id);
+    const bar=document.getElementById('pb'+id);
+    const r=bar.getBoundingClientRect();
+    const pct=(e.clientX-r.left)/r.width;
+    if(au.duration) au.currentTime=pct*au.duration;
+}
+
+function fmt(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+
+// ===== INIT =====
+buildCards();
+</script>
+</body>
+</html>
