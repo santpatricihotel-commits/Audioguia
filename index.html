@@ -3,67 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Sant Patrici · Audioguía</title>
+<title>Sant Patrici · Experiencia Inmersiva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--verde:#0C7B6B;--verde-oscuro:#095C50;--dorado:#C8A951;--crema:#FAF8F3;--texto:#2D2D2D;--gris:#8A8A8A;--radius:16px}
-body{font-family:'Montserrat',sans-serif;background:var(--crema);color:var(--texto);min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,h3{font-family:'Cormorant Garamond',serif}
+/* ===== FONT ELYSIAN ===== */
+@font-face {
+  font-family: 'Elysian';
+  src: url('fonts/Elysian-Regular.woff2') format('woff2'),
+       url('fonts/Elysian-Regular.woff') format('woff'),
+       url('fonts/Elysian-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Elysian';
+  src: url('fonts/Elysian-Bold.woff2') format('woff2'),
+       url('fonts/Elysian-Bold.woff') format('woff'),
+       url('fonts/Elysian-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
-/* ===== WELCOME ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --verde:#0C7B6B;
+  --verde-oscuro:#095C50;
+  --verde-brand:#0a7c6a;
+  --dorado:#C8A951;
+  --crema:#FAF8F3;
+  --texto:#2D2D2D;
+  --gris:#8A8A8A;
+  --radius:16px;
+}
+body{font-family:'Montserrat',sans-serif;background:var(--crema);color:var(--texto);min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',serif}
+
+/* ===== SCREENS ===== */
 .screen{display:none;min-height:100vh;min-height:100dvh}
 .screen.active{display:flex;flex-direction:column}
-#welcome{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden}
-#welcome::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px)}
-.welcome-icon{width:60px;height:60px;border:2px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:1.5rem}
-#welcome h1{font-size:2.4rem;font-weight:700;letter-spacing:2px;margin-bottom:.25rem}
-#welcome .sub{font-size:.75rem;letter-spacing:4px;opacity:.7;margin-bottom:2.5rem;font-weight:400}
-.lang-selector{display:flex;gap:.6rem;margin-bottom:2.5rem;flex-wrap:wrap;justify-content:center}
-.lang-btn{padding:.55rem 1.1rem;border:1.5px solid rgba(255,255,255,.5);border-radius:8px;background:transparent;color:#fff;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;letter-spacing:1px;transition:all .3s}
-.lang-btn:hover,.lang-btn.active{background:#fff;color:var(--verde);border-color:#fff}
-.start-btn{background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:3px;cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;z-index:1}
+
+/* ===== WELCOME ===== */
+#welcome{
+  background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);
+  color:#fff;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:2rem 1.5rem;
+  position:relative;
+  overflow:hidden;
+}
+#welcome::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);
+  pointer-events:none; /* ← FIX: permite clicks a través */
+}
+
+.welcome-logo{
+  width:180px;
+  height:auto;
+  margin-bottom:1.8rem;
+  position:relative;
+  z-index:1;
+  filter:brightness(0) invert(1); /* fuerza blanco si el logo no es blanco */
+}
+/* Si tu logo YA es blanco sobre transparente, quita el filter */
+
+#welcome .subtitle{
+  font-family:'Montserrat',sans-serif;
+  font-size:.7rem;
+  letter-spacing:5px;
+  opacity:.7;
+  margin-bottom:2.5rem;
+  font-weight:400;
+  position:relative;
+  z-index:1;
+}
+.lang-selector{
+  display:flex;
+  gap:.5rem;
+  margin-bottom:2.5rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  position:relative;
+  z-index:1;
+}
+.lang-btn{
+  padding:.55rem 1rem;
+  border:1.5px solid rgba(255,255,255,.45);
+  border-radius:8px;
+  background:transparent;
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  font-size:.78rem;
+  font-weight:600;
+  cursor:pointer;
+  letter-spacing:1px;
+  transition:all .25s;
+  -webkit-tap-highlight-color:transparent;
+}
+.lang-btn:hover,.lang-btn.active{
+  background:#fff;
+  color:var(--verde);
+  border-color:#fff;
+}
+.start-btn{
+  background:#fff;
+  color:var(--verde);
+  border:none;
+  padding:1rem 2.5rem;
+  border-radius:50px;
+  font-family:'Montserrat',sans-serif;
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:3px;
+  cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;
+  z-index:1;
+}
 .start-btn:active{transform:scale(.97)}
 
 /* ===== STOP LIST ===== */
 #stoplist{background:var(--crema)}
-.list-header{background:var(--verde);color:#fff;padding:1.5rem 1.5rem 2rem;text-align:center;border-radius:0 0 24px 24px}
-.list-header h2{font-size:1.6rem;margin-bottom:.2rem}
-.list-header .sub{font-size:.7rem;letter-spacing:3px;opacity:.7}
-.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
-.header-lang{font-size:.65rem;background:rgba(255,255,255,.15);padding:.3rem .7rem;border-radius:20px;cursor:pointer;border:1px solid rgba(255,255,255,.3);color:#fff;font-family:'Montserrat',sans-serif;letter-spacing:1px}
+.list-header{
+  background:var(--verde);
+  color:#fff;
+  padding:1.2rem 1.5rem 2rem;
+  text-align:center;
+  border-radius:0 0 24px 24px;
+}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.header-lang{
+  font-size:.65rem;
+  background:rgba(255,255,255,.12);
+  padding:.35rem .8rem;
+  border-radius:20px;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  letter-spacing:1px;
+  transition:background .2s;
+}
+.header-lang:active{background:rgba(255,255,255,.2)}
+.list-logo{height:50px;width:auto;filter:brightness(0) invert(1)}
+.list-header h2{font-size:1.5rem;margin-bottom:.15rem;letter-spacing:2px}
+.list-header .sub{font-size:.65rem;letter-spacing:3px;opacity:.7}
 .stops-container{padding:1rem 1.2rem 2rem}
-.stop-card{display:flex;align-items:center;background:#fff;border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.75rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.stop-card:active{transform:scale(.98)}
-.stop-num{width:44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;margin-right:1rem}
+.stop-card{
+  display:flex;align-items:center;background:#fff;border-radius:var(--radius);
+  padding:1rem 1.2rem;margin-bottom:.75rem;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.05);
+  -webkit-tap-highlight-color:transparent;
+}
+.stop-card:active{transform:scale(.98);box-shadow:0 2px 12px rgba(0,0,0,.1)}
+.stop-num{
+  width:44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;
+  flex-shrink:0;margin-right:1rem;
+}
 .stop-num.sub{font-size:.75rem;background:var(--dorado)}
 .stop-info{flex:1}
 .stop-cat{font-size:.6rem;letter-spacing:2px;color:var(--gris);font-weight:600;margin-bottom:.15rem}
-.stop-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;font-style:italic;color:var(--texto)}
-.stop-arrow{color:var(--verde);font-size:1.2rem;margin-left:.5rem}
+.stop-title{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--texto)}
+.stop-arrow{color:var(--verde);font-size:1.2rem;margin-left:.5rem;opacity:.5}
 
 /* ===== STOP DETAIL ===== */
 #detail{background:var(--crema)}
-.detail-header{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;padding:1.2rem 1.5rem 2.5rem;text-align:center;position:relative;border-radius:0 0 24px 24px}
-.detail-header::before{content:'';position:absolute;inset:0;border-radius:0 0 24px 24px;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.02) 10px,rgba(255,255,255,.02) 20px)}
+.detail-header{
+  background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);
+  color:#fff;padding:1.2rem 1.5rem 2.5rem;text-align:center;
+  position:relative;border-radius:0 0 24px 24px;
+}
+.detail-header::before{
+  content:'';position:absolute;inset:0;border-radius:0 0 24px 24px;
+  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.02) 10px,rgba(255,255,255,.02) 20px);
+  pointer-events:none;
+}
 .detail-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;position:relative;z-index:1}
-.back-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.back-btn{
+  width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);
+  background:transparent;color:#fff;font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .2s;
+}
 .back-btn:active{background:rgba(255,255,255,.1)}
-.detail-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;letter-spacing:1px}
-.detail-header .num{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;font-size:1.2rem;font-weight:700;position:relative;z-index:1}
+.detail-logo{height:28px;width:auto;filter:brightness(0) invert(1);position:relative;z-index:1}
+.detail-header .num{
+  width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;
+  font-size:1.2rem;font-weight:700;position:relative;z-index:1;
+  font-family:'Montserrat',sans-serif;
+}
 .detail-header .cat{font-size:.65rem;letter-spacing:3px;opacity:.7;margin-bottom:.3rem;position:relative;z-index:1}
-.detail-header h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;font-style:italic;line-height:1.3;position:relative;z-index:1}
+.detail-header h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;line-height:1.3;position:relative;z-index:1}
 .detail-body{padding:1.2rem}
 
 /* Player */
 .player-card{background:#fff;border-radius:var(--radius);padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:1rem}
 .player-controls{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-bottom:1rem}
-.ctrl-btn{width:42px;height:42px;border-radius:50%;border:none;background:transparent;color:var(--gris);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ctrl-btn{
+  width:42px;height:42px;border-radius:50%;border:none;background:transparent;
+  color:var(--gris);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;transition:background .2s;
+}
 .ctrl-btn:active{background:rgba(0,0,0,.05)}
-.play-btn{width:64px;height:64px;border-radius:50%;border:none;background:var(--verde);color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.play-btn{
+  width:64px;height:64px;border-radius:50%;border:none;background:var(--verde);
+  color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;transition:transform .15s;
+}
 .play-btn:active{transform:scale(.93)}
-.speed-btn{font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;color:var(--verde);border:1.5px solid var(--verde);width:auto;padding:0 .7rem}
+.speed-btn{
+  font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;
+  color:var(--verde);border:1.5px solid var(--verde);width:auto;padding:0 .7rem;
+}
 .progress-wrap{display:flex;align-items:center;gap:.6rem}
 .progress-time{font-size:.7rem;color:var(--gris);min-width:32px;font-variant-numeric:tabular-nums}
 .progress-bar{flex:1;height:4px;background:#e8e8e8;border-radius:4px;overflow:hidden;cursor:pointer;position:relative}
@@ -73,55 +230,81 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
 .audio-error b{color:var(--verde)}
 
 /* Transcription */
-.transcription-toggle{width:100%;background:none;border:none;border-top:1px solid #eee;padding:1rem 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:2px;color:var(--gris)}
+.transcription-toggle{
+  width:100%;background:none;border:none;border-top:1px solid #eee;
+  padding:1rem 0;display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;
+  font-weight:600;letter-spacing:2px;color:var(--gris);
+}
 .transcription-toggle .arrow{transition:transform .3s}
 .transcription-toggle.open .arrow{transform:rotate(180deg)}
-.transcription-text{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:.85rem;line-height:1.7;color:#555}
-.transcription-text.open{max-height:2000px}
+.transcription-text{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:.85rem;line-height:1.8;color:#555}
+.transcription-text.open{max-height:3000px}
 .transcription-inner{padding:.5rem 0 1rem}
 
 /* Next button */
-.next-btn{display:flex;align-items:center;justify-content:center;width:100%;background:var(--verde);color:#fff;border:none;padding:1.1rem;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:.5rem;transition:background .2s;gap:.5rem}
+.next-btn{
+  display:flex;align-items:center;justify-content:center;width:100%;
+  background:var(--verde);color:#fff;border:none;padding:1.1rem;
+  border-radius:var(--radius);font-family:'Montserrat',sans-serif;
+  font-size:.78rem;font-weight:700;letter-spacing:2px;cursor:pointer;
+  margin-top:.5rem;transition:background .2s;gap:.5rem;
+}
 .next-btn:active{background:var(--verde-oscuro)}
 
 /* ===== END SCREEN ===== */
-#endscreen{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem}
-#endscreen h2{font-size:2rem;margin-bottom:1rem}
+#endscreen{
+  background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);
+  color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem;
+  position:relative;
+}
+#endscreen::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);
+  pointer-events:none;
+}
+#endscreen>div{position:relative;z-index:1}
+#endscreen h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem;font-weight:400}
 #endscreen p{opacity:.8;line-height:1.7;margin-bottom:2rem;max-width:320px}
-.restart-btn{background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;cursor:pointer}
+.restart-btn{
+  background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;
+  border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.8rem;
+  font-weight:700;letter-spacing:2px;cursor:pointer;
+}
 
 /* Animations */
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.fade-in{animation:fadeIn .4s ease}
+.fade-in{animation:fadeIn .4s ease both}
 </style>
 </head>
 <body>
 
+<!-- ===================== WELCOME ===================== -->
 <div id="welcome" class="screen active">
-  <div class="welcome-icon">📖</div>
-  <h1>SANT PATRICI</h1>
-  <p class="sub">AUDIOGUÍA · MENORCA</p>
+  <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="welcome-logo" id="welcomeLogo">
+  <p class="subtitle" id="welcomeSub">EXPERIENCIA INMERSIVA</p>
   <div class="lang-selector" id="langSelector"></div>
   <button class="start-btn" id="startBtn"></button>
 </div>
 
+<!-- ===================== STOP LIST ===================== -->
 <div id="stoplist" class="screen">
   <div class="list-header">
     <div class="header-top">
-      <span></span>
       <button class="header-lang" id="changeLangBtn"></button>
+      <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="list-logo">
     </div>
-    <h2>SANT PATRICI</h2>
     <p class="sub" id="listSub"></p>
   </div>
   <div class="stops-container" id="stopsContainer"></div>
 </div>
 
+<!-- ===================== STOP DETAIL ===================== -->
 <div id="detail" class="screen">
   <div class="detail-header">
     <div class="detail-top">
       <button class="back-btn" id="backBtn">←</button>
-      <span class="detail-logo">SANT PATRICI</span>
+      <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="detail-logo">
       <span style="width:40px"></span>
     </div>
     <div class="num" id="detailNum"></div>
@@ -143,7 +326,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
         <span class="progress-time" id="totalTime">0:00</span>
       </div>
       <div class="audio-error" id="audioError">
-        ⚠️ <span id="audioErrorMsg"></span>
+        <span id="audioErrorMsg"></span>
       </div>
     </div>
     <button class="transcription-toggle" id="transToggle">
@@ -157,6 +340,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
   </div>
 </div>
 
+<!-- ===================== END SCREEN ===================== -->
 <div id="endscreen" class="screen">
   <div>
     <div style="font-size:3rem;margin-bottom:1rem">🌅</div>
@@ -170,49 +354,77 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif}
 
 <script>
 // ============================================================
-//  TRANSLATIONS
+//  LANGUAGES & TRANSLATIONS
 // ============================================================
 const LANGS = ['es','cat','en','fr','de'];
-const LANG_LABELS = {es:'ES',cat:'CAT',en:'EN',fr:'FR',de:'DE'};
+const LANG_LABELS = {es:'ES', cat:'CAT', en:'EN', fr:'FR', de:'DE'};
 
 const UI = {
   es: {
-    subtitle:'AUDIOGUÍA · MENORCA', start:'COMENZAR VISITA',
-    readTrans:'LEER TRANSCRIPCIÓN', next:'SIGUIENTE',
-    errAudio:'Audio no encontrado.', errSub:'Añade el archivo MP3 en la carpeta',
-    endTitle:'Gracias por su visita', endText:'Esperamos que haya disfrutado del recorrido por Sant Patrici. Llévese consigo el aroma de los jardines, el sabor del vino y la calma de esta tierra.',
-    restart:'VOLVER AL INICIO', changeLang:'IDIOMA'
+    subtitle:'EXPERIENCIA INMERSIVA',
+    start:'COMENZAR VISITA',
+    readTrans:'LEER TRANSCRIPCIÓN',
+    next:'SIGUIENTE',
+    errAudio:'Audio no encontrado.',
+    errSub:'Añade el archivo MP3 en la carpeta',
+    endTitle:'Gracias por su visita',
+    endText:'Esperamos que haya disfrutado del recorrido por Sant Patrici. Llévese consigo el aroma de los jardines, el sabor del vino y la calma de esta tierra.',
+    restart:'VOLVER AL INICIO',
+    changeLang:'IDIOMA'
   },
   cat: {
-    subtitle:'AUDIOGUIA · MENORCA', start:'COMENÇAR VISITA',
-    readTrans:'LLEGIR TRANSCRIPCIÓ', next:'SEGÜENT',
-    errAudio:'Àudio no trobat.', errSub:'Afegiu el fitxer MP3 a la carpeta',
-    endTitle:'Gràcies per la vostra visita', endText:'Esperem que hàgiu gaudit del recorregut per Sant Patrici. Emporteu-vos l\'aroma dels jardins, el gust del vi i la calma d\'aquesta terra.',
-    restart:'TORNAR A L\'INICI', changeLang:'IDIOMA'
+    subtitle:'EXPERIÈNCIA IMMERSIVA',
+    start:'COMENÇAR VISITA',
+    readTrans:'LLEGIR TRANSCRIPCIÓ',
+    next:'SEGÜENT',
+    errAudio:'Àudio no trobat.',
+    errSub:'Afegiu el fitxer MP3 a la carpeta',
+    endTitle:'Gràcies per la vostra visita',
+    endText:'Esperem que hàgiu gaudit del recorregut per Sant Patrici. Emporteu-vos l\'aroma dels jardins, el gust del vi i la calma d\'aquesta terra.',
+    restart:'TORNAR A L\'INICI',
+    changeLang:'IDIOMA'
   },
   en: {
-    subtitle:'AUDIOGUIDE · MENORCA', start:'START TOUR',
-    readTrans:'READ TRANSCRIPTION', next:'NEXT',
-    errAudio:'Audio not found.', errSub:'Add the MP3 file in the folder',
-    endTitle:'Thank you for your visit', endText:'We hope you enjoyed the tour of Sant Patrici. Take with you the scent of the gardens, the taste of the wine and the calm of this land.',
-    restart:'BACK TO START', changeLang:'LANGUAGE'
+    subtitle:'IMMERSIVE EXPERIENCE',
+    start:'START TOUR',
+    readTrans:'READ TRANSCRIPTION',
+    next:'NEXT',
+    errAudio:'Audio not found.',
+    errSub:'Add the MP3 file in the folder',
+    endTitle:'Thank you for your visit',
+    endText:'We hope you enjoyed the tour of Sant Patrici. Take with you the scent of the gardens, the taste of the wine and the calm of this land.',
+    restart:'BACK TO START',
+    changeLang:'LANGUAGE'
   },
   fr: {
-    subtitle:'AUDIOGUIDE · MINORQUE', start:'COMMENCER LA VISITE',
-    readTrans:'LIRE LA TRANSCRIPTION', next:'SUIVANT',
-    errAudio:'Audio non trouvé.', errSub:'Ajoutez le fichier MP3 dans le dossier',
-    endTitle:'Merci de votre visite', endText:'Nous espérons que vous avez apprécié la visite de Sant Patrici. Emportez avec vous le parfum des jardins, le goût du vin et le calme de cette terre.',
-    restart:'RETOUR AU DÉBUT', changeLang:'LANGUE'
+    subtitle:'EXPÉRIENCE IMMERSIVE',
+    start:'COMMENCER LA VISITE',
+    readTrans:'LIRE LA TRANSCRIPTION',
+    next:'SUIVANT',
+    errAudio:'Audio non trouvé.',
+    errSub:'Ajoutez le fichier MP3 dans le dossier',
+    endTitle:'Merci de votre visite',
+    endText:'Nous espérons que vous avez apprécié la visite de Sant Patrici. Emportez avec vous le parfum des jardins, le goût du vin et le calme de cette terre.',
+    restart:'RETOUR AU DÉBUT',
+    changeLang:'LANGUE'
   },
   de: {
-    subtitle:'AUDIOGUIDE · MENORCA', start:'TOUR STARTEN',
-    readTrans:'TRANSKRIPTION LESEN', next:'WEITER',
-    errAudio:'Audio nicht gefunden.', errSub:'Fügen Sie die MP3-Datei im Ordner hinzu',
-    endTitle:'Vielen Dank für Ihren Besuch', endText:'Wir hoffen, Sie haben die Tour durch Sant Patrici genossen. Nehmen Sie den Duft der Gärten, den Geschmack des Weins und die Ruhe dieses Landes mit.',
-    restart:'ZURÜCK ZUM ANFANG', changeLang:'SPRACHE'
+    subtitle:'IMMERSIVES ERLEBNIS',
+    start:'TOUR STARTEN',
+    readTrans:'TRANSKRIPTION LESEN',
+    next:'WEITER',
+    errAudio:'Audio nicht gefunden.',
+    errSub:'Fügen Sie die MP3-Datei im Ordner hinzu',
+    endTitle:'Vielen Dank für Ihren Besuch',
+    endText:'Wir hoffen, Sie haben die Tour durch Sant Patrici genossen. Nehmen Sie den Duft der Gärten, den Geschmack des Weins und die Ruhe dieses Landes mit.',
+    restart:'ZURÜCK ZUM ANFANG',
+    changeLang:'SPRACHE'
   }
 };
 
+// ============================================================
+//  STOPS DATA (all languages)
+// ============================================================
 const STOPS = {
   es: [
     { id:'punto-1', num:'1', cat:'EDIFICIO PRINCIPAL', title:'La casa que construyó el amor prohibido',
@@ -244,7 +456,6 @@ const STOPS = {
       trans:'Han llegado al final del recorrido. Esta terraza es nuestro lugar favorito al atardecer, cuando la luz dorada tiñe los campos y el silencio se llena de grillos y cigarras. Sant Patrici no es solo un hotel: es un trozo vivo de Menorca. Cada piedra, cada cepa, cada rama de este olivo milenario cuenta una historia que ahora también es la suya. Antes de marcharse, les invitamos a sentarse un momento, quizás con una copa de vino de la finca, y dejar que este lugar se imprima en su memoria. En Menorca decimos que quien bebe agua de un pozo de la isla siempre vuelve. Nosotros preferimos pensar que quien vive un atardecer en Sant Patrici nunca se marcha del todo. Gracias por su visita.'
     }
   ],
-
   cat: [
     { id:'punto-1', num:'1', cat:'EDIFICI PRINCIPAL', title:'La casa que va construir l\'amor prohibit',
       nextLabel:'Jardí de les Escultures',
@@ -275,7 +486,6 @@ const STOPS = {
       trans:'Heu arribat al final del recorregut. Aquesta terrassa és el nostre lloc preferit a la posta de sol, quan la llum daurada tenyeix els camps i el silenci s\'omple de grills i cigales. Sant Patrici no és només un hotel: és un tros viu de Menorca. Cada pedra, cada cep, cada branca d\'aquesta olivera mil·lenària explica una història que ara també és la vostra. Abans de marxar, us convidem a seure un moment, potser amb una copa de vi de la finca, i deixar que aquest lloc s\'imprimeixi en la vostra memòria. A Menorca diuen que qui beu aigua d\'un pou de l\'illa sempre hi torna. Nosaltres preferim pensar que qui viu una posta de sol a Sant Patrici no marxa mai del tot. Gràcies per la vostra visita.'
     }
   ],
-
   en: [
     { id:'punto-1', num:'1', cat:'MAIN BUILDING', title:'The house that forbidden love built',
       nextLabel:'Sculpture Garden',
@@ -306,7 +516,6 @@ const STOPS = {
       trans:'You have reached the end of the tour. This terrace is our favourite spot at sunset, when golden light bathes the fields and the silence fills with crickets and cicadas. Sant Patrici is not just a hotel: it is a living piece of Menorca. Every stone, every vine, every branch of that millennial olive tree tells a story that is now yours too. Before you go, we invite you to sit for a moment, perhaps with a glass of estate wine, and let this place imprint itself on your memory. In Menorca they say that whoever drinks water from an island well always returns. We prefer to think that whoever lives a sunset at Sant Patrici never truly leaves. Thank you for your visit.'
     }
   ],
-
   fr: [
     { id:'punto-1', num:'1', cat:'BÂTIMENT PRINCIPAL', title:'La maison que l\'amour interdit a bâtie',
       nextLabel:'Jardin des Sculptures',
@@ -337,7 +546,6 @@ const STOPS = {
       trans:'Vous êtes arrivés à la fin du parcours. Cette terrasse est notre endroit préféré au coucher du soleil, quand la lumière dorée baigne les champs et que le silence se remplit de grillons et de cigales. Sant Patrici n\'est pas seulement un hôtel : c\'est un morceau vivant de Minorque. Chaque pierre, chaque cep, chaque branche de cet olivier millénaire raconte une histoire qui est désormais aussi la vôtre. Avant de partir, nous vous invitons à vous asseoir un moment, peut-être avec un verre de vin du domaine, et à laisser ce lieu s\'imprimer dans votre mémoire. À Minorque, on dit que celui qui boit l\'eau d\'un puits de l\'île revient toujours. Nous préférons penser que celui qui vit un coucher de soleil à Sant Patrici ne part jamais vraiment. Merci de votre visite.'
     }
   ],
-
   de: [
     { id:'punto-1', num:'1', cat:'HAUPTGEBÄUDE', title:'Das Haus, das die verbotene Liebe erbaute',
       nextLabel:'Skulpturengarten',
@@ -377,7 +585,6 @@ let lang = 'es';
 let currentStop = 0;
 let isPlaying = false;
 let playbackRate = 1;
-
 const audio = document.getElementById('audioEl');
 
 // ============================================================
@@ -389,16 +596,22 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 
+// ============================================================
+//  LANGUAGE
+// ============================================================
 function setLang(l) {
   lang = l;
+  // Update button styles
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === l);
   });
+  // Update welcome texts
+  document.getElementById('welcomeSub').textContent = UI[l].subtitle;
   document.getElementById('startBtn').textContent = UI[l].start;
 }
 
 // ============================================================
-//  WELCOME
+//  WELCOME INIT
 // ============================================================
 (function initWelcome() {
   const sel = document.getElementById('langSelector');
@@ -407,11 +620,18 @@ function setLang(l) {
     b.className = 'lang-btn' + (l === lang ? ' active' : '');
     b.dataset.lang = l;
     b.textContent = LANG_LABELS[l];
-    b.onclick = () => setLang(l);
+    b.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setLang(l);
+    });
     sel.appendChild(b);
   });
+  document.getElementById('welcomeSub').textContent = UI[lang].subtitle;
   document.getElementById('startBtn').textContent = UI[lang].start;
-  document.getElementById('startBtn').onclick = () => renderStopList();
+  document.getElementById('startBtn').addEventListener('click', function() {
+    renderStopList();
+  });
 })();
 
 // ============================================================
@@ -421,8 +641,8 @@ function renderStopList() {
   const ui = UI[lang];
   const stops = STOPS[lang];
   document.getElementById('listSub').textContent = ui.subtitle;
-  document.getElementById('changeLangBtn').textContent = '🌐 ' + LANG_LABELS[lang];
-  document.getElementById('changeLangBtn').onclick = () => showScreen('welcome');
+  document.getElementById('changeLangBtn').textContent = '🌐 ' + ui.changeLang + ' (' + LANG_LABELS[lang] + ')';
+  document.getElementById('changeLangBtn').onclick = () => { stopAudio(); showScreen('welcome'); };
 
   const c = document.getElementById('stopsContainer');
   c.innerHTML = '';
@@ -462,11 +682,11 @@ function openStop(index) {
   const nextBtn = document.getElementById('nextBtn');
   if (s.nextLabel) {
     nextBtn.style.display = 'flex';
-    nextBtn.innerHTML = `${ui.next}: ${s.nextLabel} →`;
+    nextBtn.innerHTML = ui.next + ': ' + s.nextLabel + ' →';
     nextBtn.onclick = () => openStop(index + 1);
   } else {
     nextBtn.style.display = 'flex';
-    nextBtn.innerHTML = `${ui.endTitle} 🌅`;
+    nextBtn.innerHTML = ui.endTitle + ' 🌅';
     nextBtn.onclick = () => showEnd();
   }
 
@@ -499,13 +719,13 @@ function loadAudio(id) {
   const errMsg = document.getElementById('audioErrorMsg');
   errEl.style.display = 'none';
 
-  audio.src = `audio/${lang}/${id}.mp3`;
+  audio.src = 'audio/' + lang + '/' + id + '.mp3';
   audio.playbackRate = playbackRate;
   audio.load();
 
-  audio.onerror = () => {
+  audio.onerror = function() {
     errEl.style.display = 'block';
-    errMsg.innerHTML = `⚠️ ${UI[lang].errAudio}<br><span>${UI[lang].errSub} <b>audio/${lang}/</b></span>`;
+    errMsg.innerHTML = '⚠️ ' + UI[lang].errAudio + '<br><span>' + UI[lang].errSub + ' <b>audio/' + lang + '/</b></span>';
   };
 }
 
@@ -532,10 +752,10 @@ function togglePlay() {
     isPlaying = false;
     document.getElementById('playBtn').textContent = '▶';
   } else {
-    audio.play().then(() => {
+    audio.play().then(function() {
       isPlaying = true;
       document.getElementById('playBtn').textContent = '⏸';
-    }).catch(() => {});
+    }).catch(function() {});
   }
 }
 
@@ -544,8 +764,8 @@ function rewind10() {
 }
 
 function cycleSpeed() {
-  const speeds = [1, 1.5, 2];
-  const i = (speeds.indexOf(playbackRate) + 1) % speeds.length;
+  var speeds = [1, 1.5, 2];
+  var i = (speeds.indexOf(playbackRate) + 1) % speeds.length;
   playbackRate = speeds[i];
   audio.playbackRate = playbackRate;
   document.getElementById('speedBtn').textContent = playbackRate + 'x';
@@ -553,47 +773,50 @@ function cycleSpeed() {
 
 function fmtTime(s) {
   if (!s || isNaN(s)) return '0:00';
-  const m = Math.floor(s / 60);
-  const sec = Math.floor(s % 60);
+  var m = Math.floor(s / 60);
+  var sec = Math.floor(s % 60);
   return m + ':' + (sec < 10 ? '0' : '') + sec;
 }
 
 // Player events
-audio.addEventListener('timeupdate', () => {
+audio.addEventListener('timeupdate', function() {
   if (!audio.duration) return;
-  const pct = (audio.currentTime / audio.duration) * 100;
+  var pct = (audio.currentTime / audio.duration) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('currentTime').textContent = fmtTime(audio.currentTime);
 });
 
-audio.addEventListener('loadedmetadata', () => {
+audio.addEventListener('loadedmetadata', function() {
   document.getElementById('totalTime').textContent = fmtTime(audio.duration);
 });
 
-audio.addEventListener('ended', () => {
+audio.addEventListener('ended', function() {
   isPlaying = false;
   document.getElementById('playBtn').textContent = '▶';
 });
 
 // Progress bar click
-document.getElementById('progressBar').addEventListener('click', (e) => {
+document.getElementById('progressBar').addEventListener('click', function(e) {
   if (!audio.duration) return;
-  const rect = e.target.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
+  var rect = e.currentTarget.getBoundingClientRect();
+  var pct = (e.clientX - rect.left) / rect.width;
   audio.currentTime = pct * audio.duration;
 });
 
 // Button handlers
-document.getElementById('playBtn').onclick = togglePlay;
-document.getElementById('rewindBtn').onclick = rewind10;
-document.getElementById('speedBtn').onclick = cycleSpeed;
-document.getElementById('backBtn').onclick = () => { stopAudio(); renderStopList(); };
+document.getElementById('playBtn').addEventListener('click', togglePlay);
+document.getElementById('rewindBtn').addEventListener('click', rewind10);
+document.getElementById('speedBtn').addEventListener('click', cycleSpeed);
+document.getElementById('backBtn').addEventListener('click', function() {
+  stopAudio();
+  renderStopList();
+});
 
 // Transcription toggle
-document.getElementById('transToggle').onclick = function() {
+document.getElementById('transToggle').addEventListener('click', function() {
   this.classList.toggle('open');
   document.getElementById('transText').classList.toggle('open');
-};
+});
 </script>
 
 </body>
