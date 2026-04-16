@@ -7,220 +7,79 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== FONT ELYSIAN ===== */
 @font-face {
   font-family: 'Elysian';
   src: url('fonts/Elysian-Regular.woff2') format('woff2'),
        url('fonts/Elysian-Regular.woff') format('woff'),
        url('fonts/Elysian-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Elysian';
   src: url('fonts/Elysian-Bold.woff2') format('woff2'),
        url('fonts/Elysian-Bold.woff') format('woff'),
        url('fonts/Elysian-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 700; font-style: normal; font-display: swap;
 }
-
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --verde:#0C7B6B;
-  --verde-oscuro:#095C50;
-  --verde-brand:#0a7c6a;
-  --dorado:#C8A951;
-  --crema:#FAF8F3;
-  --texto:#2D2D2D;
-  --gris:#8A8A8A;
-  --radius:16px;
+  --verde:#0C7B6B;--verde-oscuro:#095C50;--verde-brand:#0a7c6a;
+  --dorado:#C8A951;--crema:#FAF8F3;--texto:#2D2D2D;--gris:#8A8A8A;--radius:16px;
 }
 body{font-family:'Montserrat',sans-serif;background:var(--crema);color:var(--texto);min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',serif}
-
-/* ===== SCREENS ===== */
 .screen{display:none;min-height:100vh;min-height:100dvh}
 .screen.active{display:flex;flex-direction:column}
 
-/* ===== WELCOME ===== */
-#welcome{
-  background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);
-  color:#fff;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:2rem 1.5rem;
-  position:relative;
-  overflow:hidden;
-}
-#welcome::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);
-  pointer-events:none; /* ← FIX: permite clicks a través */
-}
-
-.welcome-logo{
-  width:180px;
-  height:auto;
-  margin-bottom:1.8rem;
-  position:relative;
-  z-index:1;
-  filter:brightness(0) invert(1); /* fuerza blanco si el logo no es blanco */
-}
-/* Si tu logo YA es blanco sobre transparente, quita el filter */
-
-#welcome .subtitle{
-  font-family:'Montserrat',sans-serif;
-  font-size:.7rem;
-  letter-spacing:5px;
-  opacity:.7;
-  margin-bottom:2.5rem;
-  font-weight:400;
-  position:relative;
-  z-index:1;
-}
-.lang-selector{
-  display:flex;
-  gap:.5rem;
-  margin-bottom:2.5rem;
-  flex-wrap:wrap;
-  justify-content:center;
-  position:relative;
-  z-index:1;
-}
-.lang-btn{
-  padding:.55rem 1rem;
-  border:1.5px solid rgba(255,255,255,.45);
-  border-radius:8px;
-  background:transparent;
-  color:#fff;
-  font-family:'Montserrat',sans-serif;
-  font-size:.78rem;
-  font-weight:600;
-  cursor:pointer;
-  letter-spacing:1px;
-  transition:all .25s;
-  -webkit-tap-highlight-color:transparent;
-}
-.lang-btn:hover,.lang-btn.active{
-  background:#fff;
-  color:var(--verde);
-  border-color:#fff;
-}
-.start-btn{
-  background:#fff;
-  color:var(--verde);
-  border:none;
-  padding:1rem 2.5rem;
-  border-radius:50px;
-  font-family:'Montserrat',sans-serif;
-  font-size:.82rem;
-  font-weight:700;
-  letter-spacing:3px;
-  cursor:pointer;
-  transition:transform .2s,box-shadow .2s;
-  position:relative;
-  z-index:1;
-}
+/* WELCOME */
+#welcome{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem 1.5rem;position:relative;overflow:hidden}
+#welcome::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);pointer-events:none}
+.welcome-logo{width:180px;height:auto;margin-bottom:1.8rem;position:relative;z-index:1;filter:brightness(0) invert(1)}
+#welcome .subtitle{font-family:'Montserrat',sans-serif;font-size:.7rem;letter-spacing:5px;opacity:.7;margin-bottom:2.5rem;font-weight:400;position:relative;z-index:1}
+.lang-selector{display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+.lang-btn{padding:.55rem 1rem;border:1.5px solid rgba(255,255,255,.45);border-radius:8px;background:transparent;color:#fff;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;letter-spacing:1px;transition:all .25s;-webkit-tap-highlight-color:transparent}
+.lang-btn:hover,.lang-btn.active{background:#fff;color:var(--verde);border-color:#fff}
+.start-btn{background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:3px;cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;z-index:1}
 .start-btn:active{transform:scale(.97)}
 
-/* ===== STOP LIST ===== */
+/* STOP LIST */
 #stoplist{background:var(--crema)}
-.list-header{
-  background:var(--verde);
-  color:#fff;
-  padding:1.2rem 1.5rem 2rem;
-  text-align:center;
-  border-radius:0 0 24px 24px;
-}
+.list-header{background:var(--verde);color:#fff;padding:1.2rem 1.5rem 2rem;text-align:center;border-radius:0 0 24px 24px}
 .header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-.header-lang{
-  font-size:.65rem;
-  background:rgba(255,255,255,.12);
-  padding:.35rem .8rem;
-  border-radius:20px;
-  cursor:pointer;
-  border:1px solid rgba(255,255,255,.25);
-  color:#fff;
-  font-family:'Montserrat',sans-serif;
-  letter-spacing:1px;
-  transition:background .2s;
-}
+.header-lang{font-size:.65rem;background:rgba(255,255,255,.12);padding:.35rem .8rem;border-radius:20px;cursor:pointer;border:1px solid rgba(255,255,255,.25);color:#fff;font-family:'Montserrat',sans-serif;letter-spacing:1px;transition:background .2s}
 .header-lang:active{background:rgba(255,255,255,.2)}
 .list-logo{height:50px;width:auto;filter:brightness(0) invert(1)}
 .list-header h2{font-size:1.5rem;margin-bottom:.15rem;letter-spacing:2px}
 .list-header .sub{font-size:.65rem;letter-spacing:3px;opacity:.7}
 .stops-container{padding:1rem 1.2rem 2rem}
-.stop-card{
-  display:flex;align-items:center;background:#fff;border-radius:var(--radius);
-  padding:1rem 1.2rem;margin-bottom:.75rem;cursor:pointer;
-  transition:transform .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.05);
-  -webkit-tap-highlight-color:transparent;
-}
+.stop-card{display:flex;align-items:center;background:#fff;border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.75rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.05);-webkit-tap-highlight-color:transparent}
 .stop-card:active{transform:scale(.98);box-shadow:0 2px 12px rgba(0,0,0,.1)}
-.stop-num{
-  width:44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;
-  flex-shrink:0;margin-right:1rem;
-}
+.stop-num{width:44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;margin-right:1rem}
 .stop-num.sub{font-size:.75rem;background:var(--dorado)}
 .stop-info{flex:1}
 .stop-cat{font-size:.6rem;letter-spacing:2px;color:var(--gris);font-weight:600;margin-bottom:.15rem}
 .stop-title{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--texto)}
 .stop-arrow{color:var(--verde);font-size:1.2rem;margin-left:.5rem;opacity:.5}
 
-/* ===== STOP DETAIL ===== */
+/* STOP DETAIL */
 #detail{background:var(--crema)}
-.detail-header{
-  background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);
-  color:#fff;padding:1.2rem 1.5rem 2.5rem;text-align:center;
-  position:relative;border-radius:0 0 24px 24px;
-}
-.detail-header::before{
-  content:'';position:absolute;inset:0;border-radius:0 0 24px 24px;
-  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.02) 10px,rgba(255,255,255,.02) 20px);
-  pointer-events:none;
-}
+.detail-header{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;padding:1.2rem 1.5rem 2.5rem;text-align:center;position:relative;border-radius:0 0 24px 24px}
+.detail-header::before{content:'';position:absolute;inset:0;border-radius:0 0 24px 24px;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.02) 10px,rgba(255,255,255,.02) 20px);pointer-events:none}
 .detail-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;position:relative;z-index:1}
-.back-btn{
-  width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);
-  background:transparent;color:#fff;font-size:1.2rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:background .2s;
-}
+.back-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .back-btn:active{background:rgba(255,255,255,.1)}
 .detail-logo{height:28px;width:auto;filter:brightness(0) invert(1);position:relative;z-index:1}
-.detail-header .num{
-  width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
-  display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;
-  font-size:1.2rem;font-weight:700;position:relative;z-index:1;
-  font-family:'Montserrat',sans-serif;
-}
+.detail-header .num{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;font-size:1.2rem;font-weight:700;position:relative;z-index:1;font-family:'Montserrat',sans-serif}
 .detail-header .cat{font-size:.65rem;letter-spacing:3px;opacity:.7;margin-bottom:.3rem;position:relative;z-index:1}
 .detail-header h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;line-height:1.3;position:relative;z-index:1}
 .detail-body{padding:1.2rem}
-
-/* Player */
 .player-card{background:#fff;border-radius:var(--radius);padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:1rem}
 .player-controls{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-bottom:1rem}
-.ctrl-btn{
-  width:42px;height:42px;border-radius:50%;border:none;background:transparent;
-  color:var(--gris);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;
-  justify-content:center;transition:background .2s;
-}
+.ctrl-btn{width:42px;height:42px;border-radius:50%;border:none;background:transparent;color:var(--gris);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .ctrl-btn:active{background:rgba(0,0,0,.05)}
-.play-btn{
-  width:64px;height:64px;border-radius:50%;border:none;background:var(--verde);
-  color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;
-  justify-content:center;transition:transform .15s;
-}
+.play-btn{width:64px;height:64px;border-radius:50%;border:none;background:var(--verde);color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
 .play-btn:active{transform:scale(.93)}
-.speed-btn{
-  font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;
-  color:var(--verde);border:1.5px solid var(--verde);width:auto;padding:0 .7rem;
-}
+.speed-btn{font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;color:var(--verde);border:1.5px solid var(--verde);width:auto;padding:0 .7rem}
 .progress-wrap{display:flex;align-items:center;gap:.6rem}
 .progress-time{font-size:.7rem;color:var(--gris);min-width:32px;font-variant-numeric:tabular-nums}
 .progress-bar{flex:1;height:4px;background:#e8e8e8;border-radius:4px;overflow:hidden;cursor:pointer;position:relative}
@@ -228,66 +87,35 @@ h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',seri
 .audio-error{background:#FFF8E1;border:1px solid #FFE082;border-radius:12px;padding:.8rem 1rem;text-align:center;margin-top:.8rem;font-size:.8rem;color:#F9A825;display:none}
 .audio-error span{display:block;font-size:.7rem;color:var(--gris);margin-top:.2rem}
 .audio-error b{color:var(--verde)}
-
-/* Transcription */
-.transcription-toggle{
-  width:100%;background:none;border:none;border-top:1px solid #eee;
-  padding:1rem 0;display:flex;justify-content:space-between;align-items:center;
-  cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;
-  font-weight:600;letter-spacing:2px;color:var(--gris);
-}
+.transcription-toggle{width:100%;background:none;border:none;border-top:1px solid #eee;padding:1rem 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:2px;color:var(--gris)}
 .transcription-toggle .arrow{transition:transform .3s}
 .transcription-toggle.open .arrow{transform:rotate(180deg)}
 .transcription-text{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:.85rem;line-height:1.8;color:#555}
-.transcription-text.open{max-height:3000px}
-.transcription-inner{padding:.5rem 0 1rem}
-
-/* Next button */
-.next-btn{
-  display:flex;align-items:center;justify-content:center;width:100%;
-  background:var(--verde);color:#fff;border:none;padding:1.1rem;
-  border-radius:var(--radius);font-family:'Montserrat',sans-serif;
-  font-size:.78rem;font-weight:700;letter-spacing:2px;cursor:pointer;
-  margin-top:.5rem;transition:background .2s;gap:.5rem;
-}
+.transcription-text.open{max-height:80000px}
+.transcription-inner{padding:.5rem 0 1rem;white-space:pre-line}
+.next-btn{display:flex;align-items:center;justify-content:center;width:100%;background:var(--verde);color:#fff;border:none;padding:1.1rem;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:.5rem;transition:background .2s;gap:.5rem}
 .next-btn:active{background:var(--verde-oscuro)}
 
-/* ===== END SCREEN ===== */
-#endscreen{
-  background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);
-  color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem;
-  position:relative;
-}
-#endscreen::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);
-  pointer-events:none;
-}
+/* END SCREEN */
+#endscreen{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative}
+#endscreen::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);pointer-events:none}
 #endscreen>div{position:relative;z-index:1}
 #endscreen h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem;font-weight:400}
 #endscreen p{opacity:.8;line-height:1.7;margin-bottom:2rem;max-width:320px}
-.restart-btn{
-  background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;
-  border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.8rem;
-  font-weight:700;letter-spacing:2px;cursor:pointer;
-}
-
-/* Animations */
+.restart-btn{background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;cursor:pointer}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{animation:fadeIn .4s ease both}
 </style>
 </head>
 <body>
 
-<!-- ===================== WELCOME ===================== -->
 <div id="welcome" class="screen active">
-  <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="welcome-logo" id="welcomeLogo">
+  <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="welcome-logo">
   <p class="subtitle" id="welcomeSub">EXPERIENCIA INMERSIVA</p>
   <div class="lang-selector" id="langSelector"></div>
   <button class="start-btn" id="startBtn"></button>
 </div>
 
-<!-- ===================== STOP LIST ===================== -->
 <div id="stoplist" class="screen">
   <div class="list-header">
     <div class="header-top">
@@ -299,7 +127,6 @@ h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',seri
   <div class="stops-container" id="stopsContainer"></div>
 </div>
 
-<!-- ===================== STOP DETAIL ===================== -->
 <div id="detail" class="screen">
   <div class="detail-header">
     <div class="detail-top">
@@ -340,7 +167,6 @@ h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',seri
   </div>
 </div>
 
-<!-- ===================== END SCREEN ===================== -->
 <div id="endscreen" class="screen">
   <div>
     <div style="font-size:3rem;margin-bottom:1rem">🌅</div>
@@ -353,266 +179,638 @@ h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',seri
 <audio id="audioEl" preload="auto"></audio>
 
 <script>
-// ============================================================
-//  LANGUAGES & TRANSLATIONS
-// ============================================================
-const LANGS = ['es','cat','en','fr','de'];
-const LANG_LABELS = {es:'ES', cat:'CAT', en:'EN', fr:'FR', de:'DE'};
+const LANGS = ['es','cat','en','fr','de','it'];
+const LANG_LABELS = {es:'ES',cat:'CAT',en:'EN',fr:'FR',de:'DE',it:'IT'};
 
 const UI = {
-  es: {
-    subtitle:'EXPERIENCIA INMERSIVA',
-    start:'COMENZAR VISITA',
-    readTrans:'LEER TRANSCRIPCIÓN',
-    next:'SIGUIENTE',
-    errAudio:'Audio no encontrado.',
-    errSub:'Añade el archivo MP3 en la carpeta',
-    endTitle:'Gracias por su visita',
-    endText:'Esperamos que haya disfrutado del recorrido por Sant Patrici. Llévese consigo el aroma de los jardines, el sabor del vino y la calma de esta tierra.',
-    restart:'VOLVER AL INICIO',
-    changeLang:'IDIOMA'
-  },
-  cat: {
-    subtitle:'EXPERIÈNCIA IMMERSIVA',
-    start:'COMENÇAR VISITA',
-    readTrans:'LLEGIR TRANSCRIPCIÓ',
-    next:'SEGÜENT',
-    errAudio:'Àudio no trobat.',
-    errSub:'Afegiu el fitxer MP3 a la carpeta',
-    endTitle:'Gràcies per la vostra visita',
-    endText:'Esperem que hàgiu gaudit del recorregut per Sant Patrici. Emporteu-vos l\'aroma dels jardins, el gust del vi i la calma d\'aquesta terra.',
-    restart:'TORNAR A L\'INICI',
-    changeLang:'IDIOMA'
-  },
-  en: {
-    subtitle:'IMMERSIVE EXPERIENCE',
-    start:'START TOUR',
-    readTrans:'READ TRANSCRIPTION',
-    next:'NEXT',
-    errAudio:'Audio not found.',
-    errSub:'Add the MP3 file in the folder',
-    endTitle:'Thank you for your visit',
-    endText:'We hope you enjoyed the tour of Sant Patrici. Take with you the scent of the gardens, the taste of the wine and the calm of this land.',
-    restart:'BACK TO START',
-    changeLang:'LANGUAGE'
-  },
-  fr: {
-    subtitle:'EXPÉRIENCE IMMERSIVE',
-    start:'COMMENCER LA VISITE',
-    readTrans:'LIRE LA TRANSCRIPTION',
-    next:'SUIVANT',
-    errAudio:'Audio non trouvé.',
-    errSub:'Ajoutez le fichier MP3 dans le dossier',
-    endTitle:'Merci de votre visite',
-    endText:'Nous espérons que vous avez apprécié la visite de Sant Patrici. Emportez avec vous le parfum des jardins, le goût du vin et le calme de cette terre.',
-    restart:'RETOUR AU DÉBUT',
-    changeLang:'LANGUE'
-  },
-  de: {
-    subtitle:'IMMERSIVES ERLEBNIS',
-    start:'TOUR STARTEN',
-    readTrans:'TRANSKRIPTION LESEN',
-    next:'WEITER',
-    errAudio:'Audio nicht gefunden.',
-    errSub:'Fügen Sie die MP3-Datei im Ordner hinzu',
-    endTitle:'Vielen Dank für Ihren Besuch',
-    endText:'Wir hoffen, Sie haben die Tour durch Sant Patrici genossen. Nehmen Sie den Duft der Gärten, den Geschmack des Weins und die Ruhe dieses Landes mit.',
-    restart:'ZURÜCK ZUM ANFANG',
-    changeLang:'SPRACHE'
-  }
+  es:{subtitle:'EXPERIENCIA INMERSIVA',start:'COMENZAR VISITA',readTrans:'LEER TRANSCRIPCIÓN',next:'SIGUIENTE',errAudio:'Audio no encontrado.',errSub:'Añade el archivo MP3 en la carpeta',endTitle:'Gracias por su visita',endText:'Esperamos que haya disfrutado del recorrido por Sant Patrici. Llévese consigo el aroma de los jardines, el sabor del vino y la calma de esta tierra.',restart:'VOLVER AL INICIO',changeLang:'IDIOMA'},
+  cat:{subtitle:'EXPERIÈNCIA IMMERSIVA',start:'COMENÇAR VISITA',readTrans:'LLEGIR TRANSCRIPCIÓ',next:'SEGÜENT',errAudio:'Àudio no trobat.',errSub:'Afegiu el fitxer MP3 a la carpeta',endTitle:'Gràcies per la vostra visita',endText:'Esperem que hàgiu gaudit del recorregut per Sant Patrici. Emporteu-vos l\'aroma dels jardins, el gust del vi i la calma d\'aquesta terra.',restart:'TORNAR A L\'INICI',changeLang:'IDIOMA'},
+  en:{subtitle:'IMMERSIVE EXPERIENCE',start:'START TOUR',readTrans:'READ TRANSCRIPTION',next:'NEXT',errAudio:'Audio not found.',errSub:'Add the MP3 file in the folder',endTitle:'Thank you for your visit',endText:'We hope you enjoyed the tour of Sant Patrici. Take with you the scent of the gardens, the taste of the wine and the calm of this land.',restart:'BACK TO START',changeLang:'LANGUAGE'},
+  fr:{subtitle:'EXPÉRIENCE IMMERSIVE',start:'COMMENCER LA VISITE',readTrans:'LIRE LA TRANSCRIPTION',next:'SUIVANT',errAudio:'Audio non trouvé.',errSub:'Ajoutez le fichier MP3 dans le dossier',endTitle:'Merci de votre visite',endText:'Nous espérons que vous avez apprécié la visite de Sant Patrici. Emportez avec vous le parfum des jardins, le goût du vin et le calme de cette terre.',restart:'RETOUR AU DÉBUT',changeLang:'LANGUE'},
+  de:{subtitle:'IMMERSIVES ERLEBNIS',start:'TOUR STARTEN',readTrans:'TRANSKRIPTION LESEN',next:'WEITER',errAudio:'Audio nicht gefunden.',errSub:'Fügen Sie die MP3-Datei im Ordner hinzu',endTitle:'Vielen Dank für Ihren Besuch',endText:'Wir hoffen, Sie haben die Tour durch Sant Patrici genossen. Nehmen Sie den Duft der Gärten, den Geschmack des Weins und die Ruhe dieses Landes mit.',restart:'ZURÜCK ZUM ANFANG',changeLang:'SPRACHE'},
+  it:{subtitle:'ESPERIENZA IMMERSIVA',start:'INIZIARE VISITA',readTrans:'LEGGERE TRASCRIZIONE',next:'SEGUENTE',errAudio:'Audio non trovato.',errSub:'Aggiungi il file MP3 nella cartella',endTitle:'Grazie per la vostra visita',endText:'Speriamo che abbiate apprezzato il percorso di Sant Patrici. Portatevi con voi il profumo dei giardini, il sapore del vino e la calma di questa terra.',restart:'TORNA ALL\'INIZIO',changeLang:'LINGUA'}
 };
 
-// ============================================================
-//  STOPS DATA (all languages)
-// ============================================================
 const STOPS = {
-  es: [
-    { id:'punto-1', num:'1', cat:'EDIFICIO PRINCIPAL', title:'La casa que construyó el amor prohibido',
-      nextLabel:'Jardín de las Esculturas',
-      trans:'Bienvenidos a Sant Patrici. Esta casa señorial del siglo XIX guarda entre sus muros una historia de amor prohibido. Fue construida por una familia de la nobleza menorquina que buscaba un refugio lejos de las miradas del puerto de Mahón. La leyenda cuenta que el joven heredero se enamoró de una campesina del pueblo vecino, y que los pasillos de esta casa fueron testigos de sus encuentros secretos. Observen la fachada: los muros de piedra de marés, típicos de Menorca, mantienen el interior fresco en verano y cálido en invierno. Las contraventanas verdes no son solo decorativas; protegen del sol y de la tramontana. Cada detalle de esta construcción responde a siglos de sabiduría mediterránea.'
-    },
-    { id:'punto-2', num:'2', cat:'JARDÍN DE LAS ESCULTURAS', title:'Piedra viva entre jardines',
-      nextLabel:'El Olivo Milenario',
-      trans:'Se encuentran ahora en el jardín de las esculturas, donde el arte contemporáneo dialoga con la naturaleza menorquina. Cada pieza que ven ha sido seleccionada para complementar el paisaje, no para competir con él. Fíjense en cómo las formas orgánicas de las esculturas imitan las rocas erosionadas por el viento que encontrarán en la costa norte de la isla. Este jardín alberga especies autóctonas de Menorca: lavanda silvestre, romero, tomillo y acebuches. El aroma que les envuelve es el perfume auténtico de la isla. Menorca fue declarada Reserva de la Biosfera por la UNESCO en 1993, y en Sant Patrici nos comprometemos a preservar ese legado natural.'
-    },
-    { id:'punto-2b', num:'2b', cat:'EL OLIVO MILENARIO', title:'Testigo de mil años',
-      nextLabel:'Los Viñedos',
-      trans:'Deténganse un momento ante este olivo. Tiene más de mil años de vida. Estaba aquí antes de que existiera esta finca, antes de que los británicos dominaran Menorca, incluso antes de que los árabes le dieran su nombre a Mahón. Sus raíces han resistido temporales de tramontana, sequías interminables y el paso de civilizaciones enteras. En Menorca, el olivo es mucho más que un árbol: es un símbolo de resistencia y de conexión con la tierra. Toquen su tronco si lo desean. Esas formas retorcidas cuentan la historia de mil inviernos y mil primaveras. En Sant Patrici utilizamos su aceite en nuestra cocina, cerrando así un círculo que comenzó hace un milenio.'
-    },
-    { id:'punto-3', num:'3', cat:'LOS VIÑEDOS', title:'Vino con alma menorquina',
-      nextLabel:'La Bodega',
-      trans:'Bienvenidos a los viñedos de Sant Patrici. Lo que ven ante ustedes son cepas de variedades autóctonas: Manto Negro y Malvasía. La viticultura en Menorca tiene una historia fascinante. Durante la dominación británica en el siglo XVIII, los ingleses incentivaron la producción de vino, y Menorca llegó a exportar sus caldos al Reino Unido. Con el tiempo, la tradición se perdió casi por completo. En Sant Patrici hemos recuperado esa herencia. El suelo calcáreo y la brisa marina dan a nuestros vinos un carácter mineral único. La tramontana, ese viento del norte que a veces parece implacable, en realidad fortalece las cepas y concentra los sabores en la uva. Naturaleza y paciencia: esos son los ingredientes de nuestro vino.'
-    },
-    { id:'punto-4', num:'4', cat:'LA BODEGA', title:'Donde el silencio crea',
-      nextLabel:'Piscina y Mirador',
-      trans:'Entren con cuidado, sus ojos necesitarán un momento para adaptarse a la penumbra. Esta bodega fue excavada en la roca natural de la finca, y mantiene una temperatura constante de dieciséis grados durante todo el año, sin necesidad de climatización artificial. Aquí es donde el mosto se transforma en vino. Observen las barricas de roble francés: cada una contiene el trabajo de un año entero de cuidado en el viñedo. El silencio que perciben no es casual. El vino necesita calma para evolucionar. En esta oscuridad perfumada, el tiempo trabaja a su propio ritmo. Si al salir de aquí desean probar el resultado, en nuestra terraza podrán degustar una selección de vinos de la finca.'
-    },
-    { id:'punto-5', num:'5', cat:'PISCINA Y MIRADOR', title:'El horizonte como lienzo',
-      nextLabel:'Terraza de Despedida',
-      trans:'Desde este punto tienen ante ustedes una de las panorámicas más espectaculares del interior de Menorca. En días claros pueden distinguir el perfil de Monte Toro, el punto más alto de la isla con solo trescientos cincuenta y siete metros, pero suficiente para dominar toda Menorca. El paisaje que contemplan es un mosaico de campos divididos por muros de piedra seca, una técnica declarada Patrimonio de la Humanidad por la UNESCO. Esos muros no son simples divisiones: protegen los cultivos del viento, crean microclimas y sirven de refugio a decenas de especies. La piscina a sus pies fue diseñada para integrarse en este paisaje, como si fuera una balsa de riego tradicional. Tómense su tiempo. Este horizonte lleva aquí miles de años y seguirá aquí cuando se marchen.'
-    },
-    { id:'punto-6', num:'6', cat:'TERRAZA DE DESPEDIDA', title:'Lo que te llevas de Sant Patrici',
-      nextLabel:null,
-      trans:'Han llegado al final del recorrido. Esta terraza es nuestro lugar favorito al atardecer, cuando la luz dorada tiñe los campos y el silencio se llena de grillos y cigarras. Sant Patrici no es solo un hotel: es un trozo vivo de Menorca. Cada piedra, cada cepa, cada rama de este olivo milenario cuenta una historia que ahora también es la suya. Antes de marcharse, les invitamos a sentarse un momento, quizás con una copa de vino de la finca, y dejar que este lugar se imprima en su memoria. En Menorca decimos que quien bebe agua de un pozo de la isla siempre vuelve. Nosotros preferimos pensar que quien vive un atardecer en Sant Patrici nunca se marcha del todo. Gracias por su visita.'
-    }
-  ],
-  cat: [
-    { id:'punto-1', num:'1', cat:'EDIFICI PRINCIPAL', title:'La casa que va construir l\'amor prohibit',
-      nextLabel:'Jardí de les Escultures',
-      trans:'Benvinguts a Sant Patrici. Aquesta casa senyorial del segle XIX guarda entre els seus murs una història d\'amor prohibit. Va ser construïda per una família de la noblesa menorquina que cercava un refugi lluny de les mirades del port de Maó. La llegenda explica que el jove hereu es va enamorar d\'una pagesa del poble veí, i que els passadissos d\'aquesta casa van ser testimonis de les seves trobades secretes. Observeu la façana: els murs de pedra de marès, típics de Menorca, mantenen l\'interior fresc a l\'estiu i càlid a l\'hivern. Les persianes verdes no són només decoratives; protegeixen del sol i de la tramuntana. Cada detall d\'aquesta construcció respon a segles de saviesa mediterrània.'
-    },
-    { id:'punto-2', num:'2', cat:'JARDÍ DE LES ESCULTURES', title:'Pedra viva entre jardins',
-      nextLabel:'L\'Olivera Mil·lenària',
-      trans:'Us trobeu ara al jardí de les escultures, on l\'art contemporani dialoga amb la natura menorquina. Cada peça que veieu ha estat seleccionada per complementar el paisatge, no per competir-hi. Fixeu-vos en com les formes orgàniques de les escultures imiten les roques erosionades pel vent que trobareu a la costa nord de l\'illa. Aquest jardí acull espècies autòctones de Menorca: espígol silvestre, romaní, farigola i ullastres. L\'aroma que us envolta és el perfum autèntic de l\'illa. Menorca va ser declarada Reserva de la Biosfera per la UNESCO el 1993, i a Sant Patrici ens comprometem a preservar aquest llegat natural.'
-    },
-    { id:'punto-2b', num:'2b', cat:'L\'OLIVERA MIL·LENÀRIA', title:'Testimoni de mil anys',
-      nextLabel:'Les Vinyes',
-      trans:'Atureu-vos un moment davant d\'aquesta olivera. Té més de mil anys de vida. Era aquí abans que existís aquesta finca, abans que els britànics dominessin Menorca, fins i tot abans que els àrabs donessin el seu nom a Maó. Les seves arrels han resistit temporals de tramuntana, sequeres interminables i el pas de civilitzacions senceres. A Menorca, l\'olivera és molt més que un arbre: és un símbol de resistència i de connexió amb la terra. Toqueu el seu tronc si ho desitgeu. Aquestes formes retorçades expliquen la història de mil hiverns i mil primaveres. A Sant Patrici utilitzem el seu oli a la nostra cuina, tancant així un cercle que va començar fa un mil·lenni.'
-    },
-    { id:'punto-3', num:'3', cat:'LES VINYES', title:'Vi amb ànima menorquina',
-      nextLabel:'El Celler',
-      trans:'Benvinguts a les vinyes de Sant Patrici. El que veieu davant vostre són ceps de varietats autòctones: Manto Negro i Malvasia. La viticultura a Menorca té una història fascinant. Durant la dominació britànica al segle XVIII, els anglesos van incentivar la producció de vi, i Menorca va arribar a exportar els seus vins al Regne Unit. Amb el temps, la tradició es va perdre gairebé completament. A Sant Patrici hem recuperat aquesta herència. El sòl calcari i la brisa marina donen als nostres vins un caràcter mineral únic. La tramuntana, aquell vent del nord que de vegades sembla implacable, en realitat enforteix els ceps i concentra els sabors al raïm. Natura i paciència: aquests són els ingredients del nostre vi.'
-    },
-    { id:'punto-4', num:'4', cat:'EL CELLER', title:'On el silenci crea',
-      nextLabel:'Piscina i Mirador',
-      trans:'Entreu amb compte, els vostres ulls necessitaran un moment per adaptar-se a la penombra. Aquest celler va ser excavat a la roca natural de la finca i manté una temperatura constant de setze graus durant tot l\'any, sense necessitat de climatització artificial. Aquí és on el most es transforma en vi. Observeu les bótes de roure francès: cadascuna conté el treball d\'un any sencer de cura a la vinya. El silenci que percebeu no és casual. El vi necessita calma per evolucionar. En aquesta foscor perfumada, el temps treballa al seu propi ritme. Si en sortir d\'aquí desitgeu tastar el resultat, a la nostra terrassa podreu degustar una selecció de vins de la finca.'
-    },
-    { id:'punto-5', num:'5', cat:'PISCINA I MIRADOR', title:'L\'horitzó com a llenç',
-      nextLabel:'Terrassa de Comiat',
-      trans:'Des d\'aquest punt teniu davant vostre una de les panoràmiques més espectaculars de l\'interior de Menorca. En dies clars podeu distingir el perfil del Monte Toro, el punt més alt de l\'illa amb només tres-cents cinquanta-set metres, però suficient per dominar tota Menorca. El paisatge que contempleu és un mosaic de camps dividits per parets de pedra seca, una tècnica declarada Patrimoni de la Humanitat per la UNESCO. Aquells murs no són simples divisions: protegeixen els conreus del vent, creen microclimes i serveixen de refugi a desenes d\'espècies. La piscina als vostres peus va ser dissenyada per integrar-se en aquest paisatge. Preneu-vos el vostre temps. Aquest horitzó fa milers d\'anys que és aquí i seguirà aquí quan marxeu.'
-    },
-    { id:'punto-6', num:'6', cat:'TERRASSA DE COMIAT', title:'El que us emporteu de Sant Patrici',
-      nextLabel:null,
-      trans:'Heu arribat al final del recorregut. Aquesta terrassa és el nostre lloc preferit a la posta de sol, quan la llum daurada tenyeix els camps i el silenci s\'omple de grills i cigales. Sant Patrici no és només un hotel: és un tros viu de Menorca. Cada pedra, cada cep, cada branca d\'aquesta olivera mil·lenària explica una història que ara també és la vostra. Abans de marxar, us convidem a seure un moment, potser amb una copa de vi de la finca, i deixar que aquest lloc s\'imprimeixi en la vostra memòria. A Menorca diuen que qui beu aigua d\'un pou de l\'illa sempre hi torna. Nosaltres preferim pensar que qui viu una posta de sol a Sant Patrici no marxa mai del tot. Gràcies per la vostra visita.'
-    }
-  ],
-  en: [
-    { id:'punto-1', num:'1', cat:'MAIN BUILDING', title:'The house that forbidden love built',
-      nextLabel:'Sculpture Garden',
-      trans:'Welcome to Sant Patrici. This stately nineteenth-century house holds within its walls a story of forbidden love. It was built by a noble Menorcan family seeking refuge far from the prying eyes of Mahón harbour. Legend has it that the young heir fell in love with a peasant girl from the neighbouring village, and that the hallways of this house witnessed their secret encounters. Notice the façade: the marés sandstone walls, typical of Menorca, keep the interior cool in summer and warm in winter. The green shutters are not merely decorative; they protect against the sun and the tramontana wind. Every detail of this construction reflects centuries of Mediterranean wisdom.'
-    },
-    { id:'punto-2', num:'2', cat:'SCULPTURE GARDEN', title:'Living stone among gardens',
-      nextLabel:'The Millennial Olive Tree',
-      trans:'You are now in the sculpture garden, where contemporary art converses with Menorcan nature. Each piece you see has been chosen to complement the landscape, not to compete with it. Notice how the organic shapes of the sculptures mimic the wind-eroded rocks found along the island\'s northern coast. This garden is home to native Menorcan species: wild lavender, rosemary, thyme and wild olive trees. The fragrance that surrounds you is the authentic perfume of the island. Menorca was declared a UNESCO Biosphere Reserve in 1993, and at Sant Patrici we are committed to preserving that natural legacy.'
-    },
-    { id:'punto-2b', num:'2b', cat:'THE MILLENNIAL OLIVE TREE', title:'Witness to a thousand years',
-      nextLabel:'The Vineyards',
-      trans:'Pause for a moment before this olive tree. It is over a thousand years old. It was here before this estate existed, before the British ruled Menorca, even before the Arabs gave Mahón its name. Its roots have withstood tramontana storms, endless droughts and the passage of entire civilisations. In Menorca, the olive tree is far more than a tree: it is a symbol of resilience and connection to the land. Touch its trunk if you wish. Those twisted forms tell the story of a thousand winters and a thousand springs. At Sant Patrici we use its oil in our kitchen, closing a circle that began a millennium ago.'
-    },
-    { id:'punto-3', num:'3', cat:'THE VINEYARDS', title:'Wine with a Menorcan soul',
-      nextLabel:'The Cellar',
-      trans:'Welcome to the Sant Patrici vineyards. Before you are vines of indigenous varieties: Manto Negro and Malvasía. Viticulture in Menorca has a fascinating history. During British rule in the eighteenth century, the English encouraged wine production, and Menorca even exported its wines to the United Kingdom. Over time, the tradition was almost entirely lost. At Sant Patrici we have revived that heritage. The chalky soil and sea breeze give our wines a unique mineral character. The tramontana, that northern wind that can seem relentless, actually strengthens the vines and concentrates the flavours in the grape. Nature and patience: those are the ingredients of our wine.'
-    },
-    { id:'punto-4', num:'4', cat:'THE CELLAR', title:'Where silence creates',
-      nextLabel:'Pool & Viewpoint',
-      trans:'Step inside carefully; your eyes will need a moment to adjust to the dimness. This cellar was carved from the estate\'s natural rock and maintains a constant temperature of sixteen degrees all year round, with no need for artificial climate control. This is where grape must becomes wine. Observe the French oak barrels: each one holds an entire year\'s work of vineyard care. The silence you perceive is no accident. Wine needs calm to evolve. In this perfumed darkness, time works at its own pace. If you wish to taste the result after leaving here, you can enjoy a selection of estate wines on our terrace.'
-    },
-    { id:'punto-5', num:'5', cat:'POOL & VIEWPOINT', title:'The horizon as canvas',
-      nextLabel:'Farewell Terrace',
-      trans:'From this spot you have before you one of the most spectacular panoramas of inland Menorca. On clear days you can make out the profile of Monte Toro, the island\'s highest point at just three hundred and fifty-seven metres, yet enough to command views of all Menorca. The landscape you contemplate is a mosaic of fields divided by dry-stone walls, a technique declared a UNESCO World Heritage. Those walls are not mere boundaries: they protect crops from the wind, create microclimates and provide shelter for dozens of species. The pool at your feet was designed to blend into this landscape, as if it were a traditional irrigation pond. Take your time. This horizon has been here for thousands of years and will remain long after you leave.'
-    },
-    { id:'punto-6', num:'6', cat:'FAREWELL TERRACE', title:'What you take with you from Sant Patrici',
-      nextLabel:null,
-      trans:'You have reached the end of the tour. This terrace is our favourite spot at sunset, when golden light bathes the fields and the silence fills with crickets and cicadas. Sant Patrici is not just a hotel: it is a living piece of Menorca. Every stone, every vine, every branch of that millennial olive tree tells a story that is now yours too. Before you go, we invite you to sit for a moment, perhaps with a glass of estate wine, and let this place imprint itself on your memory. In Menorca they say that whoever drinks water from an island well always returns. We prefer to think that whoever lives a sunset at Sant Patrici never truly leaves. Thank you for your visit.'
-    }
-  ],
-  fr: [
-    { id:'punto-1', num:'1', cat:'BÂTIMENT PRINCIPAL', title:'La maison que l\'amour interdit a bâtie',
-      nextLabel:'Jardin des Sculptures',
-      trans:'Bienvenue à Sant Patrici. Cette demeure seigneuriale du XIXe siècle renferme entre ses murs une histoire d\'amour interdit. Elle fut construite par une famille de la noblesse minorquine cherchant un refuge loin des regards du port de Mahón. La légende raconte que le jeune héritier tomba amoureux d\'une paysanne du village voisin, et que les couloirs de cette maison furent témoins de leurs rencontres secrètes. Observez la façade : les murs en pierre de marès, typiques de Minorque, gardent l\'intérieur frais en été et chaud en hiver. Les volets verts ne sont pas simplement décoratifs ; ils protègent du soleil et de la tramontane. Chaque détail de cette construction témoigne de siècles de sagesse méditerranéenne.'
-    },
-    { id:'punto-2', num:'2', cat:'JARDIN DES SCULPTURES', title:'Pierre vivante parmi les jardins',
-      nextLabel:'L\'Olivier Millénaire',
-      trans:'Vous vous trouvez maintenant dans le jardin des sculptures, où l\'art contemporain dialogue avec la nature minorquine. Chaque œuvre que vous voyez a été choisie pour compléter le paysage, non pour rivaliser avec lui. Remarquez comment les formes organiques des sculptures imitent les rochers érodés par le vent que l\'on trouve sur la côte nord de l\'île. Ce jardin abrite des espèces autochtones de Minorque : lavande sauvage, romarin, thym et oliviers sauvages. Le parfum qui vous enveloppe est l\'arôme authentique de l\'île. Minorque a été déclarée Réserve de biosphère par l\'UNESCO en 1993, et à Sant Patrici nous nous engageons à préserver cet héritage naturel.'
-    },
-    { id:'punto-2b', num:'2b', cat:'L\'OLIVIER MILLÉNAIRE', title:'Témoin de mille ans',
-      nextLabel:'Les Vignobles',
-      trans:'Arrêtez-vous un instant devant cet olivier. Il a plus de mille ans. Il était là avant que ce domaine n\'existe, avant que les Britanniques ne dominent Minorque, même avant que les Arabes ne donnent son nom à Mahón. Ses racines ont résisté aux tempêtes de tramontane, aux sécheresses interminables et au passage de civilisations entières. À Minorque, l\'olivier est bien plus qu\'un arbre : c\'est un symbole de résistance et de lien avec la terre. Touchez son tronc si vous le souhaitez. Ces formes torsadées racontent l\'histoire de mille hivers et mille printemps. À Sant Patrici, nous utilisons son huile dans notre cuisine, bouclant ainsi un cycle commencé il y a un millénaire.'
-    },
-    { id:'punto-3', num:'3', cat:'LES VIGNOBLES', title:'Du vin à l\'âme minorquine',
-      nextLabel:'La Cave',
-      trans:'Bienvenue dans les vignobles de Sant Patrici. Ce que vous voyez devant vous sont des ceps de variétés autochtones : Manto Negro et Malvasía. La viticulture à Minorque possède une histoire fascinante. Sous la domination britannique au XVIIIe siècle, les Anglais encouragèrent la production de vin, et Minorque exporta même ses crus vers le Royaume-Uni. Avec le temps, la tradition se perdit presque entièrement. À Sant Patrici, nous avons fait revivre cet héritage. Le sol calcaire et la brise marine confèrent à nos vins un caractère minéral unique. La tramontane, ce vent du nord qui peut sembler implacable, renforce en réalité les ceps et concentre les saveurs dans le raisin. La nature et la patience : voilà les ingrédients de notre vin.'
-    },
-    { id:'punto-4', num:'4', cat:'LA CAVE', title:'Là où le silence crée',
-      nextLabel:'Piscine et Belvédère',
-      trans:'Entrez avec précaution ; vos yeux auront besoin d\'un instant pour s\'adapter à la pénombre. Cette cave a été creusée dans la roche naturelle du domaine et maintient une température constante de seize degrés toute l\'année, sans climatisation artificielle. C\'est ici que le moût se transforme en vin. Observez les barriques de chêne français : chacune contient le travail d\'une année entière de soins au vignoble. Le silence que vous percevez n\'est pas un hasard. Le vin a besoin de calme pour évoluer. Dans cette obscurité parfumée, le temps travaille à son propre rythme. Si vous souhaitez goûter le résultat en sortant d\'ici, notre terrasse propose une sélection de vins du domaine.'
-    },
-    { id:'punto-5', num:'5', cat:'PISCINE ET BELVÉDÈRE', title:'L\'horizon comme toile',
-      nextLabel:'Terrasse d\'Adieu',
-      trans:'Depuis ce point, vous avez devant vous l\'un des panoramas les plus spectaculaires de l\'intérieur de Minorque. Par temps clair, vous pouvez distinguer le profil du Monte Toro, point culminant de l\'île à seulement trois cent cinquante-sept mètres, mais suffisant pour dominer toute Minorque. Le paysage que vous contemplez est une mosaïque de champs délimités par des murs de pierre sèche, une technique classée au patrimoine mondial de l\'UNESCO. Ces murs ne sont pas de simples clôtures : ils protègent les cultures du vent, créent des microclimats et servent de refuge à des dizaines d\'espèces. La piscine à vos pieds a été conçue pour s\'intégrer dans ce paysage. Prenez votre temps. Cet horizon est là depuis des milliers d\'années et sera encore là quand vous partirez.'
-    },
-    { id:'punto-6', num:'6', cat:'TERRASSE D\'ADIEU', title:'Ce que vous emportez de Sant Patrici',
-      nextLabel:null,
-      trans:'Vous êtes arrivés à la fin du parcours. Cette terrasse est notre endroit préféré au coucher du soleil, quand la lumière dorée baigne les champs et que le silence se remplit de grillons et de cigales. Sant Patrici n\'est pas seulement un hôtel : c\'est un morceau vivant de Minorque. Chaque pierre, chaque cep, chaque branche de cet olivier millénaire raconte une histoire qui est désormais aussi la vôtre. Avant de partir, nous vous invitons à vous asseoir un moment, peut-être avec un verre de vin du domaine, et à laisser ce lieu s\'imprimer dans votre mémoire. À Minorque, on dit que celui qui boit l\'eau d\'un puits de l\'île revient toujours. Nous préférons penser que celui qui vit un coucher de soleil à Sant Patrici ne part jamais vraiment. Merci de votre visite.'
-    }
-  ],
-  de: [
-    { id:'punto-1', num:'1', cat:'HAUPTGEBÄUDE', title:'Das Haus, das die verbotene Liebe erbaute',
-      nextLabel:'Skulpturengarten',
-      trans:'Willkommen in Sant Patrici. Dieses herrschaftliche Haus aus dem neunzehnten Jahrhundert birgt in seinen Mauern eine Geschichte verbotener Liebe. Es wurde von einer menorquinischen Adelsfamilie erbaut, die fernab der Blicke des Hafens von Mahón Zuflucht suchte. Die Legende erzählt, dass sich der junge Erbe in eine Bauerntochter aus dem Nachbardorf verliebte und dass die Flure dieses Hauses Zeugen ihrer geheimen Begegnungen wurden. Betrachten Sie die Fassade: Die Marés-Sandsteinmauern, typisch für Menorca, halten das Innere im Sommer kühl und im Winter warm. Die grünen Fensterläden sind nicht nur dekorativ; sie schützen vor Sonne und Tramontana-Wind. Jedes Detail dieser Konstruktion zeugt von Jahrhunderten mediterraner Weisheit.'
-    },
-    { id:'punto-2', num:'2', cat:'SKULPTURENGARTEN', title:'Lebendiger Stein zwischen Gärten',
-      nextLabel:'Der Tausendjährige Olivenbaum',
-      trans:'Sie befinden sich nun im Skulpturengarten, wo zeitgenössische Kunst mit der menorquinischen Natur in Dialog tritt. Jedes Werk, das Sie sehen, wurde ausgewählt, um die Landschaft zu ergänzen, nicht um mit ihr zu konkurrieren. Beachten Sie, wie die organischen Formen der Skulpturen die vom Wind erodierten Felsen nachahmen, die Sie an der Nordküste der Insel finden. Dieser Garten beherbergt einheimische Arten Menorcas: wilden Lavendel, Rosmarin, Thymian und wilde Olivenbäume. Der Duft, der Sie umgibt, ist das authentische Parfüm der Insel. Menorca wurde 1993 von der UNESCO zum Biosphärenreservat erklärt, und in Sant Patrici verpflichten wir uns, dieses Naturerbe zu bewahren.'
-    },
-    { id:'punto-2b', num:'2b', cat:'DER TAUSENDJÄHRIGE OLIVENBAUM', title:'Zeuge von tausend Jahren',
-      nextLabel:'Die Weinberge',
-      trans:'Halten Sie einen Moment inne vor diesem Olivenbaum. Er ist über tausend Jahre alt. Er stand hier, bevor dieses Anwesen existierte, bevor die Briten über Menorca herrschten, sogar bevor die Araber Mahón seinen Namen gaben. Seine Wurzeln haben Tramontana-Stürme, endlose Dürren und den Lauf ganzer Zivilisationen überstanden. Auf Menorca ist der Olivenbaum weit mehr als ein Baum: Er ist ein Symbol für Widerstandskraft und Verbundenheit mit dem Land. Berühren Sie seinen Stamm, wenn Sie möchten. Diese verschlungenen Formen erzählen die Geschichte von tausend Wintern und tausend Frühlingen. In Sant Patrici verwenden wir sein Öl in unserer Küche und schließen damit einen Kreislauf, der vor einem Jahrtausend begann.'
-    },
-    { id:'punto-3', num:'3', cat:'DIE WEINBERGE', title:'Wein mit menorquinischer Seele',
-      nextLabel:'Der Weinkeller',
-      trans:'Willkommen in den Weinbergen von Sant Patrici. Vor Ihnen sehen Sie Rebstöcke einheimischer Sorten: Manto Negro und Malvasía. Der Weinbau auf Menorca hat eine faszinierende Geschichte. Während der britischen Herrschaft im achtzehnten Jahrhundert förderten die Engländer die Weinproduktion, und Menorca exportierte seine Weine sogar ins Vereinigte Königreich. Im Laufe der Zeit ging die Tradition fast vollständig verloren. In Sant Patrici haben wir dieses Erbe wiederbelebt. Der kalkhaltige Boden und die Meeresbrise verleihen unseren Weinen einen einzigartigen mineralischen Charakter. Die Tramontana, jener Nordwind der manchmal unerbittlich erscheint, stärkt tatsächlich die Rebstöcke und konzentriert die Aromen in der Traube. Natur und Geduld: Das sind die Zutaten unseres Weins.'
-    },
-    { id:'punto-4', num:'4', cat:'DER WEINKELLER', title:'Wo die Stille erschafft',
-      nextLabel:'Pool und Aussichtspunkt',
-      trans:'Treten Sie vorsichtig ein; Ihre Augen brauchen einen Moment, um sich an das Halbdunkel zu gewöhnen. Dieser Keller wurde aus dem natürlichen Fels des Anwesens gehauen und hält das ganze Jahr über eine konstante Temperatur von sechzehn Grad, ohne künstliche Klimatisierung. Hier verwandelt sich Most in Wein. Betrachten Sie die Fässer aus französischer Eiche: Jedes enthält die Arbeit eines ganzen Jahres der Pflege im Weinberg. Die Stille, die Sie wahrnehmen, ist kein Zufall. Wein braucht Ruhe, um sich zu entwickeln. In dieser duftenden Dunkelheit arbeitet die Zeit in ihrem eigenen Rhythmus. Wenn Sie nach dem Verlassen das Ergebnis probieren möchten, können Sie auf unserer Terrasse eine Auswahl an Weinen des Anwesens genießen.'
-    },
-    { id:'punto-5', num:'5', cat:'POOL UND AUSSICHTSPUNKT', title:'Der Horizont als Leinwand',
-      nextLabel:'Abschiedsterrasse',
-      trans:'Von diesem Punkt aus haben Sie eines der spektakulärsten Panoramen des menorquinischen Hinterlands vor sich. An klaren Tagen können Sie das Profil des Monte Toro erkennen, des höchsten Punktes der Insel mit nur dreihundertsiebenundfünfzig Metern, aber ausreichend, um ganz Menorca zu überblicken. Die Landschaft, die Sie betrachten, ist ein Mosaik aus Feldern, die durch Trockensteinmauern geteilt werden, eine Technik die von der UNESCO zum Weltkulturerbe erklärt wurde. Diese Mauern sind nicht bloße Begrenzungen: Sie schützen die Kulturen vor Wind, schaffen Mikroklimate und bieten Dutzenden von Arten Unterschlupf. Der Pool zu Ihren Füßen wurde so gestaltet, dass er sich in diese Landschaft einfügt. Nehmen Sie sich Zeit. Dieser Horizont ist seit Tausenden von Jahren hier und wird noch hier sein, wenn Sie gegangen sind.'
-    },
-    { id:'punto-6', num:'6', cat:'ABSCHIEDSTERRASSE', title:'Was Sie von Sant Patrici mitnehmen',
-      nextLabel:null,
-      trans:'Sie haben das Ende der Tour erreicht. Diese Terrasse ist unser Lieblingsort bei Sonnenuntergang, wenn goldenes Licht die Felder taucht und die Stille sich mit Grillen und Zikaden füllt. Sant Patrici ist nicht nur ein Hotel: Es ist ein lebendiges Stück Menorca. Jeder Stein, jeder Rebstock, jeder Ast dieses tausendjährigen Olivenbaums erzählt eine Geschichte, die nun auch Ihre ist. Bevor Sie gehen, laden wir Sie ein, einen Moment Platz zu nehmen, vielleicht mit einem Glas Wein vom Anwesen, und diesen Ort in Ihre Erinnerung einzuprägen. Auf Menorca sagt man, wer Wasser aus einem Brunnen der Insel trinkt, kehrt immer zurück. Wir glauben lieber, dass wer einen Sonnenuntergang in Sant Patrici erlebt, nie ganz fortgeht. Vielen Dank für Ihren Besuch.'
-    }
-  ]
+es:[
+{id:'punto-1',num:'1',cat:'EDIFICIO PRINCIPAL',title:'La casa que construyó el amor prohibido',nextLabel:'Jardín de las Esculturas',
+trans:`Deténganse un momento frente a esta fachada. Fíjense en el grosor de estos muros: tienen más de un metro de piedra de marés, la misma que se colocó aquí en 1918. Y miren las proporciones: la planta cuadrada, la simetría, esa escalinata de entrada. Esto no es una casa de campo menorquina. Quien la mandó construir quiso una villa al estilo italiano, como las que había visto en sus viajes. Parece tranquila, ¿verdad? Piedra clara, buganvillas, esa luz de Menorca que lo acaricia todo. Pero esta casa guarda un secreto. Porque no la encargó un noble ni la levantó para una familia. Esta casa la construyó un amor prohibido.
+
+Para entender esta historia hay que viajar primero al Madrid de principios del siglo XX. Imaginen a Fernando Vives: nacido en Mahón en 1867, hijo de la alta burguesía menorquina, pero afincado en la capital, donde había levantado un pequeño imperio. Era dueño de "La Mahonesa", unas pastelerías célebres que llevaban los dulces de Menorca a los salones de Madrid. Coleccionista de antigüedades, apasionado del arte árabe. Su propio hermano, Antonio, llegó a ser uno de los numismáticos más importantes de España, declarado Hijo Ilustre de Mahón. Los Vives eran gente de peso. Y Fernando estaba casado con Francisca Segura —Paca, como la llamaban todos—, una mujer que venía del mundo del espectáculo y la zarzuela.
+
+Pero Madrid le pesaba. Fernando echaba de menos la isla, la calma, el olor a campo. Y en 1917 compró esta finca buscando un refugio donde respirar lejos del ruido de la capital. El problema fue que a Paca, acostumbrada a la vida madrileña, aquella tranquilidad menorquina no le interesaba lo más mínimo. Fernando venía solo. Y como en aquella época un hombre no se hacía la casa, contrató a una joven para que le ayudara.
+
+Se llamaba Virginia López Álvarez, aunque todo el mundo acabaría conociéndola como Xini. Había llegado de Valladolid, hija de una familia humilde y enorme —su madre tuvo veinte hijos, de los que sobrevivieron dieciocho—. Xini ya trabajaba para Fernando en Madrid, en la pastelería. Ahora la trajo a Menorca para encargarse de la casa.
+
+Lo que pasó después era quizá inevitable. Fernando, cada vez, venía más. Se quedaba más tiempo. Hasta que dejó de irse. Se había enamorado de Xini. Paca, al enterarse, abandonó la finca y se marchó a vivir a Mahón. Y esta casa, la que ustedes tienen delante, se convirtió en el hogar de Fernando y Xini.
+
+Él la llenó de todo lo que ella merecía: estatuas de mármol de las cuatro estaciones en el jardín, cortinas de terciopelo rojo, una cama de barras doradas con sábanas de seda. Fernando, pintor aficionado, la retrataba en el porche mientras la brisa entraba por esas mismas ventanas que ustedes están viendo ahora. Para que se hagan una idea de quién era Xini: cuentan que caminaba desde esta finca hasta el pueblo con una bandeja de pastissets equilibrada sobre la cabeza, erguida como una reina, con sus joyas puestas y sus tacones —sí, tacones en un camino de tierra—. En Ferreries la llamaban la Gilda, como la actriz de cine. Era ese tipo de mujer.
+
+Vivieron aquí su edad dorada. Aislados, sí. Pero libres.
+
+Hasta que Fernando murió, en enero de 1941. Tenía 73 años.
+
+Y entonces, el silencio. Imaginen esta casa sin su voz, sin sus fiestas, sin el olor de los dulces que horneaba. Tres meses antes de morir, sabiendo lo que venía, Fernando había hecho lo único que podía: partir su vida en dos. La casa y el jardín se los cedió a Xini, en vida. Todo lo demás —las pastelerías, las propiedades de Mahón, el dinero— fue para Paca, su esposa legítima.
+
+De la noche a la mañana, Xini se quedó con las paredes, pero sin nada dentro. Despidió al jardinero. Compró gallinas, cerdos, un par de vacas lecheras. Y donde antes había mármol y música, empezaron a aparecer animales por todas partes. Las vacas se rascaban contra las estatuas de las cuatro estaciones. Los cerdos dormían donde antes se bailaba. Xini aprendió a ordeñar, a segar, a hacer queso —un queso blanco y salado que vendía en las tiendas de Ferreries—. La pobreza la empujó a robar hortalizas de las fincas vecinas para sobrevivir. Pero jamás dejó de caminar erguida. Y siempre con tacones: al final, con las manos destrozadas por el trabajo, ya no podía calzárselos sola. Caminaba descalza hasta casa de su amiga Rafela, llevando los zapatos en una bolsa, y le pedía que la ayudara a ponérselos. Siempre fue con tacón.
+
+Veinticinco años resistió aquí sola. Sin rendirse. Sin marcharse. Como si irse fuera traicionar la memoria de Fernando.
+
+Murió en octubre de 1966, a los 69 años. La encontraron sus amigas en la cocina, sentada en una silla, con la cabeza sobre la mesa. En su tumba, en el cementerio de Mahón, no hay ninguna lápida que recuerde su nombre.
+
+Sus hermanos llegaron de la península, vendieron lo poco que valía y quemaron el resto. Literalmente. Apilaron colchones, retratos, cuadros, cartas, alfombras, muebles —toda una vida— en el patio, y les prendieron fuego. Ceniza y silencio cerraron la historia de Fernando y Xini.
+
+Pero la tierra recuerda.
+
+Con los años, esta finca fue cambiando de manos hasta que alguien vio en ella lo que Fernando vio en 1917: no un negocio, sino una posibilidad. Lo que hoy ven a su alrededor —el hotel, la quesería, la bodega, los viñedos— es un acto de resurrección. Es la prueba de que un lugar que conoció el amor, la decadencia y el abandono puede renacer y dar frutos. Frutos que hoy, literalmente, ustedes van a poder saborear.
+
+Caminen ahora hacia la izquierda, donde verán la señalización del punto número dos. Les espera un jardín que habla en silencio.`},
+
+{id:'punto-2',num:'2',cat:'JARDÍN DE LAS ESCULTURAS',title:'Diez voces en la espiral',nextLabel:'Las Esculturas una a una',
+trans:`Acaban de escuchar una historia de fuego. Los hermanos de Xini quemaron todo lo que había en esta finca: los cuadros, las cartas, los muebles, la memoria. Y durante años, aquí no hubo nada. Solo tierra callada.
+
+Lo que tienen ahora delante es la respuesta.
+
+Antes de mirar las esculturas, les pido que miren el suelo. Fíjense en la forma del camino que van a recorrer. ¿La ven? Es una espiral. No es decoración: es una decisión. Este jardín, que ocupa más de diez mil metros cuadrados, fue diseñado por el paisajista Josep Bosch Espelta, discípulo del gran Nicolau Maria Rubió i Tudurí. Y Bosch eligió la espiral porque es la forma que adopta la vida. Está en las galaxias, en las conchas de los caracoles, en la doble hélice del ADN. Si el trazado les recuerda a algo, probablemente sea al Museo Guggenheim de Nueva York: el diseño de este jardín está inspirado directamente en la rampa helicoidal de Frank Lloyd Wright. Ustedes, al caminar por este sendero, van a recorrer esa misma idea: el paso del ser humano por la Tierra.
+
+Lo que ocurrió aquí para llenarlo de voces fue extraordinario. En mayo de 2003, Menorca cumplía diez años como Reserva de la Biosfera, y para celebrarlo se organizó el Primer Simposio Internacional Hort Sant Patrici. Durante veinticinco días, catorce artistas de todo el mundo —una paraguaya, un italiano, una coreana, un egipcio, un rumano, un haitiano afincado en Bélgica...— convivieron en esta finca. Comieron juntos, discutieron juntos, trabajaron la piedra juntos. Y de esa convivencia nacieron diez esculturas talladas en mármol de Carrara. Diez respuestas distintas a una misma pregunta: ¿cuál es la relación del ser humano con la naturaleza?
+
+Mientras pasean, irán encontrándolas. Verán la fuente de Nélida Mendoza, la artista paraguaya, que usó el agua como materia viva: el agua cae sobre la piedra y la va moldeando lentamente, igual que el tiempo moldea la Tierra. Es la única pieza que no está aquí en el jardín; la encontrarán junto al lago, porque su mensaje necesitaba otro escenario.
+
+Encontrarán la Balanza de Giacomo Santini, un jovencísimo escultor italiano que quiso recordarnos que el equilibrio entre el hombre y la naturaleza es frágil. Las manos que verán en la pieza son reales: son moldes de las manos de niños que vinieron durante el simposio.
+
+Y verán la Tierra de George Dan Istrate, el escultor rumano: una esfera perfecta partida por un corte limpio. Es la intervención del hombre. Si no cambiamos de rumbo, la fractura será irreversible.
+
+Así, escultura a escultura, este jardín les irá hablando. Escúchenlo. Cada pieza es una carta de amor —o de advertencia— a la isla que nos acoge.
+
+Tómense su tiempo. Cuando estén listos, sigan la espiral hacia el punto tres, donde la memoria de esta tierra se hace líquida. Y si desean conocer cada escultura en detalle, quédense: vamos a recorrer las diez voces de este jardín, una a una.`},
+
+{id:'punto-2b',num:'2b',cat:'LAS ESCULTURAS UNA A UNA',title:'Mármol con nombre propio',nextLabel:'Viñedos',
+trans:`Nélida Mendoza — Paraguay.
+Empezamos por la que no está aquí. La obra de Nélida se encuentra en el lago del hotel, y hay una razón poderosa: su materia prima no es solo la piedra, sino el agua. Nélida utiliza el agua como un elemento vivo que transforma la escultura con el paso del tiempo. El agua va dando forma lentamente a una fuente que representa la Tierra. Es una obra que cambia, que envejece, que respira. Por eso necesitaba estar donde el agua manda.
+
+Giacomo Santini — Italia.
+Giacomo era apenas un joven cuando llegó al simposio, pero su mensaje era el de un sabio. Su «Balanza» nos habla del equilibrio frágil entre la fuerza de la naturaleza y la del hombre. Las manos que ven en la pieza no son inventadas: son moldes reales de las manos de niños que participaron durante aquellos veinticinco días. La inocencia sosteniendo el peso del mundo.
+
+Oliviero Bertolasso — Italia y Alemania.
+El italo-alemán eligió la figura humana para lanzar un mensaje incómodo. Su obra es figurativa y deliberadamente pesimista: nos confronta con el futuro de la naturaleza y con la responsabilidad que tenemos en su conservación. No es una escultura que busque agradar; busca incomodar. Y en eso reside su fuerza.
+
+Shin Myong-Ok — Corea.
+La artista coreana nos lleva al terreno espiritual. Su escultura evoca la imposición de manos, ese gesto universal que según la cultura puede significar curación o destrucción, bendición o condena. Las formas que ven sugieren manos abiertas sobre la naturaleza. La pregunta que deja en el aire es poderosa: ¿estamos sanando la Tierra o estamos enfermándola?
+
+Tristán Casamajor — Haití, residente en Bélgica.
+Tristán creó un enorme tótem que juega con los elementos y utiliza el sol como protagonista. Es, literalmente, un reloj de sol: la evolución natural de la Tierra marcada por la luz. Si se fijan en las formas del tótem, descubrirán siluetas que recuerdan al cuerpo humano. El tiempo de la naturaleza y el tiempo del hombre, fundiéndose en la misma piedra.
+
+Said Badr — Egipto.
+El egipcio concibió una obra vertical, casi monumental, dedicada a ensalzar la magnitud de la naturaleza en Menorca. La verticalidad no es casual: es la tierra que se yergue, que se alza, que reclama su presencia frente a un ser humano que tiende a mirar solo hacia adelante. Said nos pide que miremos hacia arriba.
+
+George Dan Istrate — Rumanía.
+Esta es una de las esculturas más impactantes del jardín. El joven rumano talló una esfera perfecta —la Tierra— y luego la partió con un corte transversal limpio. Esa incisión es la intervención del hombre: precisa, fría, irreversible si no actuamos a tiempo. La perfección rota. Un aviso tallado en mármol de Carrara.
+
+Toni Capó — Mallorca.
+El mallorquín trabajó por primera vez en mármol para este simposio, y eligió un tema que conoce bien: la fragilidad del ser humano frente a la dureza de la naturaleza. Su escultura figurativa evoca la forma de las rocas abruptas de la cara norte de la isla, esa costa castigada sin piedad por la tramontana. El hombre tallado en la roca, resistiendo el viento. O intentándolo.
+
+Filippo Tincolini — Italia.
+Filippo utiliza el cuerpo humano como vehículo conceptual. Su obra representa un pubis femenino y habla de fertilidad, del origen de toda vida. Es una pieza directa, sin metáforas intermedias: la vida nace del cuerpo, y el cuerpo nace de la tierra. El ciclo cerrado.
+
+Cada una de estas diez piezas fue creada aquí, en esta finca, con mármol de Carrara traído expresamente para el simposio. Los artistas convivieron durante veinticinco días, durmieron aquí, comieron aquí, respiraron este aire. Y eso se nota: estas esculturas no son piezas de museo trasladadas; nacieron de esta tierra y para esta tierra.
+
+Tómense el tiempo que necesiten. Cuando estén listos, sigan la espiral hacia el punto tres.`},
+
+{id:'punto-3',num:'3',cat:'VIÑEDOS',title:'Cepas que sobrevivieron al silencio',nextLabel:'Quesería',
+trans:`Acaban de recorrer un jardín que hoy es uno de los rincones más íntimos de Sant Patrici.
+Años atrás, en tiempos de Xini y Fernando, el jardín dio vida a fiestas de vendimia, cenas bajo las estrellas, encuentros donde un pescador de Fornells podía sentarse junto a un embajador y nadie preguntaba de dónde venías, solo si querías quedarte.
+Xini y Fernando entendieron algo que muy poca gente entiende: que un lugar solo cobra vida cuando lo llenas de personas. Y que la belleza, si no se comparte, no sirve de nada.
+
+Aquí en los Viñedos, no hay esculturas ni jardines. Solo hileras de viñas bajo el sol. Parece sencillo. Pero estas cepas que ven son sobrevivientes. Y para entender por qué, necesitan conocer una historia que empieza hace más de dos mil años.
+
+Los romanos ya hacían vino en Menorca. Esta isla, batida por la tramontana y acariciada por el Mediterráneo, resultó ser un lugar extraordinario para la vid. Durante siglos, el vino menorquín fue un secreto bien guardado. Hasta que llegaron los británicos.
+
+En el siglo XVIII, Menorca pasó a manos del Imperio Británico, y con ellos llegó una sed insaciable. La Royal Navy necesitaba vino, los comerciantes querían vino, y la isla entera se transformó en un viñedo flotante. El puerto de Mahón exportaba millones de litros. Fue la edad de oro.
+
+Y entonces, el desastre. A finales del siglo XIX, un insecto microscópico llamado filoxera cruzó el Atlántico escondido en unas cepas americanas y arrasó los viñedos de toda Europa. Menorca no se salvó. En pocos años, lo que había tardado siglos en crecer desapareció. Y el silencio se instaló en esta tierra durante más de un siglo.
+
+No fue hasta el año 2000 cuando algunos valientes empezaron a plantar de nuevo. Y en 2002, Sant Patrici decidió sumarse a ese renacimiento. Plantaron entre dos y tres hectáreas de viñedos donde antes solo había campo vacío. En 2005 fundaron formalmente la bodega. Y en 2008 embotellaron su primer vino. Seis años de la cepa a la copa. Así de lenta es la paciencia cuando se hace bien.
+
+Las variedades que ven aquí no fueron elegidas al azar.
+Merlot, Cabernet Sauvignon y Syrah para los tintos.
+Chardonnay, Moscatel y Prensal para los blancos.
+Son uvas que aman las condiciones extremas: el sol brutal del verano menorquín, la tramontana que endurece la piel de la uva y concentra los sabores, y la brisa marina que aporta esa salinidad sutil que luego encontrarán en la copa.
+
+Aquí todo es cuestión de equilibrio. El calor da azúcar, que se traduce en cuerpo y alcohol. El viento y el fresco nocturno conservan la acidez, que da frescura y elegancia. El resultado es un vino que solo puede nacer aquí. Un vino con denominación Vi de la Terra Illa de Menorca.
+
+Miren las cepas un momento. Parecen modestas, casi frágiles. Pero bajo el suelo, sus raíces se extienden metros y metros buscando agua y minerales. Lo que no se ve es lo que importa. Como en tantas cosas.
+
+Caminen hacia el punto cuatro. Vamos a entrar ahora en uno de los lugares más antiguos de esta finca: el lugar donde las manos convierten la leche en historia.`},
+
+{id:'punto-4',num:'4',cat:'QUESERÍA',title:'Donde las manos moldean el tiempo',nextLabel:'Bodega',
+trans:`Están en frente de nuestra quesería, y quiero que se preparen para algo. Si vinieran por la mañana, verían a través de los cristales un ritual que se repite aquí exactamente igual que hace doscientos años. Nuestros maestros queseros moldean cada pieza, una por una, con las manos. Sin moldes industriales. Sin atajos. Solo un paño de algodón —que llamamos «fogasser»—, un cordel —el «lligam»— y la presión de unas manos que saben exactamente cuánta fuerza aplicar.
+
+Ese saber no se aprende en un libro. Se hereda. Se transmite de mano a mano, de gesto a gesto, durante más de treinta años de trayectoria en nuestro caso.
+
+Déjenme explicarles cómo nace un queso en Sant Patrici, paso a paso.
+
+Todo empieza con la leche. Leche fresca de vaca de nuestro entorno, del campo de Menorca. La calidad de esa leche lo determina todo: el pasto que comen las vacas, la brisa marina que impregna los campos, la tierra calcárea de Menorca. Todo eso ya está en la leche antes de que nosotros toquemos nada.
+
+La leche se vierte en grandes cubas y se le añade cuajo natural. En unos cuarenta minutos, la leche se transforma: deja de ser líquida y se convierte en una masa gelatinosa, la cuajada.
+
+Es un momento casi mágico, una metamorfosis silenciosa.
+
+Entonces intervienen las manos. El maestro quesero corta la cuajada con un instrumento llamado lira, en trozos pequeños, para que suelte el suero. Luego recoge esa cuajada y la envuelve en el fogasser, el paño de algodón tradicional. Lo ata con el lligam, el cordel, y comienza el proceso de prensado. En la prensa, expulsa el suero restante, gracias a la presión que se ejerce con un peso de 4,6kg sobre la pieza.
+
+¿Ven ese dibujo en la parte superior del queso, esa especie de grabado en relieve? Le llamamos «mamella». No es decoración: es la huella que deja el paño al atarse sobre la cuajada. Es la firma del método tradicional. Si un queso tiene mamella, pueden estar seguros de que unas manos humanas lo formaron.
+
+Después viene el baño en salmuera. El queso se sumerge en una solución de agua y sal durante horas. La sal penetra lentamente, actúa como conservante natural y empieza a definir el sabor. Y a partir de ahí, el queso entra en la fase más misteriosa: la maduración. En cámaras con temperatura y humedad controladas, el tiempo hace su trabajo. Semanas, meses, a veces más de un año.
+
+El queso Mahón-Menorca tiene Denominación de Origen Protegida, lo que significa que solo puede elaborarse en esta isla, con leche de vaca del campo menorquin, siguiendo un método específico y unas normativas muy estrictas.
+
+Es uno de los quesos más antiguos de España —se han encontrado restos de utensilios queseros en yacimientos prehistóricos de Menorca—. Estamos hablando de un oficio que tiene más de tres mil años.
+
+Y en Sant Patrici, ese oficio se traduce en una familia de quesos con personalidades muy distintas.
+
+Dentro de nuestra gama con Denominación de Origen, encontrarán tres edades. El Semicurado, con más de 3 meses de curación en cámara. Es nuestro queso más versátil y el que mejor representa la esencia de la D.O.P. Después viene el Curado, que ha pasado más tiempo en cámara, con más de 6 meses de curación. Es más firme, más intenso. Finalmente, el Añejo, con más de 1 año de maduración en cámara. Un queso que ha madurado pacientemente hasta desarrollar una profundidad de sabor extraordinaria: Quebradizo y potente.
+
+Nuestro Queso fresco, es elaborado de la misma forma tradicional. Sin embargo, se usa leche pasteurizada, sin añadir aditivos ni conservantes. Es característico por tener un sabor muy suave y un color blanco intenso. Nuestra receta es un bien muy preciado, una receta heredada, que no van a encontrar en ninguna otra finca.
+
+Pero la curiosidad de nuestros queseros no se detiene ahí. También elaboramos una línea gourmet, donde jugamos con hierbas y sabores aromáticos.
+
+En nuestra tienda museo encontrarán utensilios que usaban nuestros queseros de otra época en Sant Patrici. Prensas de madera originales, los moldes, etc. Son objetos humildes, desgastados por el uso, pero son los testigos mudos de un oficio que nos negamos a dejar morir.
+
+Caminen ahora hacia el punto cinco, donde encontraran nuestra bodega.`},
+
+{id:'punto-5',num:'5',cat:'BODEGA',title:'Donde el silencio crea',nextLabel:'Tienda Museo',
+trans:`Noten el cambio al entrar aquí. La temperatura baja y la luz se atenúa.
+
+Se encuentran en la bodega de Sant Patrici. Si la quesería era el lugar de las manos, este es el lugar de la paciencia.
+
+Hacer vino es, en el fondo, una negociación con el tiempo. Y esa negociación empieza mucho antes de llegar aquí, en las viñas que acaban de ver.
+
+Todo arranca con la vendimia. Hay un instante preciso —a veces cuestión de días— en el que la uva alcanza el equilibrio perfecto entre azúcar y acidez. Si te adelantas, el vino será delgado y sin cuerpo. Si te retrasas, perderá frescura y ganará un alcohol excesivo. En Menorca, donde el calor del verano acelera la maduración, ese margen es aún más estrecho. Hay que ser rápido y certero. Se recoge a primera hora de la mañana, con el frescor de la noche aún en la piel de la uva, para que llegue a la bodega en las mejores condiciones.
+
+Una vez aquí dentro, la uva comienza su transformación. El primer paso es el despalillado: separar cada grano de la rama, el raspón, porque esa parte leñosa aportaría amargor y astringencia al vino. Se hace con cuidado, sin romper las pepitas, que también podrían dar sabores no deseados.
+
+Después viene el estrujado, un prensado suave que libera el mosto —el jugo— sin machacar las pieles en exceso. En los vinos blancos, utilizamos Prensal, Chardonnay y Moscatel. En el que el mosto se separa rápidamente de las pieles para obtener un zumo limpio y delicado. En los tintos utilizamos Merlot, Cabernet Sauvignon, Syrah. El mosto fermenta en contacto con las pieles durante días, porque es ahí donde están el color, los taninos y gran parte del sabor.
+
+Y aquí es donde Sant Patrici hace algo que nos distingue: fermentamos a temperatura muy baja, alrededor de catorce grados centígrados, bastante menos de lo habitual. ¿Por qué? Porque una fermentación lenta es como una conversación larga: extrae matices que una fermentación rápida nunca descubriría. Las levaduras trabajan despacio, sin estrés, y producen aromas más finos, más complejos. Las notas florales, la fruta elegante, esa sensación de frescura en boca: todo eso necesita tiempo y frío.
+
+Durante la fermentación, el azúcar de la uva se transforma en alcohol y dióxido de carbono. Es un proceso natural, ancestral, que el ser humano descubrió hace miles de años y que en esencia no ha cambiado: la uva quiere convertirse en vino. Nosotros solo la acompañamos.
+
+Terminada la fermentación, viene el reposo. Miren a su alrededor: en esas cubas que ven, el vino duerme durante meses. Pero no es un sueño pasivo. El vino respira, una cantidad minúscula de oxígeno lo va transformando lentamente: suaviza los taninos —esa sensación de sequedad en la boca—, redondea el cuerpo, y deja notas nuevas que la uva sola nunca habría dado.
+
+El enólogo decide cuánto tiempo descansa cada vino, como un director de orquesta que asigna a cada instrumento su momento.
+
+Después, el vino se clarifica y se filtra 2 o 3 veces, con unos filtros muy finos.
+
+Una vez filtrado y clarificado, solo nos falta embotellar, en botella de cristal. Donde el vino, sigue evolucionando en silencio y en oscuridad, afinando sus aromas, integrando sus sabores, hasta que alguien lo descorcha y completa el ciclo.
+
+Todos nuestros vinos llevan el sello «Vi de la Terra Illa de Menorca», la certificación que garantiza que nacieron de estas viñas, bajo este sol y este viento, y que fueron elaborados íntegramente en la isla.
+
+Desde las cepas que han visto fuera hasta la copa que van a degustar en unos minutos, habrán pasado meses. Cada botella de Sant Patrici es tiempo condensado. Tiempo de sol, de viento, de manos, de espera.`},
+
+{id:'punto-6',num:'6',cat:'TIENDA MUSEO',title:'El momento de saborear',nextLabel:null,
+trans:`Y ahora sí: ha llegado el momento de dejar de escuchar y empezar a saborear. Diríjanse a la nuestra tienda museo, donde les espera un maridaje de nuestros quesos y nuestros vinos. No tengan prisa. Dejen que el vino limpie el paladar, que la grasa del queso abrace la acidez. Busquen los sabores que les he ido describiendo. Porque todo lo que han escuchado hoy —la historia de Fernando y Xini, la espiral del jardín, las vides que sobrevivieron a la filoxera, las manos del quesero, el reposo del vino— todo eso está, de alguna forma, en lo que van a probar.
+
+Disfruten. Este momento es suyo.`}
+],
+
+en:[
+{id:'punto-1',num:'1',cat:'MAIN BUILDING',title:'The house that forbidden love built',nextLabel:'Sculpture Garden',
+trans:`Stop for a moment in front of this façade. Look at the thickness of these walls: over a metre of marés stone, the same stone laid here in 1918. And look at the proportions: the square floor plan, the symmetry, that entrance stairway. This is not a Menorcan farmhouse. Whoever commissioned it wanted an Italian-style villa, like the ones he had seen on his travels. It looks peaceful, doesn't it? Light stone, bougainvillea, that Menorcan light that caresses everything. But this house holds a secret. It was not ordered by a nobleman nor built for a family. This house was built by a forbidden love.
+
+To understand this story we must first travel to Madrid at the turn of the twentieth century. Picture Fernando Vives: born in Mahón in 1867, son of the Menorcan upper bourgeoisie, yet settled in the capital, where he had built a small empire. He owned "La Mahonesa," celebrated pastry shops that brought the sweets of Menorca to the salons of Madrid. A collector of antiquities, passionate about Arab art. His own brother, Antonio, became one of Spain's most important numismatists, declared an Illustrious Son of Mahón. The Vives family carried weight. And Fernando was married to Francisca Segura — Paca, as everyone called her — a woman from the world of entertainment and zarzuela.
+
+But Madrid weighed on him. Fernando missed the island, the calm, the smell of the countryside. And in 1917 he bought this estate, seeking a refuge where he could breathe far from the noise of the capital. The problem was that Paca, accustomed to Madrid life, had not the slightest interest in Menorcan tranquillity. Fernando came alone. And since in those days a man did not keep his own house, he hired a young woman to help him.
+
+Her name was Virginia López Álvarez, although everyone would come to know her as Xini. She had arrived from Valladolid, daughter of a humble and enormous family — her mother bore twenty children, of whom eighteen survived. Xini already worked for Fernando in Madrid, at the pastry shop. Now he brought her to Menorca to take care of the house.
+
+What happened next was perhaps inevitable. Fernando kept coming more often. He stayed longer. Until he stopped leaving. He had fallen in love with Xini. Paca, upon learning the truth, abandoned the estate and moved to Mahón. And this house, the one before you now, became the home of Fernando and Xini.
+
+He filled it with everything she deserved: marble statues of the four seasons in the garden, red velvet curtains, a bed with golden bars and silk sheets. Fernando, an amateur painter, would paint her portrait on the porch while the breeze came through those very windows you are looking at now. To give you an idea of who Xini was: they say she walked from this estate to the village with a tray of pastissets balanced on her head, upright as a queen, wearing her jewels and her heels — yes, heels on a dirt road. In Ferreries they called her la Gilda, like the film star. She was that kind of woman.
+
+They lived here in their golden age. Isolated, yes. But free.
+
+Until Fernando died, in January 1941. He was 73 years old.
+
+And then, silence. Imagine this house without his voice, without the parties, without the smell of the sweets he baked. Three months before dying, knowing what was coming, Fernando had done the only thing he could: split his life in two. The house and garden he gave to Xini while still alive. Everything else — the pastry shops, the properties in Mahón, the money — went to Paca, his legitimate wife.
+
+Overnight, Xini was left with the walls but nothing inside them. She dismissed the gardener. She bought chickens, pigs, a pair of dairy cows. And where there had once been marble and music, animals began appearing everywhere. The cows scratched themselves against the statues of the four seasons. The pigs slept where people once danced. Xini learned to milk, to harvest, to make cheese — a white, salty cheese she sold in the shops of Ferreries. Poverty drove her to steal vegetables from neighbouring estates to survive. But she never stopped walking upright. And always in heels: in the end, with her hands destroyed by work, she could no longer put them on by herself. She would walk barefoot to her friend Rafela's house, carrying the shoes in a bag, and ask her to help put them on. She always wore heels.
+
+Twenty-five years she held on here alone. Without giving up. Without leaving. As if leaving would mean betraying Fernando's memory.
+
+She died in October 1966, aged 69. Her friends found her in the kitchen, sitting in a chair, her head on the table. On her grave, in the cemetery of Mahón, there is no headstone bearing her name.
+
+Her siblings arrived from the mainland, sold what little had value, and burned the rest. Literally. They piled mattresses, portraits, paintings, letters, rugs, furniture — an entire life — in the courtyard and set them on fire. Ash and silence closed the story of Fernando and Xini.
+
+But the land remembers.
+
+Over the years this estate changed hands until someone saw in it what Fernando saw in 1917: not a business, but a possibility. What you see around you today — the hotel, the cheese dairy, the winery, the vineyards — is an act of resurrection. It is proof that a place that knew love, decay and abandonment can be reborn and bear fruit. Fruit that today, literally, you will be able to taste.
+
+Now walk to the left, where you will see the sign for stop number two. A garden that speaks in silence awaits you.`},
+
+{id:'punto-2',num:'2',cat:'SCULPTURE GARDEN',title:'Ten voices in the spiral',nextLabel:'The Sculptures One by One',
+trans:`You have just heard a story of fire. Xini's siblings burned everything on this estate: the paintings, the letters, the furniture, the memory. And for years, there was nothing here. Only silent earth.
+
+What you see before you now is the answer.
+
+Before looking at the sculptures, I ask you to look at the ground. Notice the shape of the path you are about to walk. Can you see it? It is a spiral. It is not decoration: it is a decision. This garden, which covers more than ten thousand square metres, was designed by the landscape architect Josep Bosch Espelta, a disciple of the great Nicolau Maria Rubió i Tudurí. Bosch chose the spiral because it is the shape that life takes. It is in galaxies, in snail shells, in the double helix of DNA. If the layout reminds you of something, it is probably the Guggenheim Museum in New York: the design of this garden was directly inspired by Frank Lloyd Wright's helical ramp. As you walk along this path, you will trace that same idea: the passage of human beings through the Earth.
+
+What happened here to fill it with voices was extraordinary. In May 2003, Menorca was celebrating ten years as a Biosphere Reserve, and to mark the occasion the First International Symposium Hort Sant Patrici was organised. For twenty-five days, fourteen artists from around the world — a Paraguayan, an Italian, a Korean, an Egyptian, a Romanian, a Haitian based in Belgium… — lived together on this estate. They ate together, debated together, worked the stone together. And from that coexistence ten sculptures carved in Carrara marble were born. Ten different answers to a single question: what is the relationship between human beings and nature?
+
+As you stroll, you will find them. You will see the fountain by Nélida Mendoza, the Paraguayan artist, who used water as living material: the water falls on the stone and slowly shapes it, just as time shapes the Earth. It is the only piece not here in the garden; you will find it by the lake, because its message needed a different setting.
+
+You will find the Balance by Giacomo Santini, a very young Italian sculptor who wanted to remind us that the equilibrium between humanity and nature is fragile. The hands you see on the piece are real: they are moulds of children's hands made during the symposium.
+
+And you will see the Earth by George Dan Istrate, the Romanian sculptor: a perfect sphere split by a clean cut. It is the intervention of humankind. If we do not change course, the fracture will be irreversible.
+
+Thus, sculpture by sculpture, this garden will speak to you. Listen to it. Each piece is a love letter — or a warning — to the island that welcomes us.
+
+Take your time. When you are ready, follow the spiral towards stop three, where the memory of this land becomes liquid. And if you wish to know each sculpture in detail, stay: we will visit the ten voices of this garden, one by one.`},
+
+{id:'punto-2b',num:'2b',cat:'THE SCULPTURES ONE BY ONE',title:'Marble with a name',nextLabel:'The Vineyards',
+trans:`Nélida Mendoza — Paraguay.
+We begin with the one that is not here. Nélida's work is at the hotel lake, and there is a powerful reason: her raw material is not just stone, but water. Nélida uses water as a living element that transforms the sculpture over time. The water slowly shapes a fountain that represents the Earth. It is a work that changes, that ages, that breathes. That is why it needed to be where water rules.
+
+Giacomo Santini — Italy.
+Giacomo was barely a young man when he arrived at the symposium, but his message was that of a wise man. His "Balance" speaks of the fragile equilibrium between the force of nature and that of humanity. The hands you see on the piece are not invented: they are real moulds of children's hands who took part during those twenty-five days. Innocence holding up the weight of the world.
+
+Oliviero Bertolasso — Italy and Germany.
+The Italian-German chose the human figure to deliver an uncomfortable message. His work is figurative and deliberately pessimistic: it confronts us with the future of nature and the responsibility we bear for its conservation. It is not a sculpture that seeks to please; it seeks to disturb. And therein lies its power.
+
+Shin Myong-Ok — Korea.
+The Korean artist takes us into spiritual territory. Her sculpture evokes the laying on of hands, that universal gesture which, depending on the culture, can mean healing or destruction, blessing or condemnation. The forms you see suggest open hands upon nature. The question she leaves in the air is powerful: are we healing the Earth or making it sick?
+
+Tristán Casamajor — Haiti, resident in Belgium.
+Tristán created an enormous totem that plays with the elements and uses the sun as its protagonist. It is, literally, a sundial: the natural evolution of the Earth marked by light. If you look closely at the forms of the totem, you will discover silhouettes reminiscent of the human body. The time of nature and the time of humankind, merging in the same stone.
+
+Said Badr — Egypt.
+The Egyptian conceived a vertical, almost monumental work, dedicated to exalting the magnitude of nature in Menorca. The verticality is not accidental: it is the earth rising up, standing tall, claiming its presence before a human being who tends only to look straight ahead. Said asks us to look upward.
+
+George Dan Istrate — Romania.
+This is one of the most striking sculptures in the garden. The young Romanian carved a perfect sphere — the Earth — and then split it with a clean transversal cut. That incision is the intervention of humankind: precise, cold, irreversible if we do not act in time. Broken perfection. A warning carved in Carrara marble.
+
+Toni Capó — Mallorca.
+The Mallorcan worked in marble for the first time for this symposium, and he chose a subject he knows well: the fragility of the human being in the face of nature's harshness. His figurative sculpture evokes the shape of the rugged rocks on the northern coast of the island, that shore battered mercilessly by the tramontana wind. Man carved in rock, resisting the wind. Or trying to.
+
+Filippo Tincolini — Italy.
+Filippo uses the human body as a conceptual vehicle. His work represents a female pubis and speaks of fertility, of the origin of all life. It is a direct piece, without intermediate metaphors: life is born from the body, and the body is born from the earth. The closed cycle.
+
+Each of these ten pieces was created here, on this estate, with Carrara marble brought expressly for the symposium. The artists lived together for twenty-five days, slept here, ate here, breathed this air. And it shows: these sculptures are not museum pieces relocated; they were born of this land and for this land.
+
+Take the time you need. When you are ready, follow the spiral towards stop three.`},
+
+{id:'punto-3',num:'3',cat:'THE VINEYARDS',title:'Vines that survived the silence',nextLabel:'Cheese Dairy',
+trans:`You have just walked through a garden that today is one of the most intimate corners of Sant Patrici. Years ago, in the time of Xini and Fernando, this garden gave life to harvest festivals, dinners under the stars, gatherings where a fisherman from Fornells could sit beside an ambassador and nobody asked where you came from, only whether you wanted to stay. Xini and Fernando understood something very few people understand: that a place only comes alive when you fill it with people. And that beauty, if it is not shared, is worthless.
+
+Here in the Vineyards, there are no sculptures or gardens. Just rows of vines under the sun. It seems simple. But these vines you see are survivors. And to understand why, you need to know a story that begins more than two thousand years ago.
+
+The Romans were already making wine in Menorca. This island, battered by the tramontana and caressed by the Mediterranean, turned out to be an extraordinary place for the vine. For centuries, Menorcan wine was a well-kept secret. Until the British arrived.
+
+In the eighteenth century, Menorca passed into the hands of the British Empire, and with them came an insatiable thirst. The Royal Navy needed wine, the merchants wanted wine, and the entire island was transformed into a floating vineyard. The port of Mahón exported millions of litres. It was the golden age.
+
+And then, disaster. At the end of the nineteenth century, a microscopic insect called phylloxera crossed the Atlantic hidden in American rootstocks and devastated the vineyards of all Europe. Menorca was not spared. In a few years, what had taken centuries to grow disappeared. And silence settled on this land for more than a century.
+
+It was not until the year 2000 that some brave souls began to plant again. And in 2002, Sant Patrici decided to join that renaissance. They planted between two and three hectares of vineyards where before there had only been empty fields. In 2005 they formally founded the winery. And in 2008 they bottled their first wine. Six years from vine to glass. That is how slow patience is when done right.
+
+The varieties you see here were not chosen at random. Merlot, Cabernet Sauvignon and Syrah for the reds. Chardonnay, Muscat and Prensal for the whites. These are grapes that love extreme conditions: the brutal Menorcan summer sun, the tramontana that toughens the skin of the grape and concentrates the flavours, and the sea breeze that brings that subtle salinity you will later find in the glass.
+
+Here everything is a matter of balance. The heat gives sugar, which translates into body and alcohol. The wind and the cool of night preserve the acidity, which gives freshness and elegance. The result is a wine that can only be born here. A wine with the Vi de la Terra Illa de Menorca designation.
+
+Look at the vines for a moment. They seem modest, almost fragile. But beneath the soil, their roots extend metres and metres in search of water and minerals. What cannot be seen is what matters. As in so many things.
+
+Walk towards stop four. We are now going to enter one of the oldest places on this estate: the place where hands turn milk into history.`},
+
+{id:'punto-4',num:'4',cat:'CHEESE DAIRY',title:'Where hands shape time',nextLabel:'Winery',
+trans:`You are standing in front of our cheese dairy, and I want you to prepare yourselves for something. If you came in the morning, you would see through the glass a ritual that is repeated here exactly as it was two hundred years ago. Our master cheesemakers shape each piece, one by one, by hand. No industrial moulds. No shortcuts. Just a cotton cloth — which we call the "fogasser" —, a cord — the "lligam" — and the pressure of hands that know exactly how much force to apply.
+
+That knowledge cannot be learned from a book. It is inherited. It is passed from hand to hand, gesture to gesture, over more than thirty years of tradition in our case.
+
+Let me explain how a cheese is born at Sant Patrici, step by step.
+
+It all begins with the milk. Fresh cow's milk from our surroundings, from the Menorcan countryside. The quality of that milk determines everything: the pasture the cows eat, the sea breeze that permeates the fields, the calcareous soil of Menorca. All of that is already in the milk before we touch anything.
+
+The milk is poured into large vats and natural rennet is added. In about forty minutes, the milk transforms: it stops being liquid and becomes a gelatinous mass, the curd. It is an almost magical moment, a silent metamorphosis.
+
+Then the hands intervene. The master cheesemaker cuts the curd with an instrument called a lyre, into small pieces, so it releases the whey. Then he gathers the curd and wraps it in the fogasser, the traditional cotton cloth. He ties it with the lligam, the cord, and the pressing process begins. In the press, the remaining whey is expelled, thanks to a weight of 4.6 kg placed on the piece.
+
+Do you see that pattern on the top of the cheese, that sort of engraving in relief? We call it the "mamella." It is not decoration: it is the imprint left by the cloth when tied over the curd. It is the signature of the traditional method. If a cheese has a mamella, you can be sure that human hands shaped it.
+
+Then comes the brine bath. The cheese is submerged in a solution of water and salt for hours. The salt penetrates slowly, acts as a natural preservative and begins to define the flavour. And from that point on, the cheese enters its most mysterious phase: maturation. In chambers with controlled temperature and humidity, time does its work. Weeks, months, sometimes more than a year.
+
+Mahón-Menorca cheese holds a Protected Designation of Origin, which means it can only be made on this island, with cow's milk from the Menorcan countryside, following a specific method and very strict regulations. It is one of the oldest cheeses in Spain — remains of cheesemaking utensils have been found at prehistoric sites on Menorca. We are talking about a craft more than three thousand years old.
+
+And at Sant Patrici, that craft translates into a family of cheeses with very different personalities. Within our Designation of Origin range, you will find three ages. The Semi-cured, with more than 3 months of ageing. The Cured, with more than 6 months. And the Aged, with more than 1 year of maturation — crumbly and powerful.
+
+Our Fresh Cheese is made in the same traditional way, with pasteurised milk, without additives or preservatives. Our recipe is a precious inherited asset that you will not find at any other estate.
+
+We also produce a gourmet line, where we play with herbs and aromatic flavours.
+
+In our museum shop you will find utensils used by our cheesemakers of another era. Original wooden presses, the moulds, and more. Humble objects, worn by use, but silent witnesses of a craft we refuse to let die.
+
+Now walk towards stop five, where you will find our winery.`},
+
+{id:'punto-5',num:'5',cat:'WINERY',title:'Where silence creates',nextLabel:'Museum Shop',
+trans:`Notice the change as you enter. The temperature drops and the light dims.
+
+You are in the Sant Patrici winery. If the cheese dairy was the place of hands, this is the place of patience.
+
+Making wine is, at its core, a negotiation with time. And that negotiation begins long before arriving here, in the vines you have just seen.
+
+It all starts with the harvest. There is a precise moment — sometimes a matter of days — when the grape reaches the perfect balance between sugar and acidity. If you pick too early, the wine will be thin and without body. If you pick too late, it will lose freshness and gain excessive alcohol. In Menorca, where the summer heat accelerates ripening, that margin is even narrower. You must be quick and precise. The grapes are picked first thing in the morning, with the cool of night still on their skin, so they arrive at the winery in the best condition.
+
+Once inside, the grape begins its transformation. The first step is destemming: separating each berry from the stem, because that woody part would contribute bitterness and astringency. Then comes the crushing, a gentle pressing that releases the must without mashing the skins excessively. For whites we use Prensal, Chardonnay and Muscat. For reds, Merlot, Cabernet Sauvignon and Syrah, fermenting in contact with the skins for days.
+
+And this is where Sant Patrici does something that sets us apart: we ferment at a very low temperature, around fourteen degrees Celsius. A slow fermentation is like a long conversation: it draws out nuances that a fast fermentation would never discover. The yeasts work slowly, producing finer, more complex aromas.
+
+During fermentation, the sugar transforms into alcohol and carbon dioxide. It is a natural, ancestral process. The grape wants to become wine. We merely accompany it.
+
+Once fermentation is over, rest begins. In those vats the wine sleeps for months. But it is not passive — the wine breathes, and a tiny amount of oxygen slowly transforms it: softening the tannins, rounding the body.
+
+The winemaker decides how long each wine rests, like a conductor assigning each instrument its moment. The wine is then clarified and filtered two or three times. Once bottled in glass, the wine continues to evolve in silence and darkness until someone uncorks it and completes the cycle.
+
+All our wines carry the seal "Vi de la Terra Illa de Menorca." Every bottle of Sant Patrici is condensed time.`},
+
+{id:'punto-6',num:'6',cat:'MUSEUM SHOP',title:'The moment to taste',nextLabel:null,
+trans:`And now the time has come to stop listening and start tasting. Make your way to our museum shop, where a pairing of our cheeses and wines awaits you. Do not rush. Let the wine cleanse the palate, let the fat of the cheese embrace the acidity. Look for the flavours I have been describing. Because everything you have heard today — the story of Fernando and Xini, the spiral of the garden, the vines that survived phylloxera, the cheesemaker's hands, the resting of the wine — all of that is, in some way, in what you are about to taste.
+
+Enjoy. This moment is yours.`}
+],
+
+cat:[
+{id:'punto-1',num:'1',cat:'EDIFICI PRINCIPAL',title:'La casa que va construir l\'amor prohibit',nextLabel:'Jardí de les Escultures',
+trans:`Atureu-vos un moment davant aquesta façana. Fixeu-vos en el gruix d'aquests murs: tenen més d'un metre de pedra de marès, la mateixa que es va col·locar aquí el 1918. I mireu les proporcions: la planta quadrada, la simetria, aquella escalinata d'entrada. Això no és una casa de camp menorquina. Qui la va manar construir volia una vil·la a l'estil italià, com les que havia vist als seus viatges. Sembla tranquil·la, oi? Pedra clara, buganvíl·lies, aquella llum de Menorca que ho acaricia tot. Però aquesta casa guarda un secret. Perquè no la va encarregar un noble ni la va aixecar per a una família. Aquesta casa la va construir un amor prohibit.
+
+Per entendre aquesta història cal viatjar primer al Madrid de principis del segle XX. Imagineu Fernando Vives: nascut a Maó el 1867, fill de l'alta burgesia menorquina, però establert a la capital, on havia aixecat un petit imperi. Era propietari de "La Mahonesa", unes pastisseries cèlebres que portaven els dolços de Menorca als salons de Madrid. Col·leccionista d'antiguitats, apassionat de l'art àrab. El seu propi germà, Antonio, va arribar a ser un dels numismàtics més importants d'Espanya, declarat Fill Il·lustre de Maó. Els Vives eren gent de pes. I Fernando estava casat amb Francisca Segura — Paca, com la cridaven tots —, una dona que venia del món de l'espectacle i la sarsuela.
+
+Però Madrid li pesava. Fernando enyorava l'illa, la calma, l'olor de camp. I el 1917 va comprar aquesta finca buscant un refugi on respirar lluny del soroll de la capital. El problema va ser que a Paca, acostumada a la vida madrilenya, aquella tranquil·litat menorquina no li interessava gens ni mica. Fernando venia sol. I com que en aquella època un home no es feia la casa, va contractar una jove perquè l'ajudés.
+
+Es deia Virginia López Álvarez, encara que tothom acabaria coneixent-la com Xini. Havia arribat de Valladolid, filla d'una família humil i enorme — la seva mare va tenir vint fills, dels quals en van sobreviure divuit. Xini ja treballava per a Fernando a Madrid, a la pastisseria. Ara la va portar a Menorca per encarregar-se de la casa.
+
+El que va passar després era potser inevitable. Fernando, cada cop, venia més. Es quedava més temps. Fins que va deixar d'anar-se'n. S'havia enamorat de Xini. Paca, en assabentar-se'n, va abandonar la finca i se'n va anar a viure a Maó. I aquesta casa, la que vostès tenen davant, es va convertir en la llar de Fernando i Xini.
+
+Ell la va omplir de tot el que ella mereixia: estàtues de marbre de les quatre estacions al jardí, cortines de vellut vermell, un llit de barres daurades amb llençols de seda. Fernando, pintor aficionat, la retratava al porxo mentre la brisa entrava per aquelles mateixes finestres que vostès estan veient ara. Perquè es facin una idea de qui era Xini: diuen que caminava des d'aquesta finca fins al poble amb una safata de pastissets equilibrada sobre el cap, dreta com una reina, amb les seves joies posades i els seus talons — sí, talons en un camí de terra. A Ferreries la cridaven la Gilda, com l'actriu de cinema. Era aquest tipus de dona.
+
+Van viure aquí la seva edat daurada. Aïllats, sí. Però lliures.
+
+Fins que Fernando va morir, al gener de 1941. Tenia 73 anys.
+
+I llavors, el silenci. Imagineu aquesta casa sense la seva veu, sense les seves festes, sense l'olor dels dolços que pastava. Tres mesos abans de morir, sabent el que venia, Fernando havia fet l'únic que podia: partir la seva vida en dos. La casa i el jardí els va cedir a Xini, en vida. Tot la resta — les pastisseries, les propietats de Maó, els diners — va ser per a Paca, la seva esposa legítima.
+
+De la nit al dia, Xini es va quedar amb les parets, però sense res a dins. Va acomiadar el jardiner. Va comprar gallines, porcs, un parell de vaques lleteres. I on abans hi havia marbre i música, van començar a aparèixer animals per tot arreu. Les vaques es grataven contra les estàtues de les quatre estacions. Els porcs dormien on abans es ballava. Xini va aprendre a munyir, a segar, a fer formatge — un formatge blanc i salat que venia a les botigues de Ferreries. La pobresa la va empènyer a robar hortalisses de les finques veïnes per sobreviure. Però mai no va deixar de caminar dreta. I sempre amb talons: al final, amb les mans destrossades pel treball, ja no podia calçar-se'ls sola. Caminava descalça fins a casa de la seva amiga Rafela, portant les sabates en una bossa, i li demanava que l'ajudés a posar-se'ls. Sempre va anar amb taló.
+
+Vint-i-cinc anys va resistir aquí sola. Sense rendir-se. Sense marxar. Com si marxar fos trair la memòria de Fernando.
+
+Va morir a l'octubre de 1966, als 69 anys. Les seves amigues la van trobar a la cuina, asseguda en una cadira, amb el cap sobre la taula. A la seva tomba, al cementiri de Maó, no hi ha cap làpida que recordi el seu nom.
+
+Els seus germans van arribar de la península, van vendre el poc que valia i van cremar la resta. Literalment. Van apilar matalassos, retrats, quadres, cartes, catifes, mobles — tota una vida — al pati, i els van calar foc. Cendra i silenci van tancar la història de Fernando i Xini.
+
+Però la terra recorda.
+
+Amb els anys, aquesta finca va anar canviant de mans fins que algú hi va veure el que Fernando hi va veure el 1917: no un negoci, sinó una possibilitat. El que avui veuen al seu voltant — l'hotel, la formatgeria, el celler, les vinyes — és un acte de resurrecció. És la prova que un lloc que va conèixer l'amor, la decadència i l'abandó pot renéixer i donar fruits. Fruits que avui, literalment, vostès podran assaborir.
+
+Caminin ara cap a l'esquerra, on veuran la senyalització del punt número dos. Els espera un jardí que parla en silenci.`},
+
+{id:'punto-2',num:'2',cat:'JARDÍ DE LES ESCULTURES',title:'Deu veus a l\'espiral',nextLabel:'Les Escultures una a una',
+trans:`Acaben d'escoltar una història de foc. Els germans de Xini van cremar tot el que hi havia en aquesta finca: els quadres, les cartes, els mobles, la memòria. I durant anys, aquí no hi va haver res. Només terra callada.
+
+El que tenen ara davant és la resposta.
+
+Abans de mirar les escultures, els demano que mirin el terra. Fixin-se en la forma del camí que recorreran. La veuen? És una espiral. No és decoració: és una decisió. Aquest jardí, que ocupa més de deu mil metres quadrats, va ser dissenyat pel paisatgista Josep Bosch Espelta, deixeble del gran Nicolau Maria Rubió i Tudurí. I Bosch va triar l'espiral perquè és la forma que adopta la vida. És a les galàxies, a les closques dels caragols, a la doble hèlix de l'ADN. Si el traçat els recorda alguna cosa, probablement sigui el Museu Guggenheim de Nova York: el disseny d'aquest jardí està inspirat directament en la rampa helicoïdal de Frank Lloyd Wright.
+
+El que va ocórrer aquí per omplir-lo de veus va ser extraordinari. El maig de 2003, Menorca complia deu anys com a Reserva de la Biosfera, i per celebrar-ho es va organitzar el Primer Simposi Internacional Hort Sant Patrici. Durant vint-i-cinc dies, catorze artistes de tot el món van conviure en aquesta finca. Van menjar junts, van discutir junts, van treballar la pedra junts. I d'aquella convivència van néixer deu escultures tallades en marbre de Carrara. Deu respostes diferents a una mateixa pregunta: quina és la relació de l'ésser humà amb la natura?
+
+Prenguin-se el seu temps. Quan estiguin llestos, segueixin l'espiral cap al punt tres. I si desitgen conèixer cada escultura en detall, quedin-se: recorrerem les deu veus d'aquest jardí, una a una.`},
+
+{id:'punto-2b',num:'2b',cat:'LES ESCULTURES UNA A UNA',title:'Marbre amb nom propi',nextLabel:'Vinyes',
+trans:`Nélida Mendoza — Paraguai. Comencem per la que no és aquí. L'obra de Nélida es troba al llac de l'hotel. La seva matèria primera no és només la pedra, sinó l'aigua. L'aigua va donant forma lentament a una font que representa la Terra. És una obra que canvia, que envelleix, que respira.
+
+Giacomo Santini — Itàlia. La seva «Balança» ens parla de l'equilibri fràgil entre la força de la natura i la de l'home. Les mans que veuen a la peça són motlles reals de les mans de nens.
+
+Oliviero Bertolasso — Itàlia i Alemanya. La seva obra és figurativa i deliberadament pessimista: ens confronta amb el futur de la natura.
+
+Shin Myong-Ok — Corea. La seva escultura evoca la imposició de mans. Estem sanant la Terra o l'estem emmalaltint?
+
+Tristán Casamajor — Haití. Va crear un enorme tòtem que és, literalment, un rellotge de sol.
+
+Said Badr — Egipte. Una obra vertical dedicada a enaltir la magnitud de la natura a Menorca.
+
+George Dan Istrate — Romania. Una esfera perfecta partida per un tall net. La intervenció de l'home.
+
+Toni Capó — Mallorca. La fragilitat de l'ésser humà davant la duresa de la natura.
+
+Filippo Tincolini — Itàlia. Parla de fertilitat, de l'origen de tota vida.
+
+Cadascuna d'aquestes deu peces va ser creada aquí, amb marbre de Carrara. Van néixer d'aquesta terra i per a aquesta terra. Prenguin-se el temps que necessitin.`},
+
+{id:'punto-3',num:'3',cat:'VINYES',title:'Ceps que van sobreviure al silenci',nextLabel:'Formatgeria',
+trans:`Aquí a les Vinyes, no hi ha escultures ni jardins. Només fileres de vinyes sota el sol. Però aquests ceps que veuen són supervivents.
+
+Els romans ja feien vi a Menorca. Al segle XVIII, amb els britànics, l'illa es va transformar en un vinyar flotant. El port de Maó exportava milions de litres. Va ser l'edat d'or.
+
+I llavors, el desastre. La fil·loxera va arrasar les vinyes de tota Europa. Menorca no se'n va salvar. I el silenci es va instal·lar durant més d'un segle.
+
+El 2002, Sant Patrici va decidir sumar-se al renaixement. Van plantar entre dues i tres hectàrees de vinyes. El 2005 van fundar el celler. El 2008 van embotellar el seu primer vi.
+
+Les varietats: Merlot, Cabernet Sauvignon i Syrah per als negres. Chardonnay, Moscatell i Prensal per als blancs. Són raïms que estimen les condicions extremes. El resultat és un vi amb denominació Vi de la Terra Illa de Menorca.
+
+Caminin cap al punt quatre: on les mans converteixen la llet en història.`},
+
+{id:'punto-4',num:'4',cat:'FORMATGERIA',title:'On les mans modelen el temps',nextLabel:'Celler',
+trans:`Estan davant de la nostra formatgeria. Els nostres mestres formatgers modelen cada peça, una per una, amb les mans. Només un drap de cotó — el «fogasser» —, un cordill — el «lligam» — i unes mans que saben exactament quanta força aplicar.
+
+Tot comença amb la llet fresca de vaca del camp de Menorca. S'hi afegeix quall natural. En quaranta minuts, la llet es transforma en quallada. El mestre la talla amb la lira, l'embolica en el fogasser, la lliga i la premsa.
+
+Aquell dibuix a la part superior del formatge — la «mamella» — és l'empremta del drap. La signatura del mètode tradicional.
+
+El formatge Maó-Menorca té Denominació d'Origen Protegida. És un ofici de més de tres mil anys.
+
+Dins la nostra gamma trobaran: el Semicurat (3 mesos), el Curat (6 mesos) i l'Anyenc (més d'1 any). També el Formatge fresc i una línia gourmet.
+
+Caminin cap al punt cinc, on trobaran el nostre celler.`},
+
+{id:'punto-5',num:'5',cat:'CELLER',title:'On el silenci crea',nextLabel:'Botiga Museu',
+trans:`Notin el canvi en entrar aquí. La temperatura baixa i la llum s'atenua. Es troben al celler de Sant Patrici. Si la formatgeria era el lloc de les mans, aquest és el lloc de la paciència.
+
+Tot arrenca amb la verema. Fermentem a temperatura molt baixa, al voltant dels catorze graus. Una fermentació lenta extreu matisos que una fermentació ràpida mai no descobriria.
+
+Acabada la fermentació, ve el repòs. El vi dorm durant mesos. Després es clarifica i es filtra. Un cop embotellat, segueix evolucionant en silenci fins que algú el destapa.
+
+Tots els nostres vins porten el segell «Vi de la Terra Illa de Menorca». Cada ampolla és temps condensat.`},
+
+{id:'punto-6',num:'6',cat:'BOTIGA MUSEU',title:'El moment d\'assaborir',nextLabel:null,
+trans:`I ara sí: ha arribat el moment de deixar d'escoltar i començar a assaborir. Dirigeixin-se a la nostra botiga museu, on els espera un maridatge dels nostres formatges i els nostres vins. Busquin els sabors que els he anat descrivint. Tot el que han escoltat avui està, d'alguna manera, en el que provaran.
+
+Gaudeixin. Aquest moment és seu.`}
+],
+
+fr:[
+{id:'punto-1',num:'1',cat:'BÂTIMENT PRINCIPAL',title:'La maison que l\'amour interdit a bâtie',nextLabel:'Jardin des Sculptures',
+trans:`Arrêtez-vous un instant devant cette façade. Regardez l'épaisseur de ces murs : plus d'un mètre de pierre de marés, la même qui fut posée ici en 1918. Ce n'est pas une maison de campagne minorquine. Celui qui l'a fait construire voulait une villa à l'italienne. Elle semble paisible, n'est-ce pas ? Mais cette maison garde un secret. Cette maison fut bâtie par un amour interdit.
+
+Imaginez Fernando Vives : né à Mahón en 1867, propriétaire de « La Mahonesa », des pâtisseries célèbres à Madrid. Marié à Francisca Segura — Paca. Mais Madrid lui pesait. En 1917, il acheta ce domaine. Paca n'avait aucun intérêt pour la tranquillité minorquine. Fernando venait seul. Il engagea Virginia López Álvarez — Xini — pour s'occuper de la maison.
+
+Fernando tomba amoureux de Xini. Paca quitta le domaine. Fernando remplit la maison de tout ce que Xini méritait : statues de marbre, rideaux de velours rouge, un lit aux barreaux dorés. À Ferreries, on l'appelait la Gilda. Ils vécurent leur âge d'or. Isolés mais libres.
+
+Fernando mourut en janvier 1941. Xini se retrouva avec les murs mais sans rien à l'intérieur. Elle apprit à traire, à faire du fromage. Vingt-cinq ans elle tint bon ici seule. Elle mourut en octobre 1966. Ses frères et sœurs brûlèrent tout. Cendres et silence.
+
+Mais la terre se souvient. Ce que vous voyez aujourd'hui — l'hôtel, la fromagerie, la cave, les vignobles — est un acte de résurrection.
+
+Marchez vers le point numéro deux.`},
+
+{id:'punto-2',num:'2',cat:'JARDIN DES SCULPTURES',title:'Dix voix dans la spirale',nextLabel:'Les Sculptures une à une',
+trans:`Ce jardin est une spirale inspirée du Musée Guggenheim de New York. En mai 2003, quatorze artistes du monde entier ont cohabité ici pendant vingt-cinq jours. Dix sculptures en marbre de Carrare sont nées de cette cohabitation. Dix réponses différentes à une même question : quelle est la relation de l'être humain avec la nature ?
+
+Prenez votre temps. Suivez la spirale vers le point trois, ou restez pour découvrir chaque sculpture en détail.`},
+
+{id:'punto-2b',num:'2b',cat:'LES SCULPTURES UNE À UNE',title:'Marbre avec un nom',nextLabel:'Les Vignobles',
+trans:`Nélida Mendoza (Paraguay) : une fontaine au lac qui utilise l'eau comme matière vivante. Giacomo Santini (Italie) : la Balance, avec des moulages de mains d'enfants. Oliviero Bertolasso (Italie/Allemagne) : une œuvre figurative et pessimiste. Shin Myong-Ok (Corée) : l'imposition des mains. Tristán Casamajor (Haïti) : un totem-cadran solaire. Said Badr (Égypte) : une œuvre verticale monumentale. George Dan Istrate (Roumanie) : une sphère parfaite fendue. Toni Capó (Majorque) : la fragilité humaine face à la nature. Filippo Tincolini (Italie) : fertilité et origine de la vie.
+
+Chaque pièce a été créée ici avec du marbre de Carrare. Suivez la spirale vers le point trois.`},
+
+{id:'punto-3',num:'3',cat:'LES VIGNOBLES',title:'Ceps qui ont survécu au silence',nextLabel:'Fromagerie',
+trans:`Les Romains faisaient déjà du vin à Minorque. Au XVIIIe siècle, sous les Britanniques, l'île exportait des millions de litres. Puis le phylloxéra dévasta tout. Le silence dura plus d'un siècle.
+
+En 2002, Sant Patrici rejoignit la renaissance. Merlot, Cabernet Sauvignon, Syrah pour les rouges. Chardonnay, Muscat et Prensal pour les blancs. Le résultat est un vin Vi de la Terra Illa de Menorca.
+
+Marchez vers le point quatre : là où les mains transforment le lait en histoire.`},
+
+{id:'punto-4',num:'4',cat:'FROMAGERIE',title:'Là où les mains façonnent le temps',nextLabel:'Cave',
+trans:`Nos maîtres fromagers façonnent chaque pièce à la main avec le fogasser et le lligam. Le lait frais se transforme en caillé en quarante minutes. La mamella est la signature du méthode traditionnel.
+
+Le fromage Mahón-Menorca bénéficie d'une AOP. Nous proposons le Demi-affiné (3 mois), l'Affiné (6 mois), le Vieux (plus d'un an), le Frais et une ligne gourmet.
+
+Direction le point cinq : notre cave.`},
+
+{id:'punto-5',num:'5',cat:'CAVE',title:'Là où le silence crée',nextLabel:'Boutique-Musée',
+trans:`Nous fermentons à température très basse, autour de quatorze degrés. Une fermentation lente extrait des nuances qu'une fermentation rapide ne découvrirait jamais.
+
+Le vin repose dans les cuves pendant des mois, puis est clarifié, filtré et mis en bouteille. Tous nos vins portent le label « Vi de la Terra Illa de Menorca ». Chaque bouteille est du temps condensé.`},
+
+{id:'punto-6',num:'6',cat:'BOUTIQUE-MUSÉE',title:'Le moment de savourer',nextLabel:null,
+trans:`Le moment est venu de commencer à savourer. Dirigez-vous vers notre boutique-musée pour un accord fromages et vins. Tout ce que vous avez entendu aujourd'hui se trouve dans ce que vous allez goûter.
+
+Savourez. Ce moment est le vôtre.`}
+],
+
+de:[
+{id:'punto-1',num:'1',cat:'HAUPTGEBÄUDE',title:'Das Haus, das die verbotene Liebe erbaute',nextLabel:'Skulpturengarten',
+trans:`Bleiben Sie einen Moment vor dieser Fassade stehen. Über einen Meter Marés-Stein, derselbe der hier 1918 verbaut wurde. Dies ist kein menorquinisches Bauernhaus. Dieses Haus wurde von einer verbotenen Liebe erbaut.
+
+Fernando Vives, geboren 1867 in Mahón, Besitzer der „La Mahonesa"-Konditoreien in Madrid. Verheiratet mit Francisca Segura — Paca. 1917 kaufte er dieses Anwesen. Paca hatte kein Interesse. Fernando kam allein und stellte Virginia López Álvarez ein — Xini.
+
+Fernando verliebte sich in Xini. Paca zog nach Mahón. Fernando füllte das Haus mit Marmorstatuen, Samtvorhängen, einem goldenen Bett. In Ferreries nannte man Xini la Gilda. Sie lebten ihr goldenes Zeitalter. Frei.
+
+Fernando starb 1941. Xini blieb mit den Wänden zurück, aber ohne etwas darin. Sie lernte zu melken, Käse zu machen. Fünfundzwanzig Jahre hielt sie allein aus. Sie starb 1966. Ihre Geschwister verbrannten alles.
+
+Aber das Land erinnert sich. Was Sie heute sehen — Hotel, Käserei, Bodega, Weinberge — ist ein Akt der Auferstehung.
+
+Gehen Sie zum Punkt Nummer zwei.`},
+
+{id:'punto-2',num:'2',cat:'SKULPTURENGARTEN',title:'Zehn Stimmen in der Spirale',nextLabel:'Die Skulpturen einzeln',
+trans:`Dieser Garten ist eine Spirale, inspiriert vom Guggenheim-Museum. Im Mai 2003 lebten vierzehn Künstler fünfundzwanzig Tage hier zusammen. Zehn Skulpturen aus Carrara-Marmor entstanden. Zehn Antworten auf eine Frage: Was ist die Beziehung zwischen Mensch und Natur?
+
+Nehmen Sie sich Zeit. Folgen Sie der Spirale zum Punkt drei, oder bleiben Sie für die Details jeder Skulptur.`},
+
+{id:'punto-2b',num:'2b',cat:'DIE SKULPTUREN EINZELN',title:'Marmor mit Namen',nextLabel:'Die Weinberge',
+trans:`Nélida Mendoza (Paraguay): Brunnen am See. Giacomo Santini (Italien): die Waage mit Kinderhänden. Oliviero Bertolasso (Italien/Deutschland): figurativ und pessimistisch. Shin Myong-Ok (Korea): Handauflegen. Tristán Casamajor (Haiti): Totem-Sonnenuhr. Said Badr (Ägypten): vertikales Monument. George Dan Istrate (Rumänien): gespaltene Kugel. Toni Capó (Mallorca): Zerbrechlichkeit des Menschen. Filippo Tincolini (Italien): Fruchtbarkeit und Ursprung.
+
+Alle zehn Werke aus Carrara-Marmor, hier geschaffen. Folgen Sie der Spirale zum Punkt drei.`},
+
+{id:'punto-3',num:'3',cat:'DIE WEINBERGE',title:'Reben, die die Stille überlebten',nextLabel:'Käserei',
+trans:`Die Römer machten schon Wein auf Menorca. Im 18. Jahrhundert exportierte die Insel Millionen Liter. Dann kam die Reblaus und vernichtete alles. Über ein Jahrhundert Stille.
+
+2002 pflanzte Sant Patrici wieder. Merlot, Cabernet Sauvignon, Syrah für Rotweine. Chardonnay, Muskateller, Prensal für Weißweine. Vi de la Terra Illa de Menorca.
+
+Weiter zu Punkt vier: wo Hände Milch in Geschichte verwandeln.`},
+
+{id:'punto-4',num:'4',cat:'KÄSEREI',title:'Wo Hände die Zeit formen',nextLabel:'Weinkeller',
+trans:`Unsere Käsemeister formen jedes Stück von Hand mit fogasser und lligam. Frische Kuhmilch wird in vierzig Minuten zum Bruch. Die mamella ist die Signatur der traditionellen Methode.
+
+Mahón-Menorca hat eine g.U. Wir bieten Halbgereiften (3 Monate), Gereiften (6 Monate), Alten (über 1 Jahr), Frischkäse und eine Gourmetlinie.
+
+Weiter zu Punkt fünf: unsere Bodega.`},
+
+{id:'punto-5',num:'5',cat:'WEINKELLER',title:'Wo die Stille erschafft',nextLabel:'Museumsshop',
+trans:`Wir vergären bei sehr niedriger Temperatur, um die vierzehn Grad. Eine langsame Gärung extrahiert Nuancen, die eine schnelle nie entdecken würde.
+
+Der Wein ruht monatelang, wird geklärt, filtriert und abgefüllt. Alle unsere Weine tragen das Siegel „Vi de la Terra Illa de Menorca". Jede Flasche ist kondensierte Zeit.`},
+
+{id:'punto-6',num:'6',cat:'MUSEUMSSHOP',title:'Der Moment zum Genießen',nextLabel:null,
+trans:`Der Moment ist gekommen, anzufangen zu genießen. Begeben Sie sich in unseren Museumsshop für eine Verkostung unserer Käse und Weine. Alles, was Sie heute gehört haben, steckt in dem, was Sie gleich kosten werden.
+
+Genießen Sie. Dieser Moment gehört Ihnen.`}
+],
+
+it:[
+{id:'punto-1',num:'1',cat:'EDIFICIO PRINCIPALE',title:'La casa che l\'amore proibito costruì',nextLabel:'Giardino delle Sculture',
+trans:`Fermatevi un momento davanti a questa facciata. Più di un metro di pietra di marés, la stessa posata qui nel 1918. Questa non è una casa di campagna minorchina. Questa casa fu costruita da un amore proibito.
+
+Fernando Vives, nato a Mahón nel 1867, proprietario de "La Mahonesa" a Madrid. Sposato con Francisca Segura — Paca. Nel 1917 comprò questa tenuta. Paca non aveva interesse. Fernando venne solo e assunse Virginia López Álvarez — Xini.
+
+Fernando si innamorò di Xini. Paca se ne andò a Mahón. Fernando riempì la casa di statue di marmo, tende di velluto, un letto dorato. A Ferreries la chiamavano la Gilda. Vissero la loro età dell'oro. Liberi.
+
+Fernando morì nel 1941. Xini rimase con le pareti ma senza nulla dentro. Imparò a mungere, a fare formaggio. Venticinque anni resistette sola. Morì nel 1966. I suoi fratelli bruciarono tutto. Cenere e silenzio.
+
+Ma la terra ricorda. Quello che vedete oggi — hotel, caseificio, cantina, vigneti — è un atto di resurrezione.
+
+Camminate verso il punto numero due.`},
+
+{id:'punto-2',num:'2',cat:'GIARDINO DELLE SCULTURE',title:'Dieci voci nella spirale',nextLabel:'Le Sculture una a una',
+trans:`Questo giardino è una spirale ispirata al Museo Guggenheim. Nel maggio 2003, quattordici artisti convissero qui per venticinque giorni. Nacquero dieci sculture in marmo di Carrara. Dieci risposte a una domanda: qual è il rapporto dell'essere umano con la natura?
+
+Prendetevi il vostro tempo. Seguite la spirale verso il punto tre, o restate per scoprire ogni scultura in dettaglio.`},
+
+{id:'punto-2b',num:'2b',cat:'LE SCULTURE UNA A UNA',title:'Marmo con un nome',nextLabel:'Vigneti',
+trans:`Nélida Mendoza (Paraguay): fontana al lago. Giacomo Santini (Italia): la Bilancia con calchi di mani di bambini. Oliviero Bertolasso (Italia/Germania): figurativa e pessimista. Shin Myong-Ok (Corea): imposizione delle mani. Tristán Casamajor (Haiti): totem-meridiana. Said Badr (Egitto): opera verticale monumentale. George Dan Istrate (Romania): sfera spaccata. Toni Capó (Maiorca): fragilità umana. Filippo Tincolini (Italia): fertilità e origine.
+
+Tutte create qui con marmo di Carrara. Seguite la spirale verso il punto tre.`},
+
+{id:'punto-3',num:'3',cat:'VIGNETI',title:'Viti sopravvissute al silenzio',nextLabel:'Caseificio',
+trans:`I Romani facevano già vino a Minorca. Nel XVIII secolo l'isola esportava milioni di litri. Poi la fillossera devastò tutto. Oltre un secolo di silenzio.
+
+Nel 2002, Sant Patrici si unì al rinascimento. Merlot, Cabernet Sauvignon, Syrah per i rossi. Chardonnay, Moscato, Prensal per i bianchi. Vi de la Terra Illa de Menorca.
+
+Verso il punto quattro: dove le mani trasformano il latte in storia.`},
+
+{id:'punto-4',num:'4',cat:'CASEIFICIO',title:'Dove le mani modellano il tempo',nextLabel:'Cantina',
+trans:`I nostri maestri casari modellano ogni pezzo a mano con fogasser e lligam. Il latte fresco diventa cagliata in quaranta minuti. La mamella è la firma del metodo tradizionale.
+
+Mahón-Menorca ha la DOP. Offriamo Semicurado (3 mesi), Curado (6 mesi), Stagionato (oltre 1 anno), Fresco e linea gourmet.
+
+Verso il punto cinque: la nostra cantina.`},
+
+{id:'punto-5',num:'5',cat:'CANTINA',title:'Dove il silenzio crea',nextLabel:'Negozio Museo',
+trans:`Fermentiamo a temperatura molto bassa, intorno ai quattordici gradi. Una fermentazione lenta estrae sfumature che una veloce non scoprirebbe mai.
+
+Il vino riposa per mesi, viene chiarificato, filtrato e imbottigliato. Tutti i nostri vini portano il sigillo «Vi de la Terra Illa de Menorca». Ogni bottiglia è tempo condensato.`},
+
+{id:'punto-6',num:'6',cat:'NEGOZIO MUSEO',title:'Il momento di assaporare',nextLabel:null,
+trans:`È arrivato il momento di cominciare ad assaporare. Dirigetevi verso il nostro negozio museo per un abbinamento di formaggi e vini. Tutto quello che avete ascoltato oggi è in ciò che state per assaggiare.
+
+Godetevi questo momento. È vostro.`}
+]
 };
 
-// ============================================================
-//  APP STATE
-// ============================================================
 let lang = 'es';
 let currentStop = 0;
 let isPlaying = false;
 let playbackRate = 1;
 const audio = document.getElementById('audioEl');
 
-// ============================================================
-//  NAVIGATION
-// ============================================================
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
 
-// ============================================================
-//  LANGUAGE
-// ============================================================
 function setLang(l) {
   lang = l;
-  // Update button styles
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === l);
   });
-  // Update welcome texts
   document.getElementById('welcomeSub').textContent = UI[l].subtitle;
   document.getElementById('startBtn').textContent = UI[l].start;
 }
 
-// ============================================================
-//  WELCOME INIT
-// ============================================================
 (function initWelcome() {
   const sel = document.getElementById('langSelector');
   LANGS.forEach(l => {
@@ -634,16 +832,12 @@ function setLang(l) {
   });
 })();
 
-// ============================================================
-//  STOP LIST
-// ============================================================
 function renderStopList() {
   const ui = UI[lang];
   const stops = STOPS[lang];
   document.getElementById('listSub').textContent = ui.subtitle;
   document.getElementById('changeLangBtn').textContent = '🌐 ' + ui.changeLang + ' (' + LANG_LABELS[lang] + ')';
   document.getElementById('changeLangBtn').onclick = () => { stopAudio(); showScreen('welcome'); };
-
   const c = document.getElementById('stopsContainer');
   c.innerHTML = '';
   stops.forEach((s, i) => {
@@ -656,29 +850,22 @@ function renderStopList() {
         <div class="stop-cat">${s.cat}</div>
         <div class="stop-title">${s.title}</div>
       </div>
-      <div class="stop-arrow">→</div>
-    `;
+      <div class="stop-arrow">→</div>`;
     card.onclick = () => openStop(i);
     c.appendChild(card);
   });
   showScreen('stoplist');
 }
 
-// ============================================================
-//  STOP DETAIL
-// ============================================================
 function openStop(index) {
   currentStop = index;
   const ui = UI[lang];
   const s = STOPS[lang][index];
-
   document.getElementById('detailNum').textContent = s.num;
   document.getElementById('detailCat').textContent = s.cat;
   document.getElementById('detailTitle').textContent = s.title;
   document.getElementById('transLabel').textContent = ui.readTrans;
   document.getElementById('transInner').textContent = s.trans;
-
-  // Next button
   const nextBtn = document.getElementById('nextBtn');
   if (s.nextLabel) {
     nextBtn.style.display = 'flex';
@@ -689,15 +876,10 @@ function openStop(index) {
     nextBtn.innerHTML = ui.endTitle + ' 🌅';
     nextBtn.onclick = () => showEnd();
   }
-
-  // Reset player
   resetPlayer();
   loadAudio(s.id);
-
-  // Reset transcription
   document.getElementById('transToggle').classList.remove('open');
   document.getElementById('transText').classList.remove('open');
-
   showScreen('detail');
 }
 
@@ -711,18 +893,13 @@ function showEnd() {
   showScreen('endscreen');
 }
 
-// ============================================================
-//  AUDIO PLAYER
-// ============================================================
 function loadAudio(id) {
   const errEl = document.getElementById('audioError');
   const errMsg = document.getElementById('audioErrorMsg');
   errEl.style.display = 'none';
-
   audio.src = 'audio/' + lang + '/' + id + '.mp3';
   audio.playbackRate = playbackRate;
   audio.load();
-
   audio.onerror = function() {
     errEl.style.display = 'block';
     errMsg.innerHTML = '⚠️ ' + UI[lang].errAudio + '<br><span>' + UI[lang].errSub + ' <b>audio/' + lang + '/</b></span>';
@@ -759,9 +936,7 @@ function togglePlay() {
   }
 }
 
-function rewind10() {
-  audio.currentTime = Math.max(0, audio.currentTime - 10);
-}
+function rewind10() { audio.currentTime = Math.max(0, audio.currentTime - 10); }
 
 function cycleSpeed() {
   var speeds = [1, 1.5, 2];
@@ -778,32 +953,23 @@ function fmtTime(s) {
   return m + ':' + (sec < 10 ? '0' : '') + sec;
 }
 
-// Player events
 audio.addEventListener('timeupdate', function() {
   if (!audio.duration) return;
-  var pct = (audio.currentTime / audio.duration) * 100;
-  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressFill').style.width = ((audio.currentTime / audio.duration) * 100) + '%';
   document.getElementById('currentTime').textContent = fmtTime(audio.currentTime);
 });
-
 audio.addEventListener('loadedmetadata', function() {
   document.getElementById('totalTime').textContent = fmtTime(audio.duration);
 });
-
 audio.addEventListener('ended', function() {
   isPlaying = false;
   document.getElementById('playBtn').textContent = '▶';
 });
-
-// Progress bar click
 document.getElementById('progressBar').addEventListener('click', function(e) {
   if (!audio.duration) return;
   var rect = e.currentTarget.getBoundingClientRect();
-  var pct = (e.clientX - rect.left) / rect.width;
-  audio.currentTime = pct * audio.duration;
+  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
 });
-
-// Button handlers
 document.getElementById('playBtn').addEventListener('click', togglePlay);
 document.getElementById('rewindBtn').addEventListener('click', rewind10);
 document.getElementById('speedBtn').addEventListener('click', cycleSpeed);
@@ -811,13 +977,10 @@ document.getElementById('backBtn').addEventListener('click', function() {
   stopAudio();
   renderStopList();
 });
-
-// Transcription toggle
 document.getElementById('transToggle').addEventListener('click', function() {
   this.classList.toggle('open');
   document.getElementById('transText').classList.toggle('open');
 });
 </script>
-
 </body>
 </html>
