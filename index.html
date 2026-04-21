@@ -1,1714 +1,985 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sant Patrici - Menorca</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* ===== TIPOGRAFÍA ELYSIAN ===== */
-        @font-face {
-            font-family: 'Elysian';
-            src: url('fonts/Elysian-Regular.woff2') format('woff2'),
-                 url('fonts/Elysian-Regular.woff') format('woff'),
-                 url('fonts/Elysian-Regular.ttf') format('truetype');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Elysian';
-            src: url('fonts/Elysian-Bold.woff2') format('woff2'),
-                 url('fonts/Elysian-Bold.woff') format('woff'),
-                 url('fonts/Elysian-Bold.ttf') format('truetype');
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        :root {
-            --primary-color: #006D62;
-            --primary-light: #008577;
-            --primary-dark: #005B52;
-            --accent-color: #C4A962;
-            --accent-dark: #A8924A;
-            --text-color: #2a2a2a;
-            --text-light: #666;
-            --bg-color: #faf8f3;
-            --bg-alt: #f0ede5;
-            --white: #fff;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
-            --container-max: 1280px;
-            --transition: 0.3s ease;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Elysian', Georgia, 'Times New Roman', serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ===== HEADER ===== */
-        header {
-            background-color: var(--primary-color);
-            color: var(--white);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-        }
-
-        .header-container {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-logo {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .header-logo:hover { opacity: 0.85; }
-        .header-logo img { height: 50px; }
-
-        /* ===== NAVEGACIÓN DESKTOP ===== */
-        .desktop-nav {
-            display: none;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .desktop-nav a {
-            color: var(--white);
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-        }
-        .desktop-nav a:hover,
-        .desktop-nav a.active {
-            background: rgba(255,255,255,0.15);
-        }
-        .desktop-nav a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 3px;
-            background: var(--accent-color);
-            border-radius: 3px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* ===== SELECTOR DE IDIOMA ===== */
-        .language-selector { position: relative; }
-
-        .language-btn {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.5);
-            color: var(--white);
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Elysian', Georgia, serif;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-        .language-btn:hover {
-            background: rgba(255,255,255,0.15);
-            border-color: var(--white);
-        }
-
-        .language-dropdown {
-            display: none;
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            background: var(--white);
-            border-radius: 8px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            min-width: 150px;
-            z-index: 100;
-        }
-        .language-dropdown.active { display: block; }
-
-        .language-dropdown a {
-            display: block;
-            padding: 12px 18px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: background var(--transition);
-            font-size: 0.95rem;
-        }
-        .language-dropdown a:hover { background: var(--bg-color); }
-
-        /* ===== HAMBURGER (móvil) ===== */
-        .mobile-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        /* ===== MAIN ===== */
-        main {
-            margin-top: 76px;
-            min-height: calc(100vh - 76px);
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 50%, var(--primary-light) 100%);
-            color: var(--white);
-            padding: 80px 24px 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(196, 169, 98, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-logo {
-            height: 180px;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 6px 20px rgba(0,0,0,0.25));
-        }
-
-        .hero-subtitle {
-            font-size: 1.1rem;
-            margin-bottom: 35px;
-            opacity: 0.95;
-            letter-spacing: 1px;
-        }
-
-        .hero-divider {
-            width: 60px;
-            height: 3px;
-            background: var(--accent-color);
-            margin: 0 auto 30px;
-            border-radius: 2px;
-        }
-
-        /* ===== ICONOS DE CONTACTO ===== */
-        .contact-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--white);
-            text-decoration: none;
-            font-size: 0.95rem;
-            padding: 12px 24px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 30px;
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-        .contact-link:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-        .contact-link i { font-size: 1.2rem; }
-        .whatsapp-link i { color: #25D366; }
-
-        /* ===== QUICK ACCESS (home) ===== */
-        .quick-access {
-            margin-top: -60px;
-            position: relative;
-            z-index: 3;
-            padding: 0 24px 60px;
-        }
-
-        .quick-grid {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .quick-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 30px 24px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-color);
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-            cursor: pointer;
-            border: 1px solid transparent;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-        }
-        .quick-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-color);
-        }
-
-        .quick-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            transition: var(--transition);
-        }
-        .quick-card:hover .quick-icon {
-            transform: scale(1.1) rotate(-5deg);
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
-        }
-
-        .quick-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .quick-desc {
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-
-        /* ===== SECCIONES ===== */
-        .section {
-            padding: 60px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .section-title i { font-size: 1.8rem; color: var(--accent-color); }
-
-        .section-subtitle {
-            color: var(--text-light);
-            font-size: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* ===== CAJA DE CONTACTO EN SECCIONES ===== */
-        .contact-info-box {
-            background: linear-gradient(135deg, var(--white), var(--bg-alt));
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 50px;
-            text-align: center;
-            border: 1px solid rgba(0,109,98,0.1);
-            box-shadow: var(--shadow-sm);
-        }
-        .contact-info-box p {
-            margin-bottom: 25px;
-            color: var(--text-color);
-            font-size: 1.05rem;
-            line-height: 1.7;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .section-contact-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .section-contact-icons .contact-link {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            color: var(--white);
-        }
-        .section-contact-icons .contact-link:hover {
-            background: var(--primary-light);
-            border-color: var(--primary-light);
-        }
-        .section-contact-icons .whatsapp-link i { color: #25D366; }
-
-        /* ===== TARJETAS ACTIVIDADES ===== */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 28px;
-        }
-
-        .card {
-            background: var(--white);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-        }
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .card-img-wrapper {
-            position: relative;
-            overflow: hidden;
-            height: 220px;
-        }
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-        .card:hover .card-img { transform: scale(1.08); }
-
-        .card-content {
-            padding: 24px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .card-description {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.6;
-            flex: 1;
-        }
-
-        /* ===== PLAYAS ===== */
-        .beach-section { margin-bottom: 40px; }
-
-        .beach-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .beach-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-        .beach-tag.north { background: #E8D4B8; color: #8B6914; }
-        .beach-tag.south { background: #D4E8F0; color: #1B6B8C; }
-
-        .beach-info {
-            font-size: 0.95rem;
-            color: var(--text-color);
-            margin-bottom: 24px;
-            padding: 20px 24px;
-            background: var(--white);
-            border-radius: 12px;
-            border-left: 5px solid var(--primary-color);
-            box-shadow: var(--shadow-sm);
-        }
-        .beach-info strong { color: var(--primary-color); margin-right: 8px; }
-
-        .beach-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 16px;
-        }
-
-        .beach-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 20px 24px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 15px;
-        }
-        .beach-card:hover {
-            transform: translateX(4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .beach-card-content { flex: 1; }
-        .beach-name { font-weight: 600; color: var(--primary-color); font-size: 1.05rem; margin-bottom: 4px; }
-        .beach-description { font-size: 0.88rem; color: var(--text-light); line-height: 1.5; }
-
-        .beach-link {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            background: rgba(196, 169, 98, 0.1);
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-        .beach-link:hover {
-            background: var(--accent-color);
-            color: var(--white);
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--accent-color);
-            color: var(--white);
-            padding: 14px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            margin: 0 auto 40px;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-        .download-btn:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .center-btn { display: flex; justify-content: center; }
-
-        /* ===== RESTAURANTES ===== */
-        .restaurant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 24px;
-        }
-
-        .restaurant-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-        }
-        .restaurant-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .restaurant-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 16px;
-        }
-        .restaurant-icon {
-            font-size: 2rem;
-            flex-shrink: 0;
-        }
-        .restaurant-name {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .restaurant-location {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .restaurant-description {
-            font-size: 0.92rem;
-            color: var(--text-color);
-            margin-bottom: 20px;
-            flex: 1;
-            line-height: 1.6;
-        }
-
-        .restaurant-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-
-        .restaurant-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 0.88rem;
-            text-decoration: none;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-        .restaurant-btn.maps { background: var(--primary-color); color: var(--white); }
-        .restaurant-btn.maps:hover { background: var(--primary-light); transform: scale(1.05); }
-
-        .location-filter {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding: 8px 0 20px;
-            margin-bottom: 30px;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 10px 22px;
-            border-radius: 25px;
-            border: 2px solid var(--primary-color);
-            background: transparent;
-            color: var(--primary-color);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: var(--transition);
-            font-family: 'Elysian', Georgia, serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--primary-color);
-            color: var(--white);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--primary-dark);
-            color: var(--white);
-            padding: 50px 24px 30px;
-            margin-top: 60px;
-        }
-        .footer-container {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-        .footer-col h4 {
-            color: var(--accent-color);
-            margin-bottom: 16px;
-            font-size: 1.05rem;
-        }
-        .footer-col p, .footer-col a {
-            color: rgba(255,255,255,0.85);
-            font-size: 0.9rem;
-            text-decoration: none;
-            line-height: 1.8;
-            display: block;
-            transition: var(--transition);
-        }
-        .footer-col a:hover { color: var(--accent-color); }
-        .footer-bottom {
-            max-width: var(--container-max);
-            margin: 40px auto 0;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            text-align: center;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* ===== NAVEGACIÓN INFERIOR (móvil) ===== */
-        .bottom-nav {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 999;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-light);
-            font-size: 0.72rem;
-            padding: 5px 10px;
-            transition: color var(--transition);
-        }
-        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
-        .nav-item.active, .nav-item:hover { color: var(--primary-color); }
-
-        /* ===== MODALES ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(4px);
-        }
-        .modal.active { display: flex; animation: fadeIn 0.3s ease; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background: var(--white);
-            border-radius: 16px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: var(--shadow-lg);
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: var(--white);
-            padding: 22px 28px;
-            border-radius: 16px 16px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        .modal-header h3 { font-size: 1.3rem; }
-
-        .modal-close {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: var(--white);
-            font-size: 1.3rem;
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-        .modal-close:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
-
-        .modal-body { padding: 28px; }
-
-        .menu-category { margin-bottom: 30px; }
-
-        .menu-category-title {
-            font-size: 1.25rem;
-            color: var(--primary-color);
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent-color);
-            font-weight: 600;
-        }
-
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 14px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .menu-item:last-child { border-bottom: none; }
-
-        .menu-item-name { font-weight: 500; color: var(--text-color); }
-        .menu-item-description { font-size: 0.85rem; color: var(--text-light); margin-top: 4px; }
-        .menu-item-price { font-weight: 700; color: var(--primary-color); white-space: nowrap; margin-left: 15px; }
-
-        .map-modal .modal-content { max-width: 1000px; max-height: 92vh; }
-        .map-modal .modal-body { padding: 0; }
-        .map-modal .modal-body img { width: 100%; height: auto; display: block; border-radius: 0 0 16px 16px; }
-
-        /* ===== PÁGINAS ===== */
-        .page { display: none; }
-        .page.active { display: block; animation: fadePage 0.4s ease; }
-
-        @keyframes fadePage {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (min-width: 992px) {
-            .desktop-nav { display: flex; }
-        }
-
-        @media (max-width: 991px) {
-            .mobile-toggle { display: block; }
-            
-            .bottom-nav { display: flex; }
-            
-            main { padding-bottom: 70px; }
-
-            .hero { padding: 60px 20px 90px; }
-            .hero-logo { height: 140px; }
-            .section-title { font-size: 1.7rem; }
-            .section-title i { font-size: 1.4rem; }
-            .section { padding: 40px 0; }
-        }
-
-        @media (max-width: 600px) {
-            .header-container { padding: 10px 16px; }
-            .header-logo img { height: 40px; }
-            .language-btn { padding: 6px 12px; font-size: 0.85rem; }
-            
-            .hero { padding: 50px 16px 80px; }
-            .hero-logo { height: 110px; margin-bottom: 20px; }
-            .hero-subtitle { font-size: 0.95rem; margin-bottom: 25px; }
-
-            .quick-access { padding: 0 16px 40px; margin-top: -50px; }
-            .quick-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .quick-card { padding: 20px 12px; }
-            .quick-icon { width: 50px; height: 50px; font-size: 1.3rem; }
-            .quick-title { font-size: 0.95rem; }
-            .quick-desc { display: none; }
-
-            .container { padding: 0 16px; }
-            .section { padding: 30px 0; }
-            .section-title { font-size: 1.4rem; }
-            .section-header { margin-bottom: 30px; }
-
-            .contact-info-box { padding: 24px 20px; }
-            .contact-icons, .section-contact-icons {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-            .contact-link { justify-content: center; width: 100%; max-width: 320px; }
-
-            .card-grid, .beach-grid, .restaurant-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-body { padding: 20px; }
-            .modal-header { padding: 18px 20px; }
-            .modal-header h3 { font-size: 1.1rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sant Patrici · Experiencia Sensorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Elysian';
+  src: url('fonts/Elysian-Regular.woff2') format('woff2'),
+       url('fonts/Elysian-Regular.woff') format('woff'),
+       url('fonts/Elysian-Regular.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Elysian';
+  src: url('fonts/Elysian-Bold.woff2') format('woff2'),
+       url('fonts/Elysian-Bold.woff') format('woff'),
+       url('fonts/Elysian-Bold.ttf') format('truetype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --verde:#0C7B6B;--verde-oscuro:#095C50;--verde-brand:#0a7c6a;
+  --dorado:#C8A951;--crema:#FAF8F3;--texto:#2D2D2D;--gris:#8A8A8A;--radius:16px;
+}
+body{font-family:'Montserrat',sans-serif;background:var(--crema);color:var(--texto);min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',serif}
+.screen{display:none;min-height:100vh;min-height:100dvh}
+.screen.active{display:flex;flex-direction:column}
+
+/* WELCOME */
+#welcome{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem 1.5rem;position:relative;overflow:hidden}
+#welcome::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);pointer-events:none}
+.welcome-logo{width:180px;height:auto;margin-bottom:1.8rem;position:relative;z-index:1;filter:brightness(0) invert(1)}
+#welcome .subtitle{font-family:'Montserrat',sans-serif;font-size:.7rem;letter-spacing:5px;opacity:.7;margin-bottom:2.5rem;font-weight:400;position:relative;z-index:1}
+.lang-selector{display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+.lang-btn{padding:.55rem 1rem;border:1.5px solid rgba(255,255,255,.45);border-radius:8px;background:transparent;color:#fff;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;letter-spacing:1px;transition:all .25s;-webkit-tap-highlight-color:transparent}
+.lang-btn:hover,.lang-btn.active{background:#fff;color:var(--verde);border-color:#fff}
+.start-btn{background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:3px;cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;z-index:1}
+.start-btn:active{transform:scale(.97)}
+
+/* STOP LIST */
+#stoplist{background:var(--crema)}
+.list-header{background:var(--verde);color:#fff;padding:1.2rem 1.5rem 2rem;text-align:center;border-radius:0 0 24px 24px}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.header-lang{font-size:.65rem;background:rgba(255,255,255,.12);padding:.35rem .8rem;border-radius:20px;cursor:pointer;border:1px solid rgba(255,255,255,.25);color:#fff;font-family:'Montserrat',sans-serif;letter-spacing:1px;transition:background .2s}
+.header-lang:active{background:rgba(255,255,255,.2)}
+.list-logo{height:50px;width:auto;filter:brightness(0) invert(1)}
+.list-header h2{font-size:1.5rem;margin-bottom:.15rem;letter-spacing:2px}
+.list-header .sub{font-size:.65rem;letter-spacing:3px;opacity:.7}
+.stops-container{padding:1rem 1.2rem 2rem}
+.stop-card{display:flex;align-items:center;background:#fff;border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.75rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.05);-webkit-tap-highlight-color:transparent}
+.stop-card:active{transform:scale(.98);box-shadow:0 2px 12px rgba(0,0,0,.1)}
+.stop-num{width:44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;margin-right:1rem}
+.stop-num.sub{font-size:.75rem;background:var(--dorado)}
+.stop-info{flex:1}
+.stop-cat{font-size:.6rem;letter-spacing:2px;color:var(--gris);font-weight:600;margin-bottom:.15rem}
+.stop-title{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--texto)}
+.stop-arrow{color:var(--verde);font-size:1.2rem;margin-left:.5rem;opacity:.5}
+
+/* STOP DETAIL */
+#detail{background:var(--crema)}
+.detail-header{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;padding:1.2rem 1.5rem 2.5rem;text-align:center;position:relative;border-radius:0 0 24px 24px}
+.detail-header::before{content:'';position:absolute;inset:0;border-radius:0 0 24px 24px;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.02) 10px,rgba(255,255,255,.02) 20px);pointer-events:none}
+.detail-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;position:relative;z-index:1}
+.back-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.back-btn:active{background:rgba(255,255,255,.1)}
+.detail-logo{height:28px;width:auto;filter:brightness(0) invert(1);position:relative;z-index:1}
+.detail-header .num{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;font-size:1.2rem;font-weight:700;position:relative;z-index:1;font-family:'Montserrat',sans-serif}
+.detail-header .cat{font-size:.65rem;letter-spacing:3px;opacity:.7;margin-bottom:.3rem;position:relative;z-index:1}
+.detail-header h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;line-height:1.3;position:relative;z-index:1}
+.detail-body{padding:1.2rem}
+.player-card{background:#fff;border-radius:var(--radius);padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:1rem}
+.player-controls{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-bottom:1rem}
+.ctrl-btn{width:42px;height:42px;border-radius:50%;border:none;background:transparent;color:var(--gris);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ctrl-btn:active{background:rgba(0,0,0,.05)}
+.play-btn{width:64px;height:64px;border-radius:50%;border:none;background:var(--verde);color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.play-btn:active{transform:scale(.93)}
+.speed-btn{font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;color:var(--verde);border:1.5px solid var(--verde);width:auto;padding:0 .7rem}
+.progress-wrap{display:flex;align-items:center;gap:.6rem}
+.progress-time{font-size:.7rem;color:var(--gris);min-width:32px;font-variant-numeric:tabular-nums}
+.progress-bar{flex:1;height:4px;background:#e8e8e8;border-radius:4px;overflow:hidden;cursor:pointer;position:relative}
+.progress-fill{height:100%;background:var(--verde);border-radius:4px;width:0%;transition:width .1s linear}
+.audio-error{background:#FFF8E1;border:1px solid #FFE082;border-radius:12px;padding:.8rem 1rem;text-align:center;margin-top:.8rem;font-size:.8rem;color:#F9A825;display:none}
+.audio-error span{display:block;font-size:.7rem;color:var(--gris);margin-top:.2rem}
+.audio-error b{color:var(--verde)}
+.transcription-toggle{width:100%;background:none;border:none;border-top:1px solid #eee;padding:1rem 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:2px;color:var(--gris)}
+.transcription-toggle .arrow{transition:transform .3s}
+.transcription-toggle.open .arrow{transform:rotate(180deg)}
+.transcription-text{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:.85rem;line-height:1.8;color:#555}
+.transcription-text.open{max-height:80000px}
+.transcription-inner{padding:.5rem 0 1rem;white-space:pre-line}
+.next-btn{display:flex;align-items:center;justify-content:center;width:100%;background:var(--verde);color:#fff;border:none;padding:1.1rem;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:.5rem;transition:background .2s;gap:.5rem}
+.next-btn:active{background:var(--verde-oscuro)}
+
+/* END SCREEN */
+#endscreen{background:linear-gradient(160deg,#0a6e60,#0C7B6B 40%,#10957f);color:#fff;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative}
+#endscreen::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px);pointer-events:none}
+#endscreen>div{position:relative;z-index:1}
+#endscreen h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem;font-weight:400}
+#endscreen p{opacity:.8;line-height:1.7;margin-bottom:2rem;max-width:320px}
+.restart-btn{background:#fff;color:var(--verde);border:none;padding:1rem 2.5rem;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;cursor:pointer}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .4s ease both}
+</style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
-    <header id="mainHeader">
-        <div class="header-container">
-            <div class="header-logo" onclick="showPage('home')">
-                <img src="img/logo-santpatrici.png" alt="Sant Patrici" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=&quot;color:white;font-size:1.4rem;font-weight:bold;letter-spacing:2px;&quot;>SANT PATRICI</span>';">
-            </div>
+<div id="welcome" class="screen active">
+  <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="welcome-logo">
+  <p class="subtitle" id="welcomeSub">EXPERIENCIA INMERSIVA</p>
+  <div class="lang-selector" id="langSelector"></div>
+  <button class="start-btn" id="startBtn"></button>
+</div>
 
-            <nav class="desktop-nav" id="desktopNav">
-                <a href="#" class="nav-link active" data-page="home" onclick="showPage('home'); return false;">
-                    <i class="fas fa-home"></i>
-                    <span data-es="Inicio" data-en="Home" data-fr="Accueil">Inicio</span>
-                </a>
-                <a href="#" class="nav-link" data-page="activities" onclick="showPage('activities'); return false;">
-                    <i class="fas fa-star"></i>
-                    <span data-es="Actividades" data-en="Activities" data-fr="Activités">Actividades</span>
-                </a>
-                <a href="#" class="nav-link" data-page="beaches" onclick="showPage('beaches'); return false;">
-                    <i class="fas fa-umbrella-beach"></i>
-                    <span data-es="Playas" data-en="Beaches" data-fr="Plages">Playas</span>
-                </a>
-                <a href="#" class="nav-link" data-page="restaurants" onclick="showPage('restaurants'); return false;">
-                    <i class="fas fa-utensils"></i>
-                    <span data-es="Restaurantes" data-en="Restaurants" data-fr="Restaurants">Restaurantes</span>
-                </a>
-                <a href="#" class="nav-link" onclick="openModal('snacksModal'); return false;">
-                    <i class="fas fa-cheese"></i>
-                    <span data-es="Snack Bar" data-en="Snack Bar" data-fr="Snack Bar">Snack Bar</span>
-                </a>
-            </nav>
-
-            <div class="header-right">
-                <div class="language-selector">
-                    <button class="language-btn" onclick="toggleLang(this)">
-                        <i class="fas fa-globe"></i>
-                        <span class="current-lang-text">ES</span>
-                        <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
-                    </button>
-                    <div class="language-dropdown">
-                        <a href="#" onclick="changeLanguage('es'); return false;">🇪🇸 Español</a>
-                        <a href="#" onclick="changeLanguage('en'); return false;">🇬🇧 English</a>
-                        <a href="#" onclick="changeLanguage('fr'); return false;">🇫🇷 Français</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- ===== CONTENIDO PRINCIPAL ===== -->
-    <main>
-
-        <!-- ========== PÁGINA INICIO ========== -->
-        <div class="page active" id="page-home">
-            <div class="hero">
-                <div class="hero-content">
-                    <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="hero-logo" onerror="this.style.display='none';">
-                    <div class="hero-divider"></div>
-                    <p class="hero-subtitle" data-es="Tu guía para descubrir Menorca" data-en="Your guide to discover Menorca" data-fr="Votre guide pour découvrir Minorque">Tu guía para descubrir Menorca</p>
-                    <div class="contact-icons">
-                        <a href="https://wa.me/34971713716" target="_blank" class="contact-link whatsapp-link">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>+34 971 71 37 16</span>
-                        </a>
-                        <a href="mailto:sales@santpatrici.es" class="contact-link email-link">
-                            <i class="fas fa-envelope"></i>
-                            <span>sales@santpatrici.es</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="quick-access">
-                <div class="quick-grid">
-                    <a href="#" class="quick-card" onclick="openModal('snacksModal'); return false;">
-                        <div class="quick-icon"><i class="fas fa-cheese"></i></div>
-                        <div class="quick-title" data-es="Snack Bar" data-en="Snack Bar" data-fr="Snack Bar">Snack Bar</div>
-                        <div class="quick-desc" data-es="Nuestra carta" data-en="Our menu" data-fr="Notre carte">Nuestra carta</div>
-                    </a>
-                    <a href="#" class="quick-card" onclick="openModal('restaurantMenuModal'); return false;">
-                        <div class="quick-icon"><i class="fas fa-book-open"></i></div>
-                        <div class="quick-title" data-es="Restaurante" data-en="Restaurant" data-fr="Restaurant">Restaurante</div>
-                        <div class="quick-desc" data-es="Carta completa" data-en="Full menu" data-fr="Menu complet">Carta completa</div>
-                    </a>
-                    <a href="#" class="quick-card" onclick="showPage('activities'); return false;">
-                        <div class="quick-icon"><i class="fas fa-star"></i></div>
-                        <div class="quick-title" data-es="Actividades" data-en="Activities" data-fr="Activités">Actividades</div>
-                        <div class="quick-desc" data-es="Experiencias únicas" data-en="Unique experiences" data-fr="Expériences uniques">Experiencias únicas</div>
-                    </a>
-                    <a href="#" class="quick-card" onclick="showPage('beaches'); return false;">
-                        <div class="quick-icon"><i class="fas fa-umbrella-beach"></i></div>
-                        <div class="quick-title" data-es="Playas" data-en="Beaches" data-fr="Plages">Playas</div>
-                        <div class="quick-desc" data-es="Las mejores calas" data-en="The best coves" data-fr="Les meilleures criques">Las mejores calas</div>
-                    </a>
-                    <a href="#" class="quick-card" onclick="showPage('restaurants'); return false;">
-                        <div class="quick-icon"><i class="fas fa-utensils"></i></div>
-                        <div class="quick-title" data-es="Restaurantes" data-en="Restaurants" data-fr="Restaurants">Restaurantes</div>
-                        <div class="quick-desc" data-es="Recomendaciones" data-en="Recommendations" data-fr="Recommandations">Recomendaciones</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========== PÁGINA ACTIVIDADES ========== -->
-        <div class="page" id="page-activities">
-            <div class="container">
-                <div class="section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-star"></i>
-                            <span data-es="Actividades" data-en="Activities" data-fr="Activités">Actividades</span>
-                        </h3>
-                        <p class="section-subtitle" data-es="Descubre las mejores experiencias en Menorca" data-en="Discover the best experiences in Menorca" data-fr="Découvrez les meilleures expériences à Minorque">Descubre las mejores experiencias en Menorca</p>
-                    </div>
-
-                    <div class="contact-info-box">
-                        <p data-es="Nuestro personal estará encantado de asesorarle o reservarle cualquier tipo de experiencia o actividad que desee."
-                           data-en="Our staff will be happy to advise you or book any type of experience or activity you wish."
-                           data-fr="Notre personnel sera ravi de vous conseiller ou de réserver tout type d'expérience ou d'activité que vous souhaitez.">
-                           Nuestro personal estará encantado de asesorarle o reservarle cualquier tipo de experiencia o actividad que desee.
-                        </p>
-                        <div class="section-contact-icons">
-                            <a href="https://wa.me/34971713716" target="_blank" class="contact-link whatsapp-link">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>+34 971 71 37 16</span>
-                            </a>
-                            <a href="mailto:sales@santpatrici.es" class="contact-link email-link">
-                                <i class="fas fa-envelope"></i>
-                                <span>sales@santpatrici.es</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card-grid">
-                        <div class="card">
-                            <div class="card-img-wrapper">
-                                <img src="https://assets.isu.pub/document-structure/230728173835-5a82c920c79913e459704c6849a39dab/v1/cef0a5034fb6aefac4b64ed636b37a03.jpeg?width=1440&quality=85%2C50" alt="Degustación" class="card-img">
-                            </div>
-                            <div class="card-content">
-                                <h4 class="card-title" data-es="Visita Degustación en Sant Patrici" data-en="Tasting Visit at Sant Patrici" data-fr="Visite Dégustation à Sant Patrici">Visita Degustación en Sant Patrici</h4>
-                                <p class="card-description" data-es="Descubre nuestra tradición quesera con una visita guiada y degustación de nuestros quesos artesanales elaborados con leche cruda de vaca." data-en="Discover our cheese-making tradition with a guided tour and tasting of our artisan cheeses made with raw cow's milk." data-fr="Découvrez notre tradition fromagère avec une visite guidée et dégustation de nos fromages artisanaux au lait cru de vache.">Descubre nuestra tradición quesera con una visita guiada y degustación de nuestros quesos artesanales elaborados con leche cruda de vaca.</p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-img-wrapper">
-                                <img src="https://men.gsstatic.es/sfAttachPlugin/getCachedContent/id/1688690/width/730/height/500/crop/1" alt="Snorkel, Kayak y Paddle Surf" class="card-img">
-                            </div>
-                            <div class="card-content">
-                                <h4 class="card-title" data-es="Snorkel, Kayak y Paddle Surf" data-en="Snorkel, Kayak and Paddle Surf" data-fr="Snorkel, Kayak et Paddle">Snorkel, Kayak y Paddle Surf</h4>
-                                <p class="card-description" data-es="Explora las calas y cuevas de Menorca desde el mar con actividades acuáticas." data-en="Explore Menorca's coves and caves from the sea with water activities." data-fr="Explorez les criques et grottes de Minorque depuis la mer.">Explora las calas y cuevas de Menorca desde el mar con actividades acuáticas.</p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-img-wrapper">
-                                <img src="https://hipicas.net/wp-content/uploads/2024/04/Rutas-a-Caballo-por-Menorca.jpg" alt="Rutas a caballo" class="card-img">
-                            </div>
-                            <div class="card-content">
-                                <h4 class="card-title" data-es="Rutas a Caballo" data-en="Horse Riding" data-fr="Équitation">Rutas a Caballo</h4>
-                                <p class="card-description" data-es="Descubre el Camí de Cavalls y los paisajes menorquines a caballo." data-en="Discover the Camí de Cavalls and Menorcan landscapes on horseback." data-fr="Découvrez le Camí de Cavalls et les paysages minorquins à cheval.">Descubre el Camí de Cavalls y los paisajes menorquines a caballo.</p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-img-wrapper">
-                                <img src="https://www.menorcadiferente.com/wp-content/uploads/2009/10/Tramo-7-del-Cami-de-Cavalls-De-Algaiarens-a-Cala-Pilar-scaled.jpg" alt="Camí de Cavalls" class="card-img">
-                            </div>
-                            <div class="card-content">
-                                <h4 class="card-title" data-es="Camí de Cavalls" data-en="Camí de Cavalls" data-fr="Camí de Cavalls">Camí de Cavalls</h4>
-                                <p class="card-description" data-es="Recorre las rutas del Camí de Cavalls y descubre rincones únicos de la isla." data-en="Walk the Camí de Cavalls routes and discover unique corners of the island." data-fr="Parcourez les sentiers du Camí de Cavalls et découvrez des coins uniques de l'île.">Recorre las rutas del Camí de Cavalls y descubre rincones únicos de la isla.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========== PÁGINA PLAYAS ========== -->
-        <div class="page" id="page-beaches">
-            <div class="container">
-                <div class="section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-umbrella-beach"></i>
-                            <span data-es="Playas de Menorca" data-en="Menorca Beaches" data-fr="Plages de Minorque">Playas de Menorca</span>
-                        </h3>
-                        <p class="section-subtitle" data-es="Un paraíso de calas vírgenes y aguas cristalinas" data-en="A paradise of virgin coves and crystal clear waters" data-fr="Un paradis de criques vierges et d'eaux cristallines">Un paraíso de calas vírgenes y aguas cristalinas</p>
-                    </div>
-
-                    <div class="center-btn">
-                        <a href="#" class="download-btn" onclick="openModal('mapModal'); return false;">
-                            <i class="fas fa-map"></i>
-                            <span data-es="Ver Mapa de Menorca" data-en="View Menorca Map" data-fr="Voir la Carte de Minorque">Ver Mapa de Menorca</span>
-                        </a>
-                    </div>
-
-                    <!-- Playas Norte -->
-                    <div class="beach-section">
-                        <div class="beach-header">
-                            <span class="beach-tag north">
-                                <i class="fas fa-compass"></i>
-                                <span data-es="Norte" data-en="North" data-fr="Nord">Norte</span>
-                            </span>
-                        </div>
-                        <div class="beach-info">
-                            <strong data-es="Características:" data-en="Features:" data-fr="Caractéristiques:">Características:</strong>
-                            <span data-es="Arena oscura y paisaje erosionado por el viento de tramuntana. Playas más salvajes y menos concurridas." data-en="Dark sand and landscape eroded by the tramuntana wind. Wilder and less crowded beaches." data-fr="Sable foncé et paysage érodé par le vent de tramuntane. Plages plus sauvages et moins fréquentées.">Arena oscura y paisaje erosionado por el viento de tramuntana. Playas más salvajes y menos concurridas.</span>
-                        </div>
-
-                        <div class="beach-grid">
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Cala del Pilar</div>
-                                    <div class="beach-description" data-es="Impresionante cala de arena rojiza rodeada de acantilados. Acceso a pie de unos 30 minutos." data-en="Impressive cove with reddish sand surrounded by cliffs. About 30 minutes walk." data-fr="Impressionnante crique au sable rougeâtre entourée de falaises.">Impresionante cala de arena rojiza rodeada de acantilados. Acceso a pie de unos 30 minutos.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Cala+del+Pilar+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Cala Pregonda</div>
-                                    <div class="beach-description" data-es="Una de las calas más espectaculares con arena dorada y rocas rojizas." data-en="One of the most spectacular coves with golden sand and reddish rocks." data-fr="L'une des criques les plus spectaculaires avec du sable doré et des rochers rougeâtres.">Una de las calas más espectaculares con arena dorada y rocas rojizas.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Cala+Pregonda+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Platja de Cavalleria</div>
-                                    <div class="beach-description" data-es="Playa virgen con impresionantes vistas al faro de Cavalleria." data-en="Virgin beach with stunning views of Cavalleria lighthouse." data-fr="Plage vierge avec des vues impressionnantes sur le phare de Cavalleria.">Playa virgen con impresionantes vistas al faro de Cavalleria.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Platja+de+Cavalleria+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Binimel-La</div>
-                                    <div class="beach-description" data-es="Extensa playa de arena oscura, punto de partida para llegar a Cala Pregonda." data-en="Extensive dark sand beach, starting point to reach Cala Pregonda." data-fr="Grande plage de sable foncé, point de départ pour Cala Pregonda.">Extensa playa de arena oscura, punto de partida para llegar a Cala Pregonda.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Binimel-la+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Cala Calderer</div>
-                                    <div class="beach-description" data-es="Pequeña cala tranquila ideal para el snorkel." data-en="Small quiet cove ideal for snorkeling." data-fr="Petite crique tranquille idéale pour le snorkeling.">Pequeña cala tranquila ideal para el snorkel.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Cala+Calderer+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Es Tancats - Algaiarens</div>
-                                    <div class="beach-description" data-es="Conjunto de playas vírgenes conocidas como La Vall." data-en="Set of virgin beaches known as La Vall." data-fr="Ensemble de plages vierges connues sous le nom de La Vall.">Conjunto de playas vírgenes conocidas como La Vall.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Algaiarens+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Playas Sur -->
-                    <div class="beach-section">
-                        <div class="beach-header">
-                            <span class="beach-tag south">
-                                <i class="fas fa-compass"></i>
-                                <span data-es="Sur" data-en="South" data-fr="Sud">Sur</span>
-                            </span>
-                        </div>
-                        <div class="beach-info">
-                            <strong data-es="Características:" data-en="Features:" data-fr="Caractéristiques:">Características:</strong>
-                            <span data-es="Arena blanca y agua cristalina de color turquesa. Calas protegidas con vegetación mediterránea." data-en="White sand and crystal-clear turquoise water. Protected coves with Mediterranean vegetation." data-fr="Sable blanc et eau cristalline turquoise. Criques protégées avec végétation méditerranéenne.">Arena blanca y agua cristalina de color turquesa. Calas protegidas con vegetación mediterránea.</span>
-                        </div>
-
-                        <div class="beach-grid">
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Cala Galdana</div>
-                                    <div class="beach-description" data-es="Una de las playas más famosas de Menorca con forma de herradura y aguas turquesas." data-en="One of Menorca's most famous beaches with horseshoe shape and turquoise waters." data-fr="L'une des plages les plus célèbres de Minorque en forme de fer à cheval.">Una de las playas más famosas de Menorca con forma de herradura y aguas turquesas.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Cala+Galdana+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Cala Mitjaneta</div>
-                                    <div class="beach-description" data-es="Pequeña cala paradisíaca de aguas cristalinas." data-en="Small paradise cove with crystal clear waters." data-fr="Petite crique paradisiaque aux eaux cristallines.">Pequeña cala paradisíaca de aguas cristalinas.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Cala+Mitjaneta+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Cala de Trebalúger</div>
-                                    <div class="beach-description" data-es="Cala virgen accesible solo a pie o en barco, rodeada de naturaleza." data-en="Virgin cove accessible only on foot or by boat, surrounded by nature." data-fr="Crique vierge accessible uniquement à pied ou en bateau.">Cala virgen accesible solo a pie o en barco, rodeada de naturaleza.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Cala+Trebaluger+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Cala Escorxada</div>
-                                    <div class="beach-description" data-es="Cala recóndita de difícil acceso pero de gran belleza." data-en="Hidden cove difficult to access but of great beauty." data-fr="Crique cachée difficile d'accès mais d'une grande beauté.">Cala recóndita de difícil acceso pero de gran belleza.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Cala+Escorxada+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Platja Binigaus</div>
-                                    <div class="beach-description" data-es="Extensa playa virgen de arena blanca y fina." data-en="Extensive virgin beach with fine white sand." data-fr="Grande plage vierge de sable blanc et fin.">Extensa playa virgen de arena blanca y fina.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Platja+Binigaus+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Santo Tomás</div>
-                                    <div class="beach-description" data-es="Playa familiar con todos los servicios y aguas tranquilas." data-en="Family beach with all services and calm waters." data-fr="Plage familiale avec tous les services et eaux calmes.">Playa familiar con todos los servicios y aguas tranquilas.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Santo+Tomas+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                            <div class="beach-card">
-                                <div class="beach-card-content">
-                                    <div class="beach-name">Son Bou</div>
-                                    <div class="beach-description" data-es="La playa más larga de Menorca con más de 2 km de arena." data-en="Menorca's longest beach with over 2 km of sand." data-fr="La plus longue plage de Minorque avec plus de 2 km de sable.">La playa más larga de Menorca con más de 2 km de arena.</div>
-                                </div>
-                                <a href="https://maps.google.com/?q=Son+Bou+Menorca" target="_blank" class="beach-link"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========== PÁGINA RESTAURANTES ========== -->
-        <div class="page" id="page-restaurants">
-            <div class="container">
-                <div class="section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-utensils"></i>
-                            <span data-es="Restaurantes Recomendados" data-en="Recommended Restaurants" data-fr="Restaurants Recommandés">Restaurantes Recomendados</span>
-                        </h3>
-                        <p class="section-subtitle" data-es="Nuestra selección de los mejores restaurantes de la isla" data-en="Our selection of the best restaurants on the island" data-fr="Notre sélection des meilleurs restaurants de l'île">Nuestra selección de los mejores restaurantes de la isla</p>
-                    </div>
-
-                    <div class="contact-info-box">
-                        <p data-es="Si deseas hacer una reserva en cualquiera de estos restaurantes, no dudes en contactarnos." data-en="If you would like to make a reservation at any of these restaurants, please contact us." data-fr="Si vous souhaitez faire une réservation dans l'un de ces restaurants, n'hésitez pas à nous contacter.">Si deseas hacer una reserva en cualquiera de estos restaurantes, no dudes en contactarnos.</p>
-                        <div class="section-contact-icons">
-                            <a href="https://wa.me/34971713716" target="_blank" class="contact-link whatsapp-link">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>+34 971 71 37 16</span>
-                            </a>
-                            <a href="mailto:sales@santpatrici.es" class="contact-link email-link">
-                                <i class="fas fa-envelope"></i>
-                                <span>sales@santpatrici.es</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="location-filter">
-                        <button class="filter-btn active" onclick="filterRestaurants('all', event)" data-es="Todos" data-en="All" data-fr="Tous">Todos</button>
-                        <button class="filter-btn" onclick="filterRestaurants('sant-lluis', event)">Sant Lluís</button>
-                        <button class="filter-btn" onclick="filterRestaurants('mahon', event)">Mahón</button>
-                        <button class="filter-btn" onclick="filterRestaurants('fornells', event)">Fornells</button>
-                        <button class="filter-btn" onclick="filterRestaurants('ciutadella', event)">Ciutadella</button>
-                    </div>
-
-                    <div class="restaurant-grid">
-                        <!-- Sant Lluís -->
-                        <div class="restaurant-card" data-location="sant-lluis">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🍴</span>
-                                <div>
-                                    <h4 class="restaurant-name">Sa Pedrera d'es Pujol</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Sant Lluís · Camí des Pujol, 14</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Dirigido por Dani Mora, destaca por sus platos clásicos. Prueba el oliaigua con higos, la raya a la mantequilla negra o la formatjada Wellington." data-en="Directed by Dani Mora, known for classic dishes. Try the oliaigua with figs, ray with black butter or formatjada Wellington." data-fr="Dirigé par Dani Mora, connu pour ses plats classiques.">Dirigido por Dani Mora, destaca por sus platos clásicos. Prueba el oliaigua con higos, la raya a la mantequilla negra o la formatjada Wellington.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Sa+Pedrera+des+Pujol+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="sant-lluis">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🦐</span>
-                                <div>
-                                    <h4 class="restaurant-name">Xuroy</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Sant Lluís · Cala Alcaufar</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Chiringuito con encanto en la cala de Alcaufar, protegida por un puerto natural. Especializado en arroces y pescado fresco de Menorca." data-en="Charming beach bar in Alcaufar cove. Specialized in rice dishes and fresh Menorcan fish." data-fr="Bar de plage charmant dans la crique d'Alcaufar.">Chiringuito con encanto en la cala de Alcaufar, protegida por un puerto natural. Especializado en arroces y pescado fresco de Menorca.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Xuroy+Cala+Alcaufar+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <!-- Mahón -->
-                        <div class="restaurant-card" data-location="mahon">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🍷</span>
-                                <div>
-                                    <h4 class="restaurant-name">Ses Forquilles</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Mahón · San Fernando, 12</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Los platillos de Marco Collado con trufa y productos locales. Un enfoque culinario muy disfrutable." data-en="Marco Collado's dishes with truffle and local products." data-fr="Les plats de Marco Collado avec truffe et produits locaux.">Los platillos de Marco Collado con trufa y productos locales. Un enfoque culinario muy disfrutable.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Ses+Forquilles+Mahon+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="mahon">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🐟</span>
-                                <div>
-                                    <h4 class="restaurant-name">Cap-Roig</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Mahón · Carretera Sa Mesquida, 13</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Desde 1983, con vistas a Cala Sa Mesquida. Perfecto para amantes del marisco, con pescado fresco como gallo de San Pedro, cabracho, pargo y pez emperador." data-en="Since 1983, with views of Cala Sa Mesquida. Perfect for seafood lovers." data-fr="Depuis 1983, avec vue sur Cala Sa Mesquida.">Desde 1983, con vistas a Cala Sa Mesquida. Perfecto para amantes del marisco, con pescado fresco como gallo de San Pedro, cabracho, pargo y pez emperador.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Cap+Roig+Sa+Mesquida+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <!-- Fornells -->
-                        <div class="restaurant-card" data-location="fornells">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🥩</span>
-                                <div>
-                                    <h4 class="restaurant-name">Ca Na Marga</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Fornells · Sa Barrera, 24</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Tres décadas de experiencia, punto de encuentro para amantes de la carne a la brasa. Jordi Pons cría su propio ganado." data-en="Three decades of experience, meeting point for grilled meat lovers." data-fr="Trois décennies d'expérience.">Tres décadas de experiencia, punto de encuentro para amantes de la carne a la brasa. Jordi Pons cría su propio ganado.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Ca+Na+Marga+Fornells+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="fornells">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🦞</span>
-                                <div>
-                                    <h4 class="restaurant-name">Es Cranc</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Fornells · Ses Escoles, 31</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Famoso por su caldereta de langosta, elemento básico de la cocina tradicional menorquina. Las langostas se mantienen en sus propios viveros." data-en="Famous for its lobster stew, a staple of traditional Menorcan cuisine." data-fr="Célèbre pour sa caldereta de homard.">Famoso por su caldereta de langosta, elemento básico de la cocina tradicional menorquina. Las langostas se mantienen en sus propios viveros.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Es+Cranc+Fornells+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="fornells">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🍲</span>
-                                <div>
-                                    <h4 class="restaurant-name">Sa Llagosta</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Fornells · Gabriel Gelabert, 12</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="David de Coca trabaja el marisco como nadie en la isla, ofreciendo langosta en una docena de preparaciones diferentes." data-en="David de Coca works seafood like no one else on the island." data-fr="David de Coca travaille les fruits de mer comme personne sur l'île.">David de Coca trabaja el marisco como nadie en la isla, ofreciendo langosta en una docena de preparaciones diferentes.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Sa+Llagosta+Fornells+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="fornells">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🍽️</span>
-                                <div>
-                                    <h4 class="restaurant-name">Sa Taula</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Fornells · Major, 2</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Excelente alternativa con dos terrazas. Cocina mediterránea hecha con mucho amor." data-en="Excellent alternative with two terraces. Mediterranean cuisine made with lots of love." data-fr="Excellente alternative avec deux terrasses.">Excelente alternativa con dos terrazas. Cocina mediterránea hecha con mucho amor.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Sa+Taula+Fornells+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <!-- Ciutadella -->
-                        <div class="restaurant-card" data-location="ciutadella">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🍹</span>
-                                <div>
-                                    <h4 class="restaurant-name">Ulisses</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Ciutadella · Plaça de la Llibertat, 22</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Cócteles de alta calidad y cocina de mercado cerca del mercado y la catedral. El chef y bartender Joan Canals trabaja con la captura de los barcos Curniola y Valldemosa Primera." data-en="High quality cocktails and market cuisine near the market and cathedral." data-fr="Cocktails de haute qualité et cuisine du marché.">Cócteles de alta calidad y cocina de mercado cerca del mercado y la catedral. El chef y bartender Joan Canals trabaja con la captura de los barcos Curniola y Valldemosa Primera.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Ulisses+Ciutadella+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="ciutadella">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🐙</span>
-                                <div>
-                                    <h4 class="restaurant-name">S'Amarador</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Ciutadella · Pere Capllonch, 42</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Situado en el puerto de Ciutadella, especializado en pescado y marisco local. Destaca su capacidad para cambiar el menú según la pesca del día." data-en="Located in the port of Ciutadella, specialized in local fish and seafood." data-fr="Situé dans le port de Ciutadella.">Situado en el puerto de Ciutadella, especializado en pescado y marisco local. Destaca su capacidad para cambiar el menú según la pesca del día.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=S+Amarador+Ciutadella+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="ciutadella">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🦐</span>
-                                <div>
-                                    <h4 class="restaurant-name">Cafè Balear</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Ciutadella · Passeig des Moll, 15</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Lugar clásico en el puerto para gambas, rape y langosta. La pesca diaria es traída por el barco Rosa Santa Primera." data-en="Classic place in the port for prawns, monkfish and lobster." data-fr="Lieu classique du port.">Lugar clásico en el puerto para gambas, rape y langosta. La pesca diaria es traída por el barco Rosa Santa Primera.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Cafe+Balear+Ciutadella+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-
-                        <div class="restaurant-card" data-location="ciutadella">
-                            <div class="restaurant-header">
-                                <span class="restaurant-icon">🍲</span>
-                                <div>
-                                    <h4 class="restaurant-name">Smoix</h4>
-                                    <p class="restaurant-location"><i class="fas fa-map-marker-alt"></i> Ciutadella · Hotel Rural Sant Ignasi</p>
-                                </div>
-                            </div>
-                            <p class="restaurant-description" data-es="Platos preparados con ingredientes de temporada y menús degustación servidos en un restaurante minimalista y elegante con patio." data-en="Dishes prepared with seasonal ingredients and tasting menus." data-fr="Plats préparés avec des ingrédients de saison.">Platos preparados con ingredientes de temporada y menús degustación servidos en un restaurante minimalista y elegante con patio.</p>
-                            <div class="restaurant-actions">
-                                <a href="https://maps.google.com/?q=Smoix+Ciutadella+Menorca" target="_blank" class="restaurant-btn maps"><i class="fas fa-map-marker-alt"></i> Maps</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h4>Sant Patrici</h4>
-                <p data-es="Tradición quesera artesanal en el corazón de Menorca." data-en="Artisan cheese tradition in the heart of Menorca." data-fr="Tradition fromagère artisanale au cœur de Minorque.">Tradición quesera artesanal en el corazón de Menorca.</p>
-            </div>
-            <div class="footer-col">
-                <h4 data-es="Contacto" data-en="Contact" data-fr="Contact">Contacto</h4>
-                <a href="https://wa.me/34971713716" target="_blank"><i class="fab fa-whatsapp"></i> +34 971 71 37 16</a>
-                <a href="mailto:sales@santpatrici.es"><i class="fas fa-envelope"></i> sales@santpatrici.es</a>
-            </div>
-            <div class="footer-col">
-                <h4 data-es="Enlaces" data-en="Links" data-fr="Liens">Enlaces</h4>
-                <a href="#" onclick="showPage('activities'); return false;" data-es="Actividades" data-en="Activities" data-fr="Activités">Actividades</a>
-                <a href="#" onclick="showPage('beaches'); return false;" data-es="Playas" data-en="Beaches" data-fr="Plages">Playas</a>
-                <a href="#" onclick="showPage('restaurants'); return false;" data-es="Restaurantes" data-en="Restaurants" data-fr="Restaurants">Restaurantes</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            © 2026 Sant Patrici · <span data-es="Todos los derechos reservados" data-en="All rights reserved" data-fr="Tous droits réservés">Todos los derechos reservados</span>
-        </div>
-    </footer>
-
-    <!-- ===== NAVEGACIÓN INFERIOR (móvil) ===== -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item active" data-page="home" onclick="showPage('home'); return false;">
-            <i class="fas fa-home"></i>
-            <span data-es="Inicio" data-en="Home" data-fr="Accueil">Inicio</span>
-        </a>
-        <a href="#" class="nav-item" data-page="activities" onclick="showPage('activities'); return false;">
-            <i class="fas fa-star"></i>
-            <span data-es="Actividades" data-en="Activities" data-fr="Activités">Actividades</span>
-        </a>
-        <a href="#" class="nav-item" data-page="beaches" onclick="showPage('beaches'); return false;">
-            <i class="fas fa-umbrella-beach"></i>
-            <span data-es="Playas" data-en="Beaches" data-fr="Plages">Playas</span>
-        </a>
-        <a href="#" class="nav-item" data-page="restaurants" onclick="showPage('restaurants'); return false;">
-            <i class="fas fa-utensils"></i>
-            <span data-es="Restaurantes" data-en="Restaurants" data-fr="Restaurants">Restaurantes</span>
-        </a>
-    </nav>
-
-    <!-- ===== MODAL MAPA ===== -->
-    <div class="modal map-modal" id="mapModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-es="Mapa de Menorca" data-en="Menorca Map" data-fr="Carte de Minorque">Mapa de Menorca</h3>
-                <button class="modal-close" onclick="closeModal('mapModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <img src="https://i.imgur.com/f77Nw24.jpeg" alt="Mapa de Menorca">
-            </div>
-        </div>
+<div id="stoplist" class="screen">
+  <div class="list-header">
+    <div class="header-top">
+      <button class="header-lang" id="changeLangBtn"></button>
+      <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="list-logo">
     </div>
+    <p class="sub" id="listSub"></p>
+  </div>
+  <div class="stops-container" id="stopsContainer"></div>
+</div>
 
-    <!-- ===== MODAL SNACKS BAR ===== -->
-    <div class="modal" id="snacksModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-es="Carta Snacks Bar" data-en="Snacks Bar Menu" data-fr="Menu Collation">Carta Snacks Bar</h3>
-                <button class="modal-close" onclick="closeModal('snacksModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="menu-category">
-                    <h4 class="menu-category-title" data-es="Tablas" data-en="Boards" data-fr="Plateaux">Tablas</h4>
-                    <div class="menu-item">
-                        <div>
-                            <div class="menu-item-name" data-es="Tabla de quesos de Sant Patrici" data-en="Sant Patrici's cheese board" data-fr="Plateau de fromages de Sant Patrici">Tabla de quesos de Sant Patrici</div>
-                            <div class="menu-item-description" data-es="Quesos elaborados de manera tradicional en la finca con leche cruda de vaca" data-en="Traditionally made cheeses at the farm with raw cow's milk" data-fr="Fromages élaborés de manière traditionnelle à la finca avec du lait cru de vache">Quesos elaborados de manera tradicional en la finca con leche cruda de vaca</div>
-                        </div>
-                        <span class="menu-item-price">16,00 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div>
-                            <div class="menu-item-name" data-es="Tabla de jamón ibérico" data-en="Iberic ham board" data-fr="Plateau de jambon ibérique">Tabla de jamón ibérico</div>
-                        </div>
-                        <span class="menu-item-price">18,00 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div>
-                            <div class="menu-item-name" data-es="Tabla degustación" data-en="Tasting board" data-fr="Plateau dégustation">Tabla degustación</div>
-                            <div class="menu-item-description" data-es="Quesos y embutidos típicos de Menorca" data-en="Cheeses and typical Menorcan cured meats" data-fr="Fromages et charcuteries typiques de Minorque">Quesos y embutidos típicos de Menorca</div>
-                        </div>
-                        <span class="menu-item-price">20,00 €</span>
-                    </div>
-                </div>
-
-                <div class="menu-category">
-                    <h4 class="menu-category-title">Snacks</h4>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Mini coctel de frutos secos" data-en="Mini cocktail of nuts" data-fr="Mini cocktail de fruits secs">Mini coctel de frutos secos</div>
-                        <span class="menu-item-price">1,80 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Gilda de anchoa (unidad)" data-en="Anchovy Gilda (unit)" data-fr="Gilda à l'anchois (unité)">Gilda de anchoa (unidad)</div>
-                        <span class="menu-item-price">2,00 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Bolsa de patatas clásicas" data-en="Classic chips" data-fr="Sachet de chips classiques">Bolsa de patatas clásicas</div>
-                        <span class="menu-item-price">2,50 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Bolsa de patatas pimienta" data-en="Pepper chips" data-fr="Sachet de chips au poivre">Bolsa de patatas pimienta</div>
-                        <span class="menu-item-price">2,70 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Aceitunas rellenas" data-en="Stuffed olives" data-fr="Olives farcies">Aceitunas rellenas</div>
-                        <span class="menu-item-price">4,40 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Mejillones en escabeche" data-en="Pickled mussels" data-fr="Moules en escabèche">Mejillones en escabeche</div>
-                        <span class="menu-item-price">5,80 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Pan de cristal con tomate" data-en="Crystal bread with tomato" data-fr="Pain cristal avec tomate">Pan de cristal con tomate</div>
-                        <span class="menu-item-price">6,00 €</span>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-name" data-es="Berberechos al natural" data-en="Natural cockles" data-fr="Coques nature">Berberechos al natural</div>
-                        <span class="menu-item-price">11,40 €</span>
-                    </div>
-                </div>
-
-                <div class="menu-category">
-                    <h4 class="menu-category-title" data-es="Cervezas" data-en="Beer" data-fr="Bières">Cervezas</h4>
-                    <div class="menu-item"><div class="menu-item-name">Estrella Galicia 0.0 Tostada</div><span class="menu-item-price">4,00 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Estrella Galicia</div><span class="menu-item-price">4,50 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Grahame Pearce Lager 33cl</div><span class="menu-item-price">4,50 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Grahame Pearce Talaiótica 33cl</div><span class="menu-item-price">5,20 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Grahame Pearce IPA 33cl</div><span class="menu-item-price">5,80 €</span></div>
-                </div>
-
-                <div class="menu-category">
-                    <h4 class="menu-category-title" data-es="Refrescos" data-en="Soft Drinks" data-fr="Sodas">Refrescos</h4>
-                    <div class="menu-item"><div class="menu-item-name">Coca-cola</div><span class="menu-item-price">3,40 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Coca-cola Zero</div><span class="menu-item-price">3,40 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Kas de limón" data-en="Lemon Kas" data-fr="Kas Citron">Kas de limón</div><span class="menu-item-price">3,40 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Sprite</div><span class="menu-item-price">3,40 €</span></div>
-                </div>
-
-                <div class="menu-category">
-                    <h4 class="menu-category-title" data-es="Vinos" data-en="Wines" data-fr="Vins">Vinos</h4>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Vermut Tinto 25cl" data-en="Red Vermut 25cl" data-fr="Vermouth Rouge 25cl">Vermut Tinto 25cl</div><span class="menu-item-price">3,80 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Torralbenc Tinto" data-en="Torralbenc Red" data-fr="Torralbenc Rouge">Torralbenc Tinto</div><span class="menu-item-price">6,50 € / 31,40 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Es Moll Rosado</div><span class="menu-item-price">5,00 € / 24,00 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Torralbenc Rosado</div><span class="menu-item-price">6,00 € / 24,20 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name">Sa Caterina Rosado</div><span class="menu-item-price">30,90 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Torralbenc Blanco" data-en="Torralbenc White" data-fr="Torralbenc Blanc">Torralbenc Blanco</div><span class="menu-item-price">6,00 € / 26,60 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Sa Caterina Blanco" data-en="Sa Caterina White" data-fr="Sa Caterina Blanc">Sa Caterina Blanco</div><span class="menu-item-price">38,00 €</span></div>
-                </div>
-
-                <div class="menu-category">
-                    <h4 class="menu-category-title" data-es="Otros Vinos" data-en="Other Wines" data-fr="Autres Vins">Otros Vinos</h4>
-                    <div class="menu-item"><div class="menu-item-name">Alba Rosado</div><span class="menu-item-price">29,40 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Sa Forana Blanco" data-en="Sa Forana White" data-fr="Sa Forana Blanc">Sa Forana Blanco</div><span class="menu-item-price">25,70 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Alba Garnacha Blanco" data-en="Alba Garnacha White" data-fr="Alba Garnacha Blanc">Alba Garnacha Blanco</div><span class="menu-item-price">32,00 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Alba Malvasía Blanco" data-en="Alba Malvasía White" data-fr="Alba Malvasía Blanc">Alba Malvasía Blanco</div><span class="menu-item-price">32,00 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Vinya Sa Cudia Blanco" data-en="Vinya Sa Cudia White" data-fr="Vinya Sa Cudia Blanc">Vinya Sa Cudia Blanco</div><span class="menu-item-price">39,00 €</span></div>
-                    <div class="menu-item"><div class="menu-item-name" data-es="Sa Cudia Blanco" data-en="Sa Cudia White" data-fr="Sa Cudia Blanc">Sa Cudia Blanco</div><span class="menu-item-price">34,90 €</span></div>
-                </div>
-            </div>
-        </div>
+<div id="detail" class="screen">
+  <div class="detail-header">
+    <div class="detail-top">
+      <button class="back-btn" id="backBtn">←</button>
+      <img src="img/logo-santpatrici.png" alt="Sant Patrici" class="detail-logo">
+      <span style="width:40px"></span>
     </div>
-
-    <!-- ===== MODAL CARTA RESTAURANTE ===== -->
-    <div class="modal" id="restaurantMenuModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-es="Carta Restaurante" data-en="Restaurant Menu" data-fr="Menu Restaurant">Carta Restaurante</h3>
-                <button class="modal-close" onclick="closeModal('restaurantMenuModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p style="text-align: center; padding: 40px; color: var(--text-light);" data-es="Próximamente disponible la carta completa del restaurante." data-en="Full restaurant menu coming soon." data-fr="Menu complet du restaurant bientôt disponible.">Próximamente disponible la carta completa del restaurante.</p>
-            </div>
+    <div class="num" id="detailNum"></div>
+    <p class="cat" id="detailCat"></p>
+    <h2 id="detailTitle"></h2>
+  </div>
+  <div class="detail-body">
+    <div class="player-card">
+      <div class="player-controls">
+        <button class="ctrl-btn" id="rewindBtn" title="-10s">↺</button>
+        <button class="play-btn" id="playBtn">▶</button>
+        <button class="ctrl-btn speed-btn" id="speedBtn">1x</button>
+      </div>
+      <div class="progress-wrap">
+        <span class="progress-time" id="currentTime">0:00</span>
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
         </div>
+        <span class="progress-time" id="totalTime">0:00</span>
+      </div>
+      <div class="audio-error" id="audioError">
+        <span id="audioErrorMsg"></span>
+      </div>
     </div>
+    <button class="transcription-toggle" id="transToggle">
+      <span id="transLabel"></span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="transcription-text" id="transText">
+      <div class="transcription-inner" id="transInner"></div>
+    </div>
+    <button class="next-btn" id="nextBtn"></button>
+  </div>
+</div>
 
-    <!-- ===== JAVASCRIPT ===== -->
-    <script>
-        let currentLang = 'es';
+<div id="endscreen" class="screen">
+  <div>
+    <div style="font-size:3rem;margin-bottom:1rem">🌅</div>
+    <h2 id="endTitle"></h2>
+    <p id="endText"></p>
+    <button class="restart-btn" id="restartBtn"></button>
+  </div>
+</div>
 
-        function toggleLang(btn) {
-            const dropdown = btn.parentElement.querySelector('.language-dropdown');
-            document.querySelectorAll('.language-dropdown').forEach(function(d) {
-                if (d !== dropdown) d.classList.remove('active');
-            });
-            dropdown.classList.toggle('active');
-        }
+<audio id="audioEl" preload="auto"></audio>
 
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.language-selector')) {
-                document.querySelectorAll('.language-dropdown').forEach(function(d) {
-                    d.classList.remove('active');
-                });
-            }
-        });
+<script>
+const LANGS = ['es','cat','en','fr','de','it'];
+const LANG_LABELS = {es:'ES',cat:'CAT',en:'EN',fr:'FR',de:'DE',it:'IT'};
 
-        function changeLanguage(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang;
-            document.querySelectorAll('.current-lang-text').forEach(function(el) {
-                el.textContent = lang.toUpperCase();
-            });
-            document.querySelectorAll('.language-dropdown').forEach(function(d) {
-                d.classList.remove('active');
-            });
-            document.querySelectorAll('[data-' + lang + ']').forEach(function(el) {
-                el.textContent = el.getAttribute('data-' + lang);
-            });
-        }
+const UI = {
+  es:{subtitle:'EXPERIENCIA SENSORIAL',start:'COMENZAR VISITA',readTrans:'LEER TRANSCRIPCIÓN',next:'SIGUIENTE',errAudio:'Audio no encontrado.',errSub:'Añade el archivo MP3 en la carpeta',endTitle:'Gracias por su visita',endText:'Esperamos que haya disfrutado del recorrido por Sant Patrici. Llévese consigo el aroma de los jardines, el sabor del vino y la calma de esta tierra.',restart:'VOLVER AL INICIO',changeLang:'IDIOMA'},
+  cat:{subtitle:'EXPERIÈNCIA SENSORIAL',start:'COMENÇAR VISITA',readTrans:'LLEGIR TRANSCRIPCIÓ',next:'SEGÜENT',errAudio:'Àudio no trobat.',errSub:'Afegiu el fitxer MP3 a la carpeta',endTitle:'Gràcies per la vostra visita',endText:'Esperem que hàgiu gaudit del recorregut per Sant Patrici. Emporteu-vos l\'aroma dels jardins, el gust del vi i la calma d\'aquesta terra.',restart:'TORNAR A L\'INICI',changeLang:'IDIOMA'},
+  en:{subtitle:'SENSORY EXPERIENCE',start:'START TOUR',readTrans:'READ TRANSCRIPTION',next:'NEXT',errAudio:'Audio not found.',errSub:'Add the MP3 file in the folder',endTitle:'Thank you for your visit',endText:'We hope you enjoyed the tour of Sant Patrici. Take with you the scent of the gardens, the taste of the wine and the calm of this land.',restart:'BACK TO START',changeLang:'LANGUAGE'},
+  fr:{subtitle:'EXPÉRIENCE SENSORIELLE',start:'COMMENCER LA VISITE',readTrans:'LIRE LA TRANSCRIPTION',next:'SUIVANT',errAudio:'Audio non trouvé.',errSub:'Ajoutez le fichier MP3 dans le dossier',endTitle:'Merci de votre visite',endText:'Nous espérons que vous avez apprécié la visite de Sant Patrici. Emportez avec vous le parfum des jardins, le goût du vin et le calme de cette terre.',restart:'RETOUR AU DÉBUT',changeLang:'LANGUE'},
+  de:{subtitle:'SINNLICHES ERLEBNIS',start:'TOUR STARTEN',readTrans:'TRANSKRIPTION LESEN',next:'WEITER',errAudio:'Audio nicht gefunden.',errSub:'Fügen Sie die MP3-Datei im Ordner hinzu',endTitle:'Vielen Dank für Ihren Besuch',endText:'Wir hoffen, Sie haben die Tour durch Sant Patrici genossen. Nehmen Sie den Duft der Gärten, den Geschmack des Weins und die Ruhe dieses Landes mit.',restart:'ZURÜCK ZUM ANFANG',changeLang:'SPRACHE'},
+  it:{subtitle:'ESPERIENZA SENSORIALE',start:'INIZIARE VISITA',readTrans:'LEGGERE TRASCRIZIONE',next:'SEGUENTE',errAudio:'Audio non trovato.',errSub:'Aggiungi il file MP3 nella cartella',endTitle:'Grazie per la vostra visita',endText:'Speriamo che abbiate apprezzato il percorso di Sant Patrici. Portatevi con voi il profumo dei giardini, il sapore del vino e la calma di questa terra.',restart:'TORNA ALL\'INIZIO',changeLang:'LINGUA'}
+};
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(function(page) {
-                page.classList.remove('active');
-            });
-            const targetPage = document.getElementById('page-' + pageId);
-            if (targetPage) targetPage.classList.add('active');
+const STOPS = {
+es:[
+{id:'punto-1',num:'1',cat:'EDIFICIO PRINCIPAL',nextLabel:'Jardín de las Esculturas',
+trans:`Deténganse un momento frente a esta fachada. Fíjense en el grosor de estos muros: tienen más de un metro de piedra de marés, la misma que se colocó aquí en 1918. Y miren las proporciones: la planta cuadrada, la simetría, esa escalinata de entrada. Esto no es una casa de campo menorquina. Quien la mandó construir quiso una villa al estilo italiano, como las que había visto en sus viajes. Parece tranquila, ¿verdad? Piedra clara, buganvillas, esa luz de Menorca que lo acaricia todo. Pero esta casa guarda un secreto. Porque no la encargó un noble ni la levantó para una familia. Esta casa la construyó un amor prohibido.
 
-            // Actualizar navegación desktop
-            document.querySelectorAll('.desktop-nav .nav-link').forEach(function(link) {
-                link.classList.remove('active');
-                if (link.getAttribute('data-page') === pageId) {
-                    link.classList.add('active');
-                }
-            });
+Para entender esta historia hay que viajar primero al Madrid de principios del siglo XX. Imaginen a Fernando Vives: nacido en Mahón en 1867, hijo de la alta burguesía menorquina, pero afincado en la capital, donde había levantado un pequeño imperio. Era dueño de "La Mahonesa", unas pastelerías célebres que llevaban los dulces de Menorca a los salones de Madrid. Coleccionista de antigüedades, apasionado del arte árabe. Su propio hermano, Antonio, llegó a ser uno de los numismáticos más importantes de España, declarado Hijo Ilustre de Mahón. Los Vives eran gente de peso. Y Fernando estaba casado con Francisca Segura —Paca, como la llamaban todos—, una mujer que venía del mundo del espectáculo y la zarzuela.
 
-            // Actualizar navegación inferior
-            document.querySelectorAll('.bottom-nav .nav-item').forEach(function(item) {
-                item.classList.remove('active');
-                if (item.getAttribute('data-page') === pageId) {
-                    item.classList.add('active');
-                }
-            });
+Pero Madrid le pesaba. Fernando echaba de menos la isla, la calma, el olor a campo. Y en 1917 compró esta finca buscando un refugio donde respirar lejos del ruido de la capital. El problema fue que a Paca, acostumbrada a la vida madrileña, aquella tranquilidad menorquina no le interesaba lo más mínimo. Fernando venía solo. Y como en aquella época un hombre no se hacía la casa, contrató a una joven para que le ayudara.
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+Se llamaba Virginia López Álvarez, aunque todo el mundo acabaría conociéndola como Xini. Había llegado de Valladolid, hija de una familia humilde y enorme —su madre tuvo veinte hijos, de los que sobrevivieron dieciocho—. Xini ya trabajaba para Fernando en Madrid, en la pastelería. Ahora la trajo a Menorca para encargarse de la casa.
 
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+Lo que pasó después era quizá inevitable. Fernando, cada vez, venía más. Se quedaba más tiempo. Hasta que dejó de irse. Se había enamorado de Xini. Paca, al enterarse, abandonó la finca y se marchó a vivir a Mahón. Y esta casa, la que ustedes tienen delante, se convirtió en el hogar de Fernando y Xini.
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+Él la llenó de todo lo que ella merecía: estatuas de mármol de las cuatro estaciones en el jardín, cortinas de terciopelo rojo, una cama de barras doradas con sábanas de seda. Fernando, pintor aficionado, la retrataba en el porche mientras la brisa entraba por esas mismas ventanas que ustedes están viendo ahora. Para que se hagan una idea de quién era Xini: cuentan que caminaba desde esta finca hasta el pueblo con una bandeja de pastissets equilibrada sobre la cabeza, erguida como una reina, con sus joyas puestas y sus tacones —sí, tacones en un camino de tierra—. En Ferreries la llamaban la Gilda, como la actriz de cine. Era ese tipo de mujer.
 
-        document.querySelectorAll('.modal').forEach(function(modal) {
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        });
+Vivieron aquí su edad dorada. Aislados, sí. Pero libres.
 
-        // Cerrar modal con ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.active').forEach(function(m) {
-                    m.classList.remove('active');
-                });
-                document.body.style.overflow = 'auto';
-            }
-        });
+Hasta que Fernando murió, en enero de 1941. Tenía 73 años.
 
-        function filterRestaurants(location, event) {
-            document.querySelectorAll('.filter-btn').forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            if (event && event.currentTarget) event.currentTarget.classList.add('active');
+Y entonces, el silencio. Imaginen esta casa sin su voz, sin sus fiestas, sin el olor de los dulces que horneaba. Tres meses antes de morir, sabiendo lo que venía, Fernando había hecho lo único que podía: partir su vida en dos. La casa y el jardín se los cedió a Xini, en vida. Todo lo demás —las pastelerías, las propiedades de Mahón, el dinero— fue para Paca, su esposa legítima.
 
-            document.querySelectorAll('.restaurant-card').forEach(function(card) {
-                if (location === 'all' || card.getAttribute('data-location') === location) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
+De la noche a la mañana, Xini se quedó con las paredes, pero sin nada dentro. Despidió al jardinero. Compró gallinas, cerdos, un par de vacas lecheras. Y donde antes había mármol y música, empezaron a aparecer animales por todas partes. Las vacas se rascaban contra las estatuas de las cuatro estaciones. Los cerdos dormían donde antes se bailaba. Xini aprendió a ordeñar, a segar, a hacer queso —un queso blanco y salado que vendía en las tiendas de Ferreries—. La pobreza la empujó a robar hortalizas de las fincas vecinas para sobrevivir. Pero jamás dejó de caminar erguida. Y siempre con tacones: al final, con las manos destrozadas por el trabajo, ya no podía calzárselos sola. Caminaba descalza hasta casa de su amiga Rafela, llevando los zapatos en una bolsa, y le pedía que la ayudara a ponérselos. Siempre fue con tacón.
+
+Veinticinco años resistió aquí sola. Sin rendirse. Sin marcharse. Como si irse fuera traicionar la memoria de Fernando.
+
+Murió en octubre de 1966, a los 69 años. La encontraron sus amigas en la cocina, sentada en una silla, con la cabeza sobre la mesa. En su tumba, en el cementerio de Mahón, no hay ninguna lápida que recuerde su nombre.
+
+Sus hermanos llegaron de la península, vendieron lo poco que valía y quemaron el resto. Literalmente. Apilaron colchones, retratos, cuadros, cartas, alfombras, muebles —toda una vida— en el patio, y les prendieron fuego. Ceniza y silencio cerraron la historia de Fernando y Xini.
+
+Pero la tierra recuerda.
+
+Con los años, esta finca fue cambiando de manos hasta que alguien vio en ella lo que Fernando vio en 1917: no un negocio, sino una posibilidad. Lo que hoy ven a su alrededor —el hotel, la quesería, la bodega, los viñedos— es un acto de resurrección. Es la prueba de que un lugar que conoció el amor, la decadencia y el abandono puede renacer y dar frutos. Frutos que hoy, literalmente, ustedes van a poder saborear.
+
+Caminen ahora hacia la izquierda, donde verán la señalización del punto número dos. Les espera un jardín que habla en silencio.`},
+
+{id:'punto-2',num:'2',cat:'JARDÍN DE LAS ESCULTURAS',title:'Diez voces en la espiral',nextLabel:'Las Esculturas una a una',
+trans:`Acaban de escuchar una historia de fuego. Los hermanos de Xini quemaron todo lo que había en esta finca: los cuadros, las cartas, los muebles, la memoria. Y durante años, aquí no hubo nada. Solo tierra callada.
+
+Lo que tienen ahora delante es la respuesta.
+
+Antes de mirar las esculturas, les pido que miren el suelo. Fíjense en la forma del camino que van a recorrer. ¿La ven? Es una espiral. No es decoración: es una decisión. Este jardín, que ocupa más de diez mil metros cuadrados, fue diseñado por el paisajista Josep Bosch Espelta, discípulo del gran Nicolau Maria Rubió i Tudurí. Y Bosch eligió la espiral porque es la forma que adopta la vida. Está en las galaxias, en las conchas de los caracoles, en la doble hélice del ADN. Si el trazado les recuerda a algo, probablemente sea al Museo Guggenheim de Nueva York: el diseño de este jardín está inspirado directamente en la rampa helicoidal de Frank Lloyd Wright. Ustedes, al caminar por este sendero, van a recorrer esa misma idea: el paso del ser humano por la Tierra.
+
+Lo que ocurrió aquí para llenarlo de voces fue extraordinario. En mayo de 2003, Menorca cumplía diez años como Reserva de la Biosfera, y para celebrarlo se organizó el Primer Simposio Internacional Hort Sant Patrici. Durante veinticinco días, catorce artistas de todo el mundo —una paraguaya, un italiano, una coreana, un egipcio, un rumano, un haitiano afincado en Bélgica...— convivieron en esta finca. Comieron juntos, discutieron juntos, trabajaron la piedra juntos. Y de esa convivencia nacieron diez esculturas talladas en mármol de Carrara. Diez respuestas distintas a una misma pregunta: ¿cuál es la relación del ser humano con la naturaleza?
+
+Mientras pasean, irán encontrándolas. Verán la fuente de Nélida Mendoza, la artista paraguaya, que usó el agua como materia viva: el agua cae sobre la piedra y la va moldeando lentamente, igual que el tiempo moldea la Tierra. Es la única pieza que no está aquí en el jardín; la encontrarán junto al lago, porque su mensaje necesitaba otro escenario.
+
+Encontrarán la Balanza de Giacomo Santini, un jovencísimo escultor italiano que quiso recordarnos que el equilibrio entre el hombre y la naturaleza es frágil. Las manos que verán en la pieza son reales: son moldes de las manos de niños que vinieron durante el simposio.
+
+Y verán la Tierra de George Dan Istrate, el escultor rumano: una esfera perfecta partida por un corte limpio. Es la intervención del hombre. Si no cambiamos de rumbo, la fractura será irreversible.
+
+Así, escultura a escultura, este jardín les irá hablando. Escúchenlo. Cada pieza es una carta de amor —o de advertencia— a la isla que nos acoge.
+
+Tómense su tiempo. Cuando estén listos, sigan la espiral hacia el punto tres, donde la memoria de esta tierra se hace líquida. Y si desean conocer cada escultura en detalle, quédense: vamos a recorrer las diez voces de este jardín, una a una.`},
+
+{id:'punto-2b',num:'2b',cat:'LAS ESCULTURAS UNA A UNA',nextLabel:'Viñedos',
+trans:`Nélida Mendoza — Paraguay.
+Empezamos por la que no está aquí. La obra de Nélida se encuentra en el lago del hotel, y hay una razón poderosa: su materia prima no es solo la piedra, sino el agua. Nélida utiliza el agua como un elemento vivo que transforma la escultura con el paso del tiempo. El agua va dando forma lentamente a una fuente que representa la Tierra. Es una obra que cambia, que envejece, que respira. Por eso necesitaba estar donde el agua manda.
+
+Giacomo Santini — Italia.
+Giacomo era apenas un joven cuando llegó al simposio, pero su mensaje era el de un sabio. Su «Balanza» nos habla del equilibrio frágil entre la fuerza de la naturaleza y la del hombre. Las manos que ven en la pieza no son inventadas: son moldes reales de las manos de niños que participaron durante aquellos veinticinco días. La inocencia sosteniendo el peso del mundo.
+
+Oliviero Bertolasso — Italia y Alemania.
+El italo-alemán eligió la figura humana para lanzar un mensaje incómodo. Su obra es figurativa y deliberadamente pesimista: nos confronta con el futuro de la naturaleza y con la responsabilidad que tenemos en su conservación. No es una escultura que busque agradar; busca incomodar. Y en eso reside su fuerza.
+
+Shin Myong-Ok — Corea.
+La artista coreana nos lleva al terreno espiritual. Su escultura evoca la imposición de manos, ese gesto universal que según la cultura puede significar curación o destrucción, bendición o condena. Las formas que ven sugieren manos abiertas sobre la naturaleza. La pregunta que deja en el aire es poderosa: ¿estamos sanando la Tierra o estamos enfermándola?
+
+Tristán Casamajor — Haití, residente en Bélgica.
+Tristán creó un enorme tótem que juega con los elementos y utiliza el sol como protagonista. Es, literalmente, un reloj de sol: la evolución natural de la Tierra marcada por la luz. Si se fijan en las formas del tótem, descubrirán siluetas que recuerdan al cuerpo humano. El tiempo de la naturaleza y el tiempo del hombre, fundiéndose en la misma piedra.
+
+Said Badr — Egipto.
+El egipcio concibió una obra vertical, casi monumental, dedicada a ensalzar la magnitud de la naturaleza en Menorca. La verticalidad no es casual: es la tierra que se yergue, que se alza, que reclama su presencia frente a un ser humano que tiende a mirar solo hacia adelante. Said nos pide que miremos hacia arriba.
+
+George Dan Istrate — Rumanía.
+Esta es una de las esculturas más impactantes del jardín. El joven rumano talló una esfera perfecta —la Tierra— y luego la partió con un corte transversal limpio. Esa incisión es la intervención del hombre: precisa, fría, irreversible si no actuamos a tiempo. La perfección rota. Un aviso tallado en mármol de Carrara.
+
+Toni Capó — Mallorca.
+El mallorquín trabajó por primera vez en mármol para este simposio, y eligió un tema que conoce bien: la fragilidad del ser humano frente a la dureza de la naturaleza. Su escultura figurativa evoca la forma de las rocas abruptas de la cara norte de la isla, esa costa castigada sin piedad por la tramontana. El hombre tallado en la roca, resistiendo el viento. O intentándolo.
+
+Filippo Tincolini — Italia.
+Filippo utiliza el cuerpo humano como vehículo conceptual. Su obra representa un pubis femenino y habla de fertilidad, del origen de toda vida. Es una pieza directa, sin metáforas intermedias: la vida nace del cuerpo, y el cuerpo nace de la tierra. El ciclo cerrado.
+
+Cada una de estas diez piezas fue creada aquí, en esta finca, con mármol de Carrara traído expresamente para el simposio. Los artistas convivieron durante veinticinco días, durmieron aquí, comieron aquí, respiraron este aire. Y eso se nota: estas esculturas no son piezas de museo trasladadas; nacieron de esta tierra y para esta tierra.
+
+Tómense el tiempo que necesiten. Cuando estén listos, sigan la espiral hacia el punto tres.`},
+
+{id:'punto-3',num:'3',cat:'VIÑEDOS',nextLabel:'Quesería',
+trans:`Acaban de recorrer un jardín que hoy es uno de los rincones más íntimos de Sant Patrici.
+Años atrás, en tiempos de Xini y Fernando, el jardín dio vida a fiestas de vendimia, cenas bajo las estrellas, encuentros donde un pescador de Fornells podía sentarse junto a un embajador y nadie preguntaba de dónde venías, solo si querías quedarte.
+Xini y Fernando entendieron algo que muy poca gente entiende: que un lugar solo cobra vida cuando lo llenas de personas. Y que la belleza, si no se comparte, no sirve de nada.
+
+Aquí en los Viñedos, no hay esculturas ni jardines. Solo hileras de viñas bajo el sol. Parece sencillo. Pero estas cepas que ven son sobrevivientes. Y para entender por qué, necesitan conocer una historia que empieza hace más de dos mil años.
+
+Los romanos ya hacían vino en Menorca. Esta isla, batida por la tramontana y acariciada por el Mediterráneo, resultó ser un lugar extraordinario para la vid. Durante siglos, el vino menorquín fue un secreto bien guardado. Hasta que llegaron los británicos.
+
+En el siglo XVIII, Menorca pasó a manos del Imperio Británico, y con ellos llegó una sed insaciable. La Royal Navy necesitaba vino, los comerciantes querían vino, y la isla entera se transformó en un viñedo flotante. El puerto de Mahón exportaba millones de litros. Fue la edad de oro.
+
+Y entonces, el desastre. A finales del siglo XIX, un insecto microscópico llamado filoxera cruzó el Atlántico escondido en unas cepas americanas y arrasó los viñedos de toda Europa. Menorca no se salvó. En pocos años, lo que había tardado siglos en crecer desapareció. Y el silencio se instaló en esta tierra durante más de un siglo.
+
+No fue hasta el año 2000 cuando algunos valientes empezaron a plantar de nuevo. Y en 2002, Sant Patrici decidió sumarse a ese renacimiento. Plantaron entre dos y tres hectáreas de viñedos donde antes solo había campo vacío. En 2005 fundaron formalmente la bodega. Y en 2008 embotellaron su primer vino. Seis años de la cepa a la copa. Así de lenta es la paciencia cuando se hace bien.
+
+Las variedades que ven aquí no fueron elegidas al azar.
+Merlot, Cabernet Sauvignon y Syrah para los tintos.
+Chardonnay, Moscatel y Prensal para los blancos.
+Son uvas que aman las condiciones extremas: el sol brutal del verano menorquín, la tramontana que endurece la piel de la uva y concentra los sabores, y la brisa marina que aporta esa salinidad sutil que luego encontrarán en la copa.
+
+Aquí todo es cuestión de equilibrio. El calor da azúcar, que se traduce en cuerpo y alcohol. El viento y el fresco nocturno conservan la acidez, que da frescura y elegancia. El resultado es un vino que solo puede nacer aquí. Un vino con denominación Vi de la Terra Illa de Menorca.
+
+Miren las cepas un momento. Parecen modestas, casi frágiles. Pero bajo el suelo, sus raíces se extienden metros y metros buscando agua y minerales. Lo que no se ve es lo que importa. Como en tantas cosas.
+
+Caminen hacia el punto cuatro. Vamos a entrar ahora en uno de los lugares más antiguos de esta finca: el lugar donde las manos convierten la leche en historia.`},
+
+{id:'punto-4',num:'4',cat:'QUESERÍA',nextLabel:'Bodega',
+trans:`Están en frente de nuestra quesería, y quiero que se preparen para algo. Si vinieran por la mañana, verían a través de los cristales un ritual que se repite aquí exactamente igual que hace doscientos años. Nuestros maestros queseros moldean cada pieza, una por una, con las manos. Sin moldes industriales. Sin atajos. Solo un paño de algodón —que llamamos «fogasser»—, un cordel —el «lligam»— y la presión de unas manos que saben exactamente cuánta fuerza aplicar.
+
+Ese saber no se aprende en un libro. Se hereda. Se transmite de mano a mano, de gesto a gesto, durante más de treinta años de trayectoria en nuestro caso.
+
+Déjenme explicarles cómo nace un queso en Sant Patrici, paso a paso.
+
+Todo empieza con la leche. Leche fresca de vaca de nuestro entorno, del campo de Menorca. La calidad de esa leche lo determina todo: el pasto que comen las vacas, la brisa marina que impregna los campos, la tierra calcárea de Menorca. Todo eso ya está en la leche antes de que nosotros toquemos nada.
+
+La leche se vierte en grandes cubas y se le añade cuajo natural. En unos cuarenta minutos, la leche se transforma: deja de ser líquida y se convierte en una masa gelatinosa, la cuajada.
+
+Es un momento casi mágico, una metamorfosis silenciosa.
+
+Entonces intervienen las manos. El maestro quesero corta la cuajada con un instrumento llamado lira, en trozos pequeños, para que suelte el suero. Luego recoge esa cuajada y la envuelve en el fogasser, el paño de algodón tradicional. Lo ata con el lligam, el cordel, y comienza el proceso de prensado. En la prensa, expulsa el suero restante, gracias a la presión que se ejerce con un peso de 4,6kg sobre la pieza.
+
+¿Ven ese dibujo en la parte superior del queso, esa especie de grabado en relieve? Le llamamos «mamella». No es decoración: es la huella que deja el paño al atarse sobre la cuajada. Es la firma del método tradicional. Si un queso tiene mamella, pueden estar seguros de que unas manos humanas lo formaron.
+
+Después viene el baño en salmuera. El queso se sumerge en una solución de agua y sal durante horas. La sal penetra lentamente, actúa como conservante natural y empieza a definir el sabor. Y a partir de ahí, el queso entra en la fase más misteriosa: la maduración. En cámaras con temperatura y humedad controladas, el tiempo hace su trabajo. Semanas, meses, a veces más de un año.
+
+El queso Mahón-Menorca tiene Denominación de Origen Protegida, lo que significa que solo puede elaborarse en esta isla, con leche de vaca del campo menorquin, siguiendo un método específico y unas normativas muy estrictas.
+
+Es uno de los quesos más antiguos de España —se han encontrado restos de utensilios queseros en yacimientos prehistóricos de Menorca—. Estamos hablando de un oficio que tiene más de tres mil años.
+
+Y en Sant Patrici, ese oficio se traduce en una familia de quesos con personalidades muy distintas.
+
+Dentro de nuestra gama con Denominación de Origen, encontrarán tres edades. El Semicurado, con más de 3 meses de curación en cámara. Es nuestro queso más versátil y el que mejor representa la esencia de la D.O.P. Después viene el Curado, que ha pasado más tiempo en cámara, con más de 6 meses de curación. Es más firme, más intenso. Finalmente, el Añejo, con más de 1 año de maduración en cámara. Un queso que ha madurado pacientemente hasta desarrollar una profundidad de sabor extraordinaria: Quebradizo y potente.
+
+Nuestro Queso fresco, es elaborado de la misma forma tradicional. Sin embargo, se usa leche pasteurizada, sin añadir aditivos ni conservantes. Es característico por tener un sabor muy suave y un color blanco intenso. Nuestra receta es un bien muy preciado, una receta heredada, que no van a encontrar en ninguna otra finca.
+
+Pero la curiosidad de nuestros queseros no se detiene ahí. También elaboramos una línea gourmet, donde jugamos con hierbas y sabores aromáticos.
+
+En nuestra tienda museo encontrarán utensilios que usaban nuestros queseros de otra época en Sant Patrici. Prensas de madera originales, los moldes, etc. Son objetos humildes, desgastados por el uso, pero son los testigos mudos de un oficio que nos negamos a dejar morir.
+
+Caminen ahora hacia el punto cinco, donde encontraran nuestra bodega.`},
+
+{id:'punto-5',num:'5',cat:'BODEGA',nextLabel:'Tienda Museo',
+trans:`Noten el cambio al entrar aquí. La temperatura baja y la luz se atenúa.
+
+Se encuentran en la bodega de Sant Patrici. Si la quesería era el lugar de las manos, este es el lugar de la paciencia.
+
+Hacer vino es, en el fondo, una negociación con el tiempo. Y esa negociación empieza mucho antes de llegar aquí, en las viñas que acaban de ver.
+
+Todo arranca con la vendimia. Hay un instante preciso —a veces cuestión de días— en el que la uva alcanza el equilibrio perfecto entre azúcar y acidez. Si te adelantas, el vino será delgado y sin cuerpo. Si te retrasas, perderá frescura y ganará un alcohol excesivo. En Menorca, donde el calor del verano acelera la maduración, ese margen es aún más estrecho. Hay que ser rápido y certero. Se recoge a primera hora de la mañana, con el frescor de la noche aún en la piel de la uva, para que llegue a la bodega en las mejores condiciones.
+
+Una vez aquí dentro, la uva comienza su transformación. El primer paso es el despalillado: separar cada grano de la rama, el raspón, porque esa parte leñosa aportaría amargor y astringencia al vino. Se hace con cuidado, sin romper las pepitas, que también podrían dar sabores no deseados.
+
+Después viene el estrujado, un prensado suave que libera el mosto —el jugo— sin machacar las pieles en exceso. En los vinos blancos, utilizamos Prensal, Chardonnay y Moscatel. En el que el mosto se separa rápidamente de las pieles para obtener un zumo limpio y delicado. En los tintos utilizamos Merlot, Cabernet Sauvignon, Syrah. El mosto fermenta en contacto con las pieles durante días, porque es ahí donde están el color, los taninos y gran parte del sabor.
+
+Y aquí es donde Sant Patrici hace algo que nos distingue: fermentamos a temperatura muy baja, alrededor de catorce grados centígrados, bastante menos de lo habitual. ¿Por qué? Porque una fermentación lenta es como una conversación larga: extrae matices que una fermentación rápida nunca descubriría. Las levaduras trabajan despacio, sin estrés, y producen aromas más finos, más complejos. Las notas florales, la fruta elegante, esa sensación de frescura en boca: todo eso necesita tiempo y frío.
+
+Durante la fermentación, el azúcar de la uva se transforma en alcohol y dióxido de carbono. Es un proceso natural, ancestral, que el ser humano descubrió hace miles de años y que en esencia no ha cambiado: la uva quiere convertirse en vino. Nosotros solo la acompañamos.
+
+Terminada la fermentación, viene el reposo. Miren a su alrededor: en esas cubas que ven, el vino duerme durante meses. Pero no es un sueño pasivo. El vino respira, una cantidad minúscula de oxígeno lo va transformando lentamente: suaviza los taninos —esa sensación de sequedad en la boca—, redondea el cuerpo, y deja notas nuevas que la uva sola nunca habría dado.
+
+El enólogo decide cuánto tiempo descansa cada vino, como un director de orquesta que asigna a cada instrumento su momento.
+
+Después, el vino se clarifica y se filtra 2 o 3 veces, con unos filtros muy finos.
+
+Una vez filtrado y clarificado, solo nos falta embotellar, en botella de cristal. Donde el vino, sigue evolucionando en silencio y en oscuridad, afinando sus aromas, integrando sus sabores, hasta que alguien lo descorcha y completa el ciclo.
+
+Todos nuestros vinos llevan el sello «Vi de la Terra Illa de Menorca», la certificación que garantiza que nacieron de estas viñas, bajo este sol y este viento, y que fueron elaborados íntegramente en la isla.
+
+Desde las cepas que han visto fuera hasta la copa que van a degustar en unos minutos, habrán pasado meses. Cada botella de Sant Patrici es tiempo condensado. Tiempo de sol, de viento, de manos, de espera.`},
+
+{id:'punto-6',num:'6',cat:'TIENDA MUSEO',nextLabel:null,
+trans:`Y ahora sí: ha llegado el momento de dejar de escuchar y empezar a saborear. Diríjanse a la nuestra tienda museo, donde les espera un maridaje de nuestros quesos y nuestros vinos. No tengan prisa. Dejen que el vino limpie el paladar, que la grasa del queso abrace la acidez. Busquen los sabores que les he ido describiendo. Porque todo lo que han escuchado hoy —la historia de Fernando y Xini, la espiral del jardín, las vides que sobrevivieron a la filoxera, las manos del quesero, el reposo del vino— todo eso está, de alguna forma, en lo que van a probar.
+
+Disfruten. Este momento es suyo.`}
+],
+
+en:[
+{id:'punto-1',num:'1',cat:'MAIN BUILDING',title:'The house that forbidden love built',nextLabel:'Sculpture Garden',
+trans:`Stop for a moment in front of this façade. Look at the thickness of these walls: over a metre of marés stone, the same stone laid here in 1918. And look at the proportions: the square floor plan, the symmetry, that entrance stairway. This is not a Menorcan farmhouse. Whoever commissioned it wanted an Italian-style villa, like the ones he had seen on his travels. It looks peaceful, doesn't it? Light stone, bougainvillea, that Menorcan light that caresses everything. But this house holds a secret. It was not ordered by a nobleman nor built for a family. This house was built by a forbidden love.
+
+To understand this story we must first travel to Madrid at the turn of the twentieth century. Picture Fernando Vives: born in Mahón in 1867, son of the Menorcan upper bourgeoisie, yet settled in the capital, where he had built a small empire. He owned "La Mahonesa," celebrated pastry shops that brought the sweets of Menorca to the salons of Madrid. A collector of antiquities, passionate about Arab art. His own brother, Antonio, became one of Spain's most important numismatists, declared an Illustrious Son of Mahón. The Vives family carried weight. And Fernando was married to Francisca Segura — Paca, as everyone called her — a woman from the world of entertainment and zarzuela.
+
+But Madrid weighed on him. Fernando missed the island, the calm, the smell of the countryside. And in 1917 he bought this estate, seeking a refuge where he could breathe far from the noise of the capital. The problem was that Paca, accustomed to Madrid life, had not the slightest interest in Menorcan tranquillity. Fernando came alone. And since in those days a man did not keep his own house, he hired a young woman to help him.
+
+Her name was Virginia López Álvarez, although everyone would come to know her as Xini. She had arrived from Valladolid, daughter of a humble and enormous family — her mother bore twenty children, of whom eighteen survived. Xini already worked for Fernando in Madrid, at the pastry shop. Now he brought her to Menorca to take care of the house.
+
+What happened next was perhaps inevitable. Fernando kept coming more often. He stayed longer. Until he stopped leaving. He had fallen in love with Xini. Paca, upon learning the truth, abandoned the estate and moved to Mahón. And this house, the one before you now, became the home of Fernando and Xini.
+
+He filled it with everything she deserved: marble statues of the four seasons in the garden, red velvet curtains, a bed with golden bars and silk sheets. Fernando, an amateur painter, would paint her portrait on the porch while the breeze came through those very windows you are looking at now. To give you an idea of who Xini was: they say she walked from this estate to the village with a tray of pastissets balanced on her head, upright as a queen, wearing her jewels and her heels — yes, heels on a dirt road. In Ferreries they called her la Gilda, like the film star. She was that kind of woman.
+
+They lived here in their golden age. Isolated, yes. But free.
+
+Until Fernando died, in January 1941. He was 73 years old.
+
+And then, silence. Imagine this house without his voice, without the parties, without the smell of the sweets he baked. Three months before dying, knowing what was coming, Fernando had done the only thing he could: split his life in two. The house and garden he gave to Xini while still alive. Everything else — the pastry shops, the properties in Mahón, the money — went to Paca, his legitimate wife.
+
+Overnight, Xini was left with the walls but nothing inside them. She dismissed the gardener. She bought chickens, pigs, a pair of dairy cows. And where there had once been marble and music, animals began appearing everywhere. The cows scratched themselves against the statues of the four seasons. The pigs slept where people once danced. Xini learned to milk, to harvest, to make cheese — a white, salty cheese she sold in the shops of Ferreries. Poverty drove her to steal vegetables from neighbouring estates to survive. But she never stopped walking upright. And always in heels: in the end, with her hands destroyed by work, she could no longer put them on by herself. She would walk barefoot to her friend Rafela's house, carrying the shoes in a bag, and ask her to help put them on. She always wore heels.
+
+Twenty-five years she held on here alone. Without giving up. Without leaving. As if leaving would mean betraying Fernando's memory.
+
+She died in October 1966, aged 69. Her friends found her in the kitchen, sitting in a chair, her head on the table. On her grave, in the cemetery of Mahón, there is no headstone bearing her name.
+
+Her siblings arrived from the mainland, sold what little had value, and burned the rest. Literally. They piled mattresses, portraits, paintings, letters, rugs, furniture — an entire life — in the courtyard and set them on fire. Ash and silence closed the story of Fernando and Xini.
+
+But the land remembers.
+
+Over the years this estate changed hands until someone saw in it what Fernando saw in 1917: not a business, but a possibility. What you see around you today — the hotel, the cheese dairy, the winery, the vineyards — is an act of resurrection. It is proof that a place that knew love, decay and abandonment can be reborn and bear fruit. Fruit that today, literally, you will be able to taste.
+
+Now walk to the left, where you will see the sign for stop number two. A garden that speaks in silence awaits you.`},
+
+{id:'punto-2',num:'2',cat:'SCULPTURE GARDEN',title:'Ten voices in the spiral',nextLabel:'The Sculptures One by One',
+trans:`You have just heard a story of fire. Xini's siblings burned everything on this estate: the paintings, the letters, the furniture, the memory. And for years, there was nothing here. Only silent earth.
+
+What you see before you now is the answer.
+
+Before looking at the sculptures, I ask you to look at the ground. Notice the shape of the path you are about to walk. Can you see it? It is a spiral. It is not decoration: it is a decision. This garden, which covers more than ten thousand square metres, was designed by the landscape architect Josep Bosch Espelta, a disciple of the great Nicolau Maria Rubió i Tudurí. Bosch chose the spiral because it is the shape that life takes. It is in galaxies, in snail shells, in the double helix of DNA. If the layout reminds you of something, it is probably the Guggenheim Museum in New York: the design of this garden was directly inspired by Frank Lloyd Wright's helical ramp. As you walk along this path, you will trace that same idea: the passage of human beings through the Earth.
+
+What happened here to fill it with voices was extraordinary. In May 2003, Menorca was celebrating ten years as a Biosphere Reserve, and to mark the occasion the First International Symposium Hort Sant Patrici was organised. For twenty-five days, fourteen artists from around the world — a Paraguayan, an Italian, a Korean, an Egyptian, a Romanian, a Haitian based in Belgium… — lived together on this estate. They ate together, debated together, worked the stone together. And from that coexistence ten sculptures carved in Carrara marble were born. Ten different answers to a single question: what is the relationship between human beings and nature?
+
+As you stroll, you will find them. You will see the fountain by Nélida Mendoza, the Paraguayan artist, who used water as living material: the water falls on the stone and slowly shapes it, just as time shapes the Earth. It is the only piece not here in the garden; you will find it by the lake, because its message needed a different setting.
+
+You will find the Balance by Giacomo Santini, a very young Italian sculptor who wanted to remind us that the equilibrium between humanity and nature is fragile. The hands you see on the piece are real: they are moulds of children's hands made during the symposium.
+
+And you will see the Earth by George Dan Istrate, the Romanian sculptor: a perfect sphere split by a clean cut. It is the intervention of humankind. If we do not change course, the fracture will be irreversible.
+
+Thus, sculpture by sculpture, this garden will speak to you. Listen to it. Each piece is a love letter — or a warning — to the island that welcomes us.
+
+Take your time. When you are ready, follow the spiral towards stop three, where the memory of this land becomes liquid. And if you wish to know each sculpture in detail, stay: we will visit the ten voices of this garden, one by one.`},
+
+{id:'punto-2b',num:'2b',cat:'THE SCULPTURES ONE BY ONE',title:'Marble with a name',nextLabel:'The Vineyards',
+trans:`Nélida Mendoza — Paraguay.
+We begin with the one that is not here. Nélida's work is at the hotel lake, and there is a powerful reason: her raw material is not just stone, but water. Nélida uses water as a living element that transforms the sculpture over time. The water slowly shapes a fountain that represents the Earth. It is a work that changes, that ages, that breathes. That is why it needed to be where water rules.
+
+Giacomo Santini — Italy.
+Giacomo was barely a young man when he arrived at the symposium, but his message was that of a wise man. His "Balance" speaks of the fragile equilibrium between the force of nature and that of humanity. The hands you see on the piece are not invented: they are real moulds of children's hands who took part during those twenty-five days. Innocence holding up the weight of the world.
+
+Oliviero Bertolasso — Italy and Germany.
+The Italian-German chose the human figure to deliver an uncomfortable message. His work is figurative and deliberately pessimistic: it confronts us with the future of nature and the responsibility we bear for its conservation. It is not a sculpture that seeks to please; it seeks to disturb. And therein lies its power.
+
+Shin Myong-Ok — Korea.
+The Korean artist takes us into spiritual territory. Her sculpture evokes the laying on of hands, that universal gesture which, depending on the culture, can mean healing or destruction, blessing or condemnation. The forms you see suggest open hands upon nature. The question she leaves in the air is powerful: are we healing the Earth or making it sick?
+
+Tristán Casamajor — Haiti, resident in Belgium.
+Tristán created an enormous totem that plays with the elements and uses the sun as its protagonist. It is, literally, a sundial: the natural evolution of the Earth marked by light. If you look closely at the forms of the totem, you will discover silhouettes reminiscent of the human body. The time of nature and the time of humankind, merging in the same stone.
+
+Said Badr — Egypt.
+The Egyptian conceived a vertical, almost monumental work, dedicated to exalting the magnitude of nature in Menorca. The verticality is not accidental: it is the earth rising up, standing tall, claiming its presence before a human being who tends only to look straight ahead. Said asks us to look upward.
+
+George Dan Istrate — Romania.
+This is one of the most striking sculptures in the garden. The young Romanian carved a perfect sphere — the Earth — and then split it with a clean transversal cut. That incision is the intervention of humankind: precise, cold, irreversible if we do not act in time. Broken perfection. A warning carved in Carrara marble.
+
+Toni Capó — Mallorca.
+The Mallorcan worked in marble for the first time for this symposium, and he chose a subject he knows well: the fragility of the human being in the face of nature's harshness. His figurative sculpture evokes the shape of the rugged rocks on the northern coast of the island, that shore battered mercilessly by the tramontana wind. Man carved in rock, resisting the wind. Or trying to.
+
+Filippo Tincolini — Italy.
+Filippo uses the human body as a conceptual vehicle. His work represents a female pubis and speaks of fertility, of the origin of all life. It is a direct piece, without intermediate metaphors: life is born from the body, and the body is born from the earth. The closed cycle.
+
+Each of these ten pieces was created here, on this estate, with Carrara marble brought expressly for the symposium. The artists lived together for twenty-five days, slept here, ate here, breathed this air. And it shows: these sculptures are not museum pieces relocated; they were born of this land and for this land.
+
+Take the time you need. When you are ready, follow the spiral towards stop three.`},
+
+{id:'punto-3',num:'3',cat:'THE VINEYARDS',title:'Vines that survived the silence',nextLabel:'Cheese Dairy',
+trans:`You have just walked through a garden that today is one of the most intimate corners of Sant Patrici. Years ago, in the time of Xini and Fernando, this garden gave life to harvest festivals, dinners under the stars, gatherings where a fisherman from Fornells could sit beside an ambassador and nobody asked where you came from, only whether you wanted to stay. Xini and Fernando understood something very few people understand: that a place only comes alive when you fill it with people. And that beauty, if it is not shared, is worthless.
+
+Here in the Vineyards, there are no sculptures or gardens. Just rows of vines under the sun. It seems simple. But these vines you see are survivors. And to understand why, you need to know a story that begins more than two thousand years ago.
+
+The Romans were already making wine in Menorca. This island, battered by the tramontana and caressed by the Mediterranean, turned out to be an extraordinary place for the vine. For centuries, Menorcan wine was a well-kept secret. Until the British arrived.
+
+In the eighteenth century, Menorca passed into the hands of the British Empire, and with them came an insatiable thirst. The Royal Navy needed wine, the merchants wanted wine, and the entire island was transformed into a floating vineyard. The port of Mahón exported millions of litres. It was the golden age.
+
+And then, disaster. At the end of the nineteenth century, a microscopic insect called phylloxera crossed the Atlantic hidden in American rootstocks and devastated the vineyards of all Europe. Menorca was not spared. In a few years, what had taken centuries to grow disappeared. And silence settled on this land for more than a century.
+
+It was not until the year 2000 that some brave souls began to plant again. And in 2002, Sant Patrici decided to join that renaissance. They planted between two and three hectares of vineyards where before there had only been empty fields. In 2005 they formally founded the winery. And in 2008 they bottled their first wine. Six years from vine to glass. That is how slow patience is when done right.
+
+The varieties you see here were not chosen at random. Merlot, Cabernet Sauvignon and Syrah for the reds. Chardonnay, Muscat and Prensal for the whites. These are grapes that love extreme conditions: the brutal Menorcan summer sun, the tramontana that toughens the skin of the grape and concentrates the flavours, and the sea breeze that brings that subtle salinity you will later find in the glass.
+
+Here everything is a matter of balance. The heat gives sugar, which translates into body and alcohol. The wind and the cool of night preserve the acidity, which gives freshness and elegance. The result is a wine that can only be born here. A wine with the Vi de la Terra Illa de Menorca designation.
+
+Look at the vines for a moment. They seem modest, almost fragile. But beneath the soil, their roots extend metres and metres in search of water and minerals. What cannot be seen is what matters. As in so many things.
+
+Walk towards stop four. We are now going to enter one of the oldest places on this estate: the place where hands turn milk into history.`},
+
+{id:'punto-4',num:'4',cat:'CHEESE DAIRY',title:'Where hands shape time',nextLabel:'Winery',
+trans:`You are standing in front of our cheese dairy, and I want you to prepare yourselves for something. If you came in the morning, you would see through the glass a ritual that is repeated here exactly as it was two hundred years ago. Our master cheesemakers shape each piece, one by one, by hand. No industrial moulds. No shortcuts. Just a cotton cloth — which we call the "fogasser" —, a cord — the "lligam" — and the pressure of hands that know exactly how much force to apply.
+
+That knowledge cannot be learned from a book. It is inherited. It is passed from hand to hand, gesture to gesture, over more than thirty years of tradition in our case.
+
+Let me explain how a cheese is born at Sant Patrici, step by step.
+
+It all begins with the milk. Fresh cow's milk from our surroundings, from the Menorcan countryside. The quality of that milk determines everything: the pasture the cows eat, the sea breeze that permeates the fields, the calcareous soil of Menorca. All of that is already in the milk before we touch anything.
+
+The milk is poured into large vats and natural rennet is added. In about forty minutes, the milk transforms: it stops being liquid and becomes a gelatinous mass, the curd. It is an almost magical moment, a silent metamorphosis.
+
+Then the hands intervene. The master cheesemaker cuts the curd with an instrument called a lyre, into small pieces, so it releases the whey. Then he gathers the curd and wraps it in the fogasser, the traditional cotton cloth. He ties it with the lligam, the cord, and the pressing process begins. In the press, the remaining whey is expelled, thanks to a weight of 4.6 kg placed on the piece.
+
+Do you see that pattern on the top of the cheese, that sort of engraving in relief? We call it the "mamella." It is not decoration: it is the imprint left by the cloth when tied over the curd. It is the signature of the traditional method. If a cheese has a mamella, you can be sure that human hands shaped it.
+
+Then comes the brine bath. The cheese is submerged in a solution of water and salt for hours. The salt penetrates slowly, acts as a natural preservative and begins to define the flavour. And from that point on, the cheese enters its most mysterious phase: maturation. In chambers with controlled temperature and humidity, time does its work. Weeks, months, sometimes more than a year.
+
+Mahón-Menorca cheese holds a Protected Designation of Origin, which means it can only be made on this island, with cow's milk from the Menorcan countryside, following a specific method and very strict regulations. It is one of the oldest cheeses in Spain — remains of cheesemaking utensils have been found at prehistoric sites on Menorca. We are talking about a craft more than three thousand years old.
+
+And at Sant Patrici, that craft translates into a family of cheeses with very different personalities. Within our Designation of Origin range, you will find three ages. The Semi-cured, with more than 3 months of ageing. The Cured, with more than 6 months. And the Aged, with more than 1 year of maturation — crumbly and powerful.
+
+Our Fresh Cheese is made in the same traditional way, with pasteurised milk, without additives or preservatives. Our recipe is a precious inherited asset that you will not find at any other estate.
+
+We also produce a gourmet line, where we play with herbs and aromatic flavours.
+
+In our museum shop you will find utensils used by our cheesemakers of another era. Original wooden presses, the moulds, and more. Humble objects, worn by use, but silent witnesses of a craft we refuse to let die.
+
+Now walk towards stop five, where you will find our winery.`},
+
+{id:'punto-5',num:'5',cat:'WINERY',title:'Where silence creates',nextLabel:'Museum Shop',
+trans:`Notice the change as you enter. The temperature drops and the light dims.
+
+You are in the Sant Patrici winery. If the cheese dairy was the place of hands, this is the place of patience.
+
+Making wine is, at its core, a negotiation with time. And that negotiation begins long before arriving here, in the vines you have just seen.
+
+It all starts with the harvest. There is a precise moment — sometimes a matter of days — when the grape reaches the perfect balance between sugar and acidity. If you pick too early, the wine will be thin and without body. If you pick too late, it will lose freshness and gain excessive alcohol. In Menorca, where the summer heat accelerates ripening, that margin is even narrower. You must be quick and precise. The grapes are picked first thing in the morning, with the cool of night still on their skin, so they arrive at the winery in the best condition.
+
+Once inside, the grape begins its transformation. The first step is destemming: separating each berry from the stem, because that woody part would contribute bitterness and astringency. Then comes the crushing, a gentle pressing that releases the must without mashing the skins excessively. For whites we use Prensal, Chardonnay and Muscat. For reds, Merlot, Cabernet Sauvignon and Syrah, fermenting in contact with the skins for days.
+
+And this is where Sant Patrici does something that sets us apart: we ferment at a very low temperature, around fourteen degrees Celsius. A slow fermentation is like a long conversation: it draws out nuances that a fast fermentation would never discover. The yeasts work slowly, producing finer, more complex aromas.
+
+During fermentation, the sugar transforms into alcohol and carbon dioxide. It is a natural, ancestral process. The grape wants to become wine. We merely accompany it.
+
+Once fermentation is over, rest begins. In those vats the wine sleeps for months. But it is not passive — the wine breathes, and a tiny amount of oxygen slowly transforms it: softening the tannins, rounding the body.
+
+The winemaker decides how long each wine rests, like a conductor assigning each instrument its moment. The wine is then clarified and filtered two or three times. Once bottled in glass, the wine continues to evolve in silence and darkness until someone uncorks it and completes the cycle.
+
+All our wines carry the seal "Vi de la Terra Illa de Menorca." Every bottle of Sant Patrici is condensed time.`},
+
+{id:'punto-6',num:'6',cat:'MUSEUM SHOP',title:'The moment to taste',nextLabel:null,
+trans:`And now the time has come to stop listening and start tasting. Make your way to our museum shop, where a pairing of our cheeses and wines awaits you. Do not rush. Let the wine cleanse the palate, let the fat of the cheese embrace the acidity. Look for the flavours I have been describing. Because everything you have heard today — the story of Fernando and Xini, the spiral of the garden, the vines that survived phylloxera, the cheesemaker's hands, the resting of the wine — all of that is, in some way, in what you are about to taste.
+
+Enjoy. This moment is yours.`}
+],
+
+cat:[
+{id:'punto-1',num:'1',cat:'EDIFICI PRINCIPAL',title:'La casa que va construir l\'amor prohibit',nextLabel:'Jardí de les Escultures',
+trans:`Atureu-vos un moment davant aquesta façana. Fixeu-vos en el gruix d'aquests murs: tenen més d'un metre de pedra de marès, la mateixa que es va col·locar aquí el 1918. I mireu les proporcions: la planta quadrada, la simetria, aquella escalinata d'entrada. Això no és una casa de camp menorquina. Qui la va manar construir volia una vil·la a l'estil italià, com les que havia vist als seus viatges. Sembla tranquil·la, oi? Pedra clara, buganvíl·lies, aquella llum de Menorca que ho acaricia tot. Però aquesta casa guarda un secret. Perquè no la va encarregar un noble ni la va aixecar per a una família. Aquesta casa la va construir un amor prohibit.
+
+Per entendre aquesta història cal viatjar primer al Madrid de principis del segle XX. Imagineu Fernando Vives: nascut a Maó el 1867, fill de l'alta burgesia menorquina, però establert a la capital, on havia aixecat un petit imperi. Era propietari de "La Mahonesa", unes pastisseries cèlebres que portaven els dolços de Menorca als salons de Madrid. Col·leccionista d'antiguitats, apassionat de l'art àrab. El seu propi germà, Antonio, va arribar a ser un dels numismàtics més importants d'Espanya, declarat Fill Il·lustre de Maó. Els Vives eren gent de pes. I Fernando estava casat amb Francisca Segura — Paca, com la cridaven tots —, una dona que venia del món de l'espectacle i la sarsuela.
+
+Però Madrid li pesava. Fernando enyorava l'illa, la calma, l'olor de camp. I el 1917 va comprar aquesta finca buscant un refugi on respirar lluny del soroll de la capital. El problema va ser que a Paca, acostumada a la vida madrilenya, aquella tranquil·litat menorquina no li interessava gens ni mica. Fernando venia sol. I com que en aquella època un home no es feia la casa, va contractar una jove perquè l'ajudés.
+
+Es deia Virginia López Álvarez, encara que tothom acabaria coneixent-la com Xini. Havia arribat de Valladolid, filla d'una família humil i enorme — la seva mare va tenir vint fills, dels quals en van sobreviure divuit. Xini ja treballava per a Fernando a Madrid, a la pastisseria. Ara la va portar a Menorca per encarregar-se de la casa.
+
+El que va passar després era potser inevitable. Fernando, cada cop, venia més. Es quedava més temps. Fins que va deixar d'anar-se'n. S'havia enamorat de Xini. Paca, en assabentar-se'n, va abandonar la finca i se'n va anar a viure a Maó. I aquesta casa, la que vostès tenen davant, es va convertir en la llar de Fernando i Xini.
+
+Ell la va omplir de tot el que ella mereixia: estàtues de marbre de les quatre estacions al jardí, cortines de vellut vermell, un llit de barres daurades amb llençols de seda. Fernando, pintor aficionat, la retratava al porxo mentre la brisa entrava per aquelles mateixes finestres que vostès estan veient ara. Perquè es facin una idea de qui era Xini: diuen que caminava des d'aquesta finca fins al poble amb una safata de pastissets equilibrada sobre el cap, dreta com una reina, amb les seves joies posades i els seus talons — sí, talons en un camí de terra. A Ferreries la cridaven la Gilda, com l'actriu de cinema. Era aquest tipus de dona.
+
+Van viure aquí la seva edat daurada. Aïllats, sí. Però lliures.
+
+Fins que Fernando va morir, al gener de 1941. Tenia 73 anys.
+
+I llavors, el silenci. Imagineu aquesta casa sense la seva veu, sense les seves festes, sense l'olor dels dolços que pastava. Tres mesos abans de morir, sabent el que venia, Fernando havia fet l'únic que podia: partir la seva vida en dos. La casa i el jardí els va cedir a Xini, en vida. Tot la resta — les pastisseries, les propietats de Maó, els diners — va ser per a Paca, la seva esposa legítima.
+
+De la nit al dia, Xini es va quedar amb les parets, però sense res a dins. Va acomiadar el jardiner. Va comprar gallines, porcs, un parell de vaques lleteres. I on abans hi havia marbre i música, van començar a aparèixer animals per tot arreu. Les vaques es grataven contra les estàtues de les quatre estacions. Els porcs dormien on abans es ballava. Xini va aprendre a munyir, a segar, a fer formatge — un formatge blanc i salat que venia a les botigues de Ferreries. La pobresa la va empènyer a robar hortalisses de les finques veïnes per sobreviure. Però mai no va deixar de caminar dreta. I sempre amb talons: al final, amb les mans destrossades pel treball, ja no podia calçar-se'ls sola. Caminava descalça fins a casa de la seva amiga Rafela, portant les sabates en una bossa, i li demanava que l'ajudés a posar-se'ls. Sempre va anar amb taló.
+
+Vint-i-cinc anys va resistir aquí sola. Sense rendir-se. Sense marxar. Com si marxar fos trair la memòria de Fernando.
+
+Va morir a l'octubre de 1966, als 69 anys. Les seves amigues la van trobar a la cuina, asseguda en una cadira, amb el cap sobre la taula. A la seva tomba, al cementiri de Maó, no hi ha cap làpida que recordi el seu nom.
+
+Els seus germans van arribar de la península, van vendre el poc que valia i van cremar la resta. Literalment. Van apilar matalassos, retrats, quadres, cartes, catifes, mobles — tota una vida — al pati, i els van calar foc. Cendra i silenci van tancar la història de Fernando i Xini.
+
+Però la terra recorda.
+
+Amb els anys, aquesta finca va anar canviant de mans fins que algú hi va veure el que Fernando hi va veure el 1917: no un negoci, sinó una possibilitat. El que avui veuen al seu voltant — l'hotel, la formatgeria, el celler, les vinyes — és un acte de resurrecció. És la prova que un lloc que va conèixer l'amor, la decadència i l'abandó pot renéixer i donar fruits. Fruits que avui, literalment, vostès podran assaborir.
+
+Caminin ara cap a l'esquerra, on veuran la senyalització del punt número dos. Els espera un jardí que parla en silenci.`},
+
+{id:'punto-2',num:'2',cat:'JARDÍ DE LES ESCULTURES',title:'Deu veus a l\'espiral',nextLabel:'Les Escultures una a una',
+trans:`Acaben d'escoltar una història de foc. Els germans de Xini van cremar tot el que hi havia en aquesta finca: els quadres, les cartes, els mobles, la memòria. I durant anys, aquí no hi va haver res. Només terra callada.
+
+El que tenen ara davant és la resposta.
+
+Abans de mirar les escultures, els demano que mirin el terra. Fixin-se en la forma del camí que recorreran. La veuen? És una espiral. No és decoració: és una decisió. Aquest jardí, que ocupa més de deu mil metres quadrats, va ser dissenyat pel paisatgista Josep Bosch Espelta, deixeble del gran Nicolau Maria Rubió i Tudurí. I Bosch va triar l'espiral perquè és la forma que adopta la vida. És a les galàxies, a les closques dels caragols, a la doble hèlix de l'ADN. Si el traçat els recorda alguna cosa, probablement sigui el Museu Guggenheim de Nova York: el disseny d'aquest jardí està inspirat directament en la rampa helicoïdal de Frank Lloyd Wright.
+
+El que va ocórrer aquí per omplir-lo de veus va ser extraordinari. El maig de 2003, Menorca complia deu anys com a Reserva de la Biosfera, i per celebrar-ho es va organitzar el Primer Simposi Internacional Hort Sant Patrici. Durant vint-i-cinc dies, catorze artistes de tot el món van conviure en aquesta finca. Van menjar junts, van discutir junts, van treballar la pedra junts. I d'aquella convivència van néixer deu escultures tallades en marbre de Carrara. Deu respostes diferents a una mateixa pregunta: quina és la relació de l'ésser humà amb la natura?
+
+Prenguin-se el seu temps. Quan estiguin llestos, segueixin l'espiral cap al punt tres. I si desitgen conèixer cada escultura en detall, quedin-se: recorrerem les deu veus d'aquest jardí, una a una.`},
+
+{id:'punto-2b',num:'2b',cat:'LES ESCULTURES UNA A UNA',title:'Marbre amb nom propi',nextLabel:'Vinyes',
+trans:`Nélida Mendoza — Paraguai. Comencem per la que no és aquí. L'obra de Nélida es troba al llac de l'hotel. La seva matèria primera no és només la pedra, sinó l'aigua. L'aigua va donant forma lentament a una font que representa la Terra. És una obra que canvia, que envelleix, que respira.
+
+Giacomo Santini — Itàlia. La seva «Balança» ens parla de l'equilibri fràgil entre la força de la natura i la de l'home. Les mans que veuen a la peça són motlles reals de les mans de nens.
+
+Oliviero Bertolasso — Itàlia i Alemanya. La seva obra és figurativa i deliberadament pessimista: ens confronta amb el futur de la natura.
+
+Shin Myong-Ok — Corea. La seva escultura evoca la imposició de mans. Estem sanant la Terra o l'estem emmalaltint?
+
+Tristán Casamajor — Haití. Va crear un enorme tòtem que és, literalment, un rellotge de sol.
+
+Said Badr — Egipte. Una obra vertical dedicada a enaltir la magnitud de la natura a Menorca.
+
+George Dan Istrate — Romania. Una esfera perfecta partida per un tall net. La intervenció de l'home.
+
+Toni Capó — Mallorca. La fragilitat de l'ésser humà davant la duresa de la natura.
+
+Filippo Tincolini — Itàlia. Parla de fertilitat, de l'origen de tota vida.
+
+Cadascuna d'aquestes deu peces va ser creada aquí, amb marbre de Carrara. Van néixer d'aquesta terra i per a aquesta terra. Prenguin-se el temps que necessitin.`},
+
+{id:'punto-3',num:'3',cat:'VINYES',title:'Ceps que van sobreviure al silenci',nextLabel:'Formatgeria',
+trans:`Aquí a les Vinyes, no hi ha escultures ni jardins. Només fileres de vinyes sota el sol. Però aquests ceps que veuen són supervivents.
+
+Els romans ja feien vi a Menorca. Al segle XVIII, amb els britànics, l'illa es va transformar en un vinyar flotant. El port de Maó exportava milions de litres. Va ser l'edat d'or.
+
+I llavors, el desastre. La fil·loxera va arrasar les vinyes de tota Europa. Menorca no se'n va salvar. I el silenci es va instal·lar durant més d'un segle.
+
+El 2002, Sant Patrici va decidir sumar-se al renaixement. Van plantar entre dues i tres hectàrees de vinyes. El 2005 van fundar el celler. El 2008 van embotellar el seu primer vi.
+
+Les varietats: Merlot, Cabernet Sauvignon i Syrah per als negres. Chardonnay, Moscatell i Prensal per als blancs. Són raïms que estimen les condicions extremes. El resultat és un vi amb denominació Vi de la Terra Illa de Menorca.
+
+Caminin cap al punt quatre: on les mans converteixen la llet en història.`},
+
+{id:'punto-4',num:'4',cat:'FORMATGERIA',title:'On les mans modelen el temps',nextLabel:'Celler',
+trans:`Estan davant de la nostra formatgeria. Els nostres mestres formatgers modelen cada peça, una per una, amb les mans. Només un drap de cotó — el «fogasser» —, un cordill — el «lligam» — i unes mans que saben exactament quanta força aplicar.
+
+Tot comença amb la llet fresca de vaca del camp de Menorca. S'hi afegeix quall natural. En quaranta minuts, la llet es transforma en quallada. El mestre la talla amb la lira, l'embolica en el fogasser, la lliga i la premsa.
+
+Aquell dibuix a la part superior del formatge — la «mamella» — és l'empremta del drap. La signatura del mètode tradicional.
+
+El formatge Maó-Menorca té Denominació d'Origen Protegida. És un ofici de més de tres mil anys.
+
+Dins la nostra gamma trobaran: el Semicurat (3 mesos), el Curat (6 mesos) i l'Anyenc (més d'1 any). També el Formatge fresc i una línia gourmet.
+
+Caminin cap al punt cinc, on trobaran el nostre celler.`},
+
+{id:'punto-5',num:'5',cat:'CELLER',title:'On el silenci crea',nextLabel:'Botiga Museu',
+trans:`Notin el canvi en entrar aquí. La temperatura baixa i la llum s'atenua. Es troben al celler de Sant Patrici. Si la formatgeria era el lloc de les mans, aquest és el lloc de la paciència.
+
+Tot arrenca amb la verema. Fermentem a temperatura molt baixa, al voltant dels catorze graus. Una fermentació lenta extreu matisos que una fermentació ràpida mai no descobriria.
+
+Acabada la fermentació, ve el repòs. El vi dorm durant mesos. Després es clarifica i es filtra. Un cop embotellat, segueix evolucionant en silenci fins que algú el destapa.
+
+Tots els nostres vins porten el segell «Vi de la Terra Illa de Menorca». Cada ampolla és temps condensat.`},
+
+{id:'punto-6',num:'6',cat:'BOTIGA MUSEU',title:'El moment d\'assaborir',nextLabel:null,
+trans:`I ara sí: ha arribat el moment de deixar d'escoltar i començar a assaborir. Dirigeixin-se a la nostra botiga museu, on els espera un maridatge dels nostres formatges i els nostres vins. Busquin els sabors que els he anat descrivint. Tot el que han escoltat avui està, d'alguna manera, en el que provaran.
+
+Gaudeixin. Aquest moment és seu.`}
+],
+
+fr:[
+{id:'punto-1',num:'1',cat:'BÂTIMENT PRINCIPAL',title:'La maison que l\'amour interdit a bâtie',nextLabel:'Jardin des Sculptures',
+trans:`Arrêtez-vous un instant devant cette façade. Regardez l'épaisseur de ces murs : plus d'un mètre de pierre de marés, la même qui fut posée ici en 1918. Ce n'est pas une maison de campagne minorquine. Celui qui l'a fait construire voulait une villa à l'italienne. Elle semble paisible, n'est-ce pas ? Mais cette maison garde un secret. Cette maison fut bâtie par un amour interdit.
+
+Imaginez Fernando Vives : né à Mahón en 1867, propriétaire de « La Mahonesa », des pâtisseries célèbres à Madrid. Marié à Francisca Segura — Paca. Mais Madrid lui pesait. En 1917, il acheta ce domaine. Paca n'avait aucun intérêt pour la tranquillité minorquine. Fernando venait seul. Il engagea Virginia López Álvarez — Xini — pour s'occuper de la maison.
+
+Fernando tomba amoureux de Xini. Paca quitta le domaine. Fernando remplit la maison de tout ce que Xini méritait : statues de marbre, rideaux de velours rouge, un lit aux barreaux dorés. À Ferreries, on l'appelait la Gilda. Ils vécurent leur âge d'or. Isolés mais libres.
+
+Fernando mourut en janvier 1941. Xini se retrouva avec les murs mais sans rien à l'intérieur. Elle apprit à traire, à faire du fromage. Vingt-cinq ans elle tint bon ici seule. Elle mourut en octobre 1966. Ses frères et sœurs brûlèrent tout. Cendres et silence.
+
+Mais la terre se souvient. Ce que vous voyez aujourd'hui — l'hôtel, la fromagerie, la cave, les vignobles — est un acte de résurrection.
+
+Marchez vers le point numéro deux.`},
+
+{id:'punto-2',num:'2',cat:'JARDIN DES SCULPTURES',title:'Dix voix dans la spirale',nextLabel:'Les Sculptures une à une',
+trans:`Ce jardin est une spirale inspirée du Musée Guggenheim de New York. En mai 2003, quatorze artistes du monde entier ont cohabité ici pendant vingt-cinq jours. Dix sculptures en marbre de Carrare sont nées de cette cohabitation. Dix réponses différentes à une même question : quelle est la relation de l'être humain avec la nature ?
+
+Prenez votre temps. Suivez la spirale vers le point trois, ou restez pour découvrir chaque sculpture en détail.`},
+
+{id:'punto-2b',num:'2b',cat:'LES SCULPTURES UNE À UNE',title:'Marbre avec un nom',nextLabel:'Les Vignobles',
+trans:`Nélida Mendoza (Paraguay) : une fontaine au lac qui utilise l'eau comme matière vivante. Giacomo Santini (Italie) : la Balance, avec des moulages de mains d'enfants. Oliviero Bertolasso (Italie/Allemagne) : une œuvre figurative et pessimiste. Shin Myong-Ok (Corée) : l'imposition des mains. Tristán Casamajor (Haïti) : un totem-cadran solaire. Said Badr (Égypte) : une œuvre verticale monumentale. George Dan Istrate (Roumanie) : une sphère parfaite fendue. Toni Capó (Majorque) : la fragilité humaine face à la nature. Filippo Tincolini (Italie) : fertilité et origine de la vie.
+
+Chaque pièce a été créée ici avec du marbre de Carrare. Suivez la spirale vers le point trois.`},
+
+{id:'punto-3',num:'3',cat:'LES VIGNOBLES',title:'Ceps qui ont survécu au silence',nextLabel:'Fromagerie',
+trans:`Les Romains faisaient déjà du vin à Minorque. Au XVIIIe siècle, sous les Britanniques, l'île exportait des millions de litres. Puis le phylloxéra dévasta tout. Le silence dura plus d'un siècle.
+
+En 2002, Sant Patrici rejoignit la renaissance. Merlot, Cabernet Sauvignon, Syrah pour les rouges. Chardonnay, Muscat et Prensal pour les blancs. Le résultat est un vin Vi de la Terra Illa de Menorca.
+
+Marchez vers le point quatre : là où les mains transforment le lait en histoire.`},
+
+{id:'punto-4',num:'4',cat:'FROMAGERIE',title:'Là où les mains façonnent le temps',nextLabel:'Cave',
+trans:`Nos maîtres fromagers façonnent chaque pièce à la main avec le fogasser et le lligam. Le lait frais se transforme en caillé en quarante minutes. La mamella est la signature du méthode traditionnel.
+
+Le fromage Mahón-Menorca bénéficie d'une AOP. Nous proposons le Demi-affiné (3 mois), l'Affiné (6 mois), le Vieux (plus d'un an), le Frais et une ligne gourmet.
+
+Direction le point cinq : notre cave.`},
+
+{id:'punto-5',num:'5',cat:'CAVE',title:'Là où le silence crée',nextLabel:'Boutique-Musée',
+trans:`Nous fermentons à température très basse, autour de quatorze degrés. Une fermentation lente extrait des nuances qu'une fermentation rapide ne découvrirait jamais.
+
+Le vin repose dans les cuves pendant des mois, puis est clarifié, filtré et mis en bouteille. Tous nos vins portent le label « Vi de la Terra Illa de Menorca ». Chaque bouteille est du temps condensé.`},
+
+{id:'punto-6',num:'6',cat:'BOUTIQUE-MUSÉE',title:'Le moment de savourer',nextLabel:null,
+trans:`Le moment est venu de commencer à savourer. Dirigez-vous vers notre boutique-musée pour un accord fromages et vins. Tout ce que vous avez entendu aujourd'hui se trouve dans ce que vous allez goûter.
+
+Savourez. Ce moment est le vôtre.`}
+],
+
+de:[
+{id:'punto-1',num:'1',cat:'HAUPTGEBÄUDE',title:'Das Haus, das die verbotene Liebe erbaute',nextLabel:'Skulpturengarten',
+trans:`Bleiben Sie einen Moment vor dieser Fassade stehen. Über einen Meter Marés-Stein, derselbe der hier 1918 verbaut wurde. Dies ist kein menorquinisches Bauernhaus. Dieses Haus wurde von einer verbotenen Liebe erbaut.
+
+Fernando Vives, geboren 1867 in Mahón, Besitzer der „La Mahonesa"-Konditoreien in Madrid. Verheiratet mit Francisca Segura — Paca. 1917 kaufte er dieses Anwesen. Paca hatte kein Interesse. Fernando kam allein und stellte Virginia López Álvarez ein — Xini.
+
+Fernando verliebte sich in Xini. Paca zog nach Mahón. Fernando füllte das Haus mit Marmorstatuen, Samtvorhängen, einem goldenen Bett. In Ferreries nannte man Xini la Gilda. Sie lebten ihr goldenes Zeitalter. Frei.
+
+Fernando starb 1941. Xini blieb mit den Wänden zurück, aber ohne etwas darin. Sie lernte zu melken, Käse zu machen. Fünfundzwanzig Jahre hielt sie allein aus. Sie starb 1966. Ihre Geschwister verbrannten alles.
+
+Aber das Land erinnert sich. Was Sie heute sehen — Hotel, Käserei, Bodega, Weinberge — ist ein Akt der Auferstehung.
+
+Gehen Sie zum Punkt Nummer zwei.`},
+
+{id:'punto-2',num:'2',cat:'SKULPTURENGARTEN',title:'Zehn Stimmen in der Spirale',nextLabel:'Die Skulpturen einzeln',
+trans:`Dieser Garten ist eine Spirale, inspiriert vom Guggenheim-Museum. Im Mai 2003 lebten vierzehn Künstler fünfundzwanzig Tage hier zusammen. Zehn Skulpturen aus Carrara-Marmor entstanden. Zehn Antworten auf eine Frage: Was ist die Beziehung zwischen Mensch und Natur?
+
+Nehmen Sie sich Zeit. Folgen Sie der Spirale zum Punkt drei, oder bleiben Sie für die Details jeder Skulptur.`},
+
+{id:'punto-2b',num:'2b',cat:'DIE SKULPTUREN EINZELN',title:'Marmor mit Namen',nextLabel:'Die Weinberge',
+trans:`Nélida Mendoza (Paraguay): Brunnen am See. Giacomo Santini (Italien): die Waage mit Kinderhänden. Oliviero Bertolasso (Italien/Deutschland): figurativ und pessimistisch. Shin Myong-Ok (Korea): Handauflegen. Tristán Casamajor (Haiti): Totem-Sonnenuhr. Said Badr (Ägypten): vertikales Monument. George Dan Istrate (Rumänien): gespaltene Kugel. Toni Capó (Mallorca): Zerbrechlichkeit des Menschen. Filippo Tincolini (Italien): Fruchtbarkeit und Ursprung.
+
+Alle zehn Werke aus Carrara-Marmor, hier geschaffen. Folgen Sie der Spirale zum Punkt drei.`},
+
+{id:'punto-3',num:'3',cat:'DIE WEINBERGE',title:'Reben, die die Stille überlebten',nextLabel:'Käserei',
+trans:`Die Römer machten schon Wein auf Menorca. Im 18. Jahrhundert exportierte die Insel Millionen Liter. Dann kam die Reblaus und vernichtete alles. Über ein Jahrhundert Stille.
+
+2002 pflanzte Sant Patrici wieder. Merlot, Cabernet Sauvignon, Syrah für Rotweine. Chardonnay, Muskateller, Prensal für Weißweine. Vi de la Terra Illa de Menorca.
+
+Weiter zu Punkt vier: wo Hände Milch in Geschichte verwandeln.`},
+
+{id:'punto-4',num:'4',cat:'KÄSEREI',title:'Wo Hände die Zeit formen',nextLabel:'Weinkeller',
+trans:`Unsere Käsemeister formen jedes Stück von Hand mit fogasser und lligam. Frische Kuhmilch wird in vierzig Minuten zum Bruch. Die mamella ist die Signatur der traditionellen Methode.
+
+Mahón-Menorca hat eine g.U. Wir bieten Halbgereiften (3 Monate), Gereiften (6 Monate), Alten (über 1 Jahr), Frischkäse und eine Gourmetlinie.
+
+Weiter zu Punkt fünf: unsere Bodega.`},
+
+{id:'punto-5',num:'5',cat:'WEINKELLER',title:'Wo die Stille erschafft',nextLabel:'Museumsshop',
+trans:`Wir vergären bei sehr niedriger Temperatur, um die vierzehn Grad. Eine langsame Gärung extrahiert Nuancen, die eine schnelle nie entdecken würde.
+
+Der Wein ruht monatelang, wird geklärt, filtriert und abgefüllt. Alle unsere Weine tragen das Siegel „Vi de la Terra Illa de Menorca". Jede Flasche ist kondensierte Zeit.`},
+
+{id:'punto-6',num:'6',cat:'MUSEUMSSHOP',title:'Der Moment zum Genießen',nextLabel:null,
+trans:`Der Moment ist gekommen, anzufangen zu genießen. Begeben Sie sich in unseren Museumsshop für eine Verkostung unserer Käse und Weine. Alles, was Sie heute gehört haben, steckt in dem, was Sie gleich kosten werden.
+
+Genießen Sie. Dieser Moment gehört Ihnen.`}
+],
+
+it:[
+{id:'punto-1',num:'1',cat:'EDIFICIO PRINCIPALE',title:'La casa che l\'amore proibito costruì',nextLabel:'Giardino delle Sculture',
+trans:`Fermatevi un momento davanti a questa facciata. Più di un metro di pietra di marés, la stessa posata qui nel 1918. Questa non è una casa di campagna minorchina. Questa casa fu costruita da un amore proibito.
+
+Fernando Vives, nato a Mahón nel 1867, proprietario de "La Mahonesa" a Madrid. Sposato con Francisca Segura — Paca. Nel 1917 comprò questa tenuta. Paca non aveva interesse. Fernando venne solo e assunse Virginia López Álvarez — Xini.
+
+Fernando si innamorò di Xini. Paca se ne andò a Mahón. Fernando riempì la casa di statue di marmo, tende di velluto, un letto dorato. A Ferreries la chiamavano la Gilda. Vissero la loro età dell'oro. Liberi.
+
+Fernando morì nel 1941. Xini rimase con le pareti ma senza nulla dentro. Imparò a mungere, a fare formaggio. Venticinque anni resistette sola. Morì nel 1966. I suoi fratelli bruciarono tutto. Cenere e silenzio.
+
+Ma la terra ricorda. Quello che vedete oggi — hotel, caseificio, cantina, vigneti — è un atto di resurrezione.
+
+Camminate verso il punto numero due.`},
+
+{id:'punto-2',num:'2',cat:'GIARDINO DELLE SCULTURE',title:'Dieci voci nella spirale',nextLabel:'Le Sculture una a una',
+trans:`Questo giardino è una spirale ispirata al Museo Guggenheim. Nel maggio 2003, quattordici artisti convissero qui per venticinque giorni. Nacquero dieci sculture in marmo di Carrara. Dieci risposte a una domanda: qual è il rapporto dell'essere umano con la natura?
+
+Prendetevi il vostro tempo. Seguite la spirale verso il punto tre, o restate per scoprire ogni scultura in dettaglio.`},
+
+{id:'punto-2b',num:'2b',cat:'LE SCULTURE UNA A UNA',title:'Marmo con un nome',nextLabel:'Vigneti',
+trans:`Nélida Mendoza (Paraguay): fontana al lago. Giacomo Santini (Italia): la Bilancia con calchi di mani di bambini. Oliviero Bertolasso (Italia/Germania): figurativa e pessimista. Shin Myong-Ok (Corea): imposizione delle mani. Tristán Casamajor (Haiti): totem-meridiana. Said Badr (Egitto): opera verticale monumentale. George Dan Istrate (Romania): sfera spaccata. Toni Capó (Maiorca): fragilità umana. Filippo Tincolini (Italia): fertilità e origine.
+
+Tutte create qui con marmo di Carrara. Seguite la spirale verso il punto tre.`},
+
+{id:'punto-3',num:'3',cat:'VIGNETI',title:'Viti sopravvissute al silenzio',nextLabel:'Caseificio',
+trans:`I Romani facevano già vino a Minorca. Nel XVIII secolo l'isola esportava milioni di litri. Poi la fillossera devastò tutto. Oltre un secolo di silenzio.
+
+Nel 2002, Sant Patrici si unì al rinascimento. Merlot, Cabernet Sauvignon, Syrah per i rossi. Chardonnay, Moscato, Prensal per i bianchi. Vi de la Terra Illa de Menorca.
+
+Verso il punto quattro: dove le mani trasformano il latte in storia.`},
+
+{id:'punto-4',num:'4',cat:'CASEIFICIO',title:'Dove le mani modellano il tempo',nextLabel:'Cantina',
+trans:`I nostri maestri casari modellano ogni pezzo a mano con fogasser e lligam. Il latte fresco diventa cagliata in quaranta minuti. La mamella è la firma del metodo tradizionale.
+
+Mahón-Menorca ha la DOP. Offriamo Semicurado (3 mesi), Curado (6 mesi), Stagionato (oltre 1 anno), Fresco e linea gourmet.
+
+Verso il punto cinque: la nostra cantina.`},
+
+{id:'punto-5',num:'5',cat:'CANTINA',title:'Dove il silenzio crea',nextLabel:'Negozio Museo',
+trans:`Fermentiamo a temperatura molto bassa, intorno ai quattordici gradi. Una fermentazione lenta estrae sfumature che una veloce non scoprirebbe mai.
+
+Il vino riposa per mesi, viene chiarificato, filtrato e imbottigliato. Tutti i nostri vini portano il sigillo «Vi de la Terra Illa de Menorca». Ogni bottiglia è tempo condensato.`},
+
+{id:'punto-6',num:'6',cat:'NEGOZIO MUSEO',title:'Il momento di assaporare',nextLabel:null,
+trans:`È arrivato il momento di cominciare ad assaporare. Dirigetevi verso il nostro negozio museo per un abbinamento di formaggi e vini. Tutto quello che avete ascoltato oggi è in ciò che state per assaggiare.
+
+Godetevi questo momento. È vostro.`}
+]
+};
+
+let lang = 'es';
+let currentStop = 0;
+let isPlaying = false;
+let playbackRate = 1;
+const audio = document.getElementById('audioEl');
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+  document.getElementById('welcomeSub').textContent = UI[l].subtitle;
+  document.getElementById('startBtn').textContent = UI[l].start;
+}
+
+(function initWelcome() {
+  const sel = document.getElementById('langSelector');
+  LANGS.forEach(l => {
+    const b = document.createElement('button');
+    b.className = 'lang-btn' + (l === lang ? ' active' : '');
+    b.dataset.lang = l;
+    b.textContent = LANG_LABELS[l];
+    b.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setLang(l);
+    });
+    sel.appendChild(b);
+  });
+  document.getElementById('welcomeSub').textContent = UI[lang].subtitle;
+  document.getElementById('startBtn').textContent = UI[lang].start;
+  document.getElementById('startBtn').addEventListener('click', function() {
+    renderStopList();
+  });
+})();
+
+function renderStopList() {
+  const ui = UI[lang];
+  const stops = STOPS[lang];
+  document.getElementById('listSub').textContent = ui.subtitle;
+  document.getElementById('changeLangBtn').textContent = '🌐 ' + ui.changeLang + ' (' + LANG_LABELS[lang] + ')';
+  document.getElementById('changeLangBtn').onclick = () => { stopAudio(); showScreen('welcome'); };
+  const c = document.getElementById('stopsContainer');
+  c.innerHTML = '';
+  stops.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'stop-card fade-in';
+    card.style.animationDelay = (i * 0.06) + 's';
+    card.innerHTML = `
+      <div class="stop-num ${s.num.includes('b') ? 'sub' : ''}">${s.num}</div>
+      <div class="stop-info">
+        <div class="stop-cat">${s.cat}</div>
+      </div>
+      <div class="stop-arrow">→</div>`;
+    card.onclick = () => openStop(i);
+    c.appendChild(card);
+  });
+  showScreen('stoplist');
+}
+
+function openStop(index) {
+  currentStop = index;
+  const ui = UI[lang];
+  const s = STOPS[lang][index];
+  document.getElementById('detailNum').textContent = s.num;
+  document.getElementById('detailCat').textContent = s.cat;
+  document.getElementById('detailTitle').textContent = s.title;
+  document.getElementById('transLabel').textContent = ui.readTrans;
+  document.getElementById('transInner').textContent = s.trans;
+  const nextBtn = document.getElementById('nextBtn');
+  if (s.nextLabel) {
+    nextBtn.style.display = 'flex';
+    nextBtn.innerHTML = ui.next + ': ' + s.nextLabel + ' →';
+    nextBtn.onclick = () => openStop(index + 1);
+  } else {
+    nextBtn.style.display = 'flex';
+    nextBtn.innerHTML = ui.endTitle + ' 🌅';
+    nextBtn.onclick = () => showEnd();
+  }
+  resetPlayer();
+  loadAudio(s.id);
+  document.getElementById('transToggle').classList.remove('open');
+  document.getElementById('transText').classList.remove('open');
+  showScreen('detail');
+}
+
+function showEnd() {
+  const ui = UI[lang];
+  document.getElementById('endTitle').textContent = ui.endTitle;
+  document.getElementById('endText').textContent = ui.endText;
+  document.getElementById('restartBtn').textContent = ui.restart;
+  document.getElementById('restartBtn').onclick = () => showScreen('welcome');
+  stopAudio();
+  showScreen('endscreen');
+}
+
+function loadAudio(id) {
+  const errEl = document.getElementById('audioError');
+  const errMsg = document.getElementById('audioErrorMsg');
+  errEl.style.display = 'none';
+  audio.src = 'audio/' + lang + '/' + id + '.mp3';
+  audio.playbackRate = playbackRate;
+  audio.load();
+  audio.onerror = function() {
+    errEl.style.display = 'block';
+    errMsg.innerHTML = '⚠️ ' + UI[lang].errAudio + '<br><span>' + UI[lang].errSub + ' <b>audio/' + lang + '/</b></span>';
+  };
+}
+
+function resetPlayer() {
+  stopAudio();
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('currentTime').textContent = '0:00';
+  document.getElementById('totalTime').textContent = '0:00';
+  playbackRate = 1;
+  document.getElementById('speedBtn').textContent = '1x';
+}
+
+function stopAudio() {
+  audio.pause();
+  audio.currentTime = 0;
+  isPlaying = false;
+  document.getElementById('playBtn').textContent = '▶';
+}
+
+function togglePlay() {
+  if (audio.error || !audio.src) return;
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶';
+  } else {
+    audio.play().then(function() {
+      isPlaying = true;
+      document.getElementById('playBtn').textContent = '⏸';
+    }).catch(function() {});
+  }
+}
+
+function rewind10() { audio.currentTime = Math.max(0, audio.currentTime - 10); }
+
+function cycleSpeed() {
+  var speeds = [1, 1.5, 2];
+  var i = (speeds.indexOf(playbackRate) + 1) % speeds.length;
+  playbackRate = speeds[i];
+  audio.playbackRate = playbackRate;
+  document.getElementById('speedBtn').textContent = playbackRate + 'x';
+}
+
+function fmtTime(s) {
+  if (!s || isNaN(s)) return '0:00';
+  var m = Math.floor(s / 60);
+  var sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+audio.addEventListener('timeupdate', function() {
+  if (!audio.duration) return;
+  document.getElementById('progressFill').style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+  document.getElementById('currentTime').textContent = fmtTime(audio.currentTime);
+});
+audio.addEventListener('loadedmetadata', function() {
+  document.getElementById('totalTime').textContent = fmtTime(audio.duration);
+});
+audio.addEventListener('ended', function() {
+  isPlaying = false;
+  document.getElementById('playBtn').textContent = '▶';
+});
+document.getElementById('progressBar').addEventListener('click', function(e) {
+  if (!audio.duration) return;
+  var rect = e.currentTarget.getBoundingClientRect();
+  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+});
+document.getElementById('playBtn').addEventListener('click', togglePlay);
+document.getElementById('rewindBtn').addEventListener('click', rewind10);
+document.getElementById('speedBtn').addEventListener('click', cycleSpeed);
+document.getElementById('backBtn').addEventListener('click', function() {
+  stopAudio();
+  renderStopList();
+});
+document.getElementById('transToggle').addEventListener('click', function() {
+  this.classList.toggle('open');
+  document.getElementById('transText').classList.toggle('open');
+});
+</script>
 </body>
 </html>
