@@ -57,8 +57,8 @@ h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',seri
 .stop-num{width:44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;margin-right:1rem}
 .stop-num.sub{font-size:.75rem;background:var(--dorado)}
 .stop-info{flex:1}
-.stop-cat{font-size:.6rem;letter-spacing:2px;color:var(--gris);font-weight:600;margin-bottom:.15rem}
-.stop-title{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--texto)}
+.stop-cat{font-size:.68rem;letter-spacing:2px;color:var(--gris);font-weight:600;margin-bottom:.25rem}
+.stop-title{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--texto);line-height:1.3}
 .stop-arrow{color:var(--verde);font-size:1.2rem;margin-left:.5rem;opacity:.5}
 
 /* STOP DETAIL */
@@ -70,11 +70,11 @@ h1,h2,h3,.font-elysian{font-family:'Elysian','Cormorant Garamond','Georgia',seri
 .back-btn:active{background:rgba(255,255,255,.1)}
 .detail-logo{height:28px;width:auto;filter:brightness(0) invert(1);position:relative;z-index:1}
 .detail-header .num{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;font-size:1.2rem;font-weight:700;position:relative;z-index:1;font-family:'Montserrat',sans-serif}
-.detail-header .cat{font-size:.65rem;letter-spacing:3px;opacity:.7;margin-bottom:.3rem;position:relative;z-index:1}
+.detail-header h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;line-height:1.3;position:relative;z-index:1}
 .detail-header h2{font-family:'Elysian','Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;line-height:1.3;position:relative;z-index:1}
 .detail-body{padding:1.2rem}
 .player-card{background:#fff;border-radius:var(--radius);padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:1rem}
-.player-controls{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-bottom:1rem}
+.player-controls{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1.2rem}
 .ctrl-btn{width:42px;height:42px;border-radius:50%;border:none;background:transparent;color:var(--gris);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .ctrl-btn:active{background:rgba(0,0,0,.05)}
 .play-btn{width:64px;height:64px;border-radius:50%;border:none;background:var(--verde);color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
@@ -1379,6 +1379,7 @@ function renderStopList() {
       <div class="stop-num ${s.num.includes('b') ? 'sub' : ''}">${s.num}</div>
       <div class="stop-info">
         <div class="stop-cat">${s.cat}</div>
+        ${s.title ? `<div class="stop-title">${s.title}</div>` : ''}
       </div>
       <div class="stop-arrow">→</div>`;
     card.onclick = () => openStop(i);
